@@ -1,11 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from 'react'
+
+//Components
 import Header from './Components/Header'
 import Body from './Components/Body';
+import Footer from "./Components/Footer";
 
-//pages
+//Pages
 import SubmitRecipe from "./Pages/SubmitRecipe";
 import About from "./Pages/About";
+
 
 
 function App() {
@@ -21,6 +25,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </>
   )
 }
