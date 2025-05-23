@@ -5,6 +5,7 @@ import Body from './Components/Body';
 
 //pages
 import SubmitRecipe from "./Pages/SubmitRecipe";
+import About from "./Pages/About";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Body />} />
           <Route path="/submit" element={<SubmitRecipe />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </BrowserRouter>
     </>
