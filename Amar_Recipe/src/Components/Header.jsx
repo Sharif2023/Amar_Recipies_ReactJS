@@ -36,38 +36,61 @@ function Header() {
                         </button>
                     </div>
 
-                    <form className="max-w-lg mx-auto">
-                        <div className="flex">
-                            <button
-                                onClick={() => setDropdownOpen(!dropdownOpen)}
-                                className="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                                type="button"
-                            >
-                                All categories
-                                <svg className="w-2.5 h-2.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                </svg>
-                            </button>
+                    <form className="max-w-lg mx-auto w-full">
+                        <div className="flex h-11.5">
+                            {/* Dropdown Button */}
+                            <div className="relative">
+                                <button
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                    type="button"
+                                    className="h-full z-10 inline-flex items-center justify-between gap-1 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-s-md hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                                >
+                                    <span>All categories</span>
+                                    <svg className="w-3 h-3 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                    </svg>
+                                </button>
 
-                            {/* Dropdown menu */}
-                            <div
-                                className={`absolute left-0 mt-1 w-44 z-20 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 ${dropdownOpen ? '' : 'hidden'}`}
-                            >
-                                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                                    {["Mockups", "Templates", "Design", "Logos"].map((item) => (
-                                        <li key={item}>
-                                            <button type="button" className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                {item}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
+                                {/* Dropdown Menu */}
+                                <div
+                                    className={`absolute left-0 mt-1 w-44 z-20 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 ${dropdownOpen ? '' : 'hidden'}`}
+                                >
+                                    <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                        {["All Recipes",
+                                            "Meat",
+                                            "Vegetables",
+                                            "Salad",
+                                            "Drinks",
+                                            "Desserts",
+                                            "Rice & Pasta",
+                                            "Snacks",
+                                            "Bangladeshi",
+                                            "Chinese",
+                                            "Italian"].map((item) => (
+                                                <li key={item}>
+                                                    <button type="button" className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                        {item}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                    </ul>
+                                </div>
                             </div>
+
+                            {/* Search Input */}
                             <div className="relative w-full">
-                                <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." required />
-                                <button type="submit" className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <input
+                                    type="search"
+                                    className="h-full block w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 border-s-0 rounded-e-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
+                                    placeholder="Search Item of Meat, Vegetable, Salat, Drinks ..."
+                                    required
+                                />
+                                <button
+                                    type="submit"
+                                    className="absolute top-0 end-0 h-full p-2.5 text-sm font-medium text-white bg-[#1f1f1f] rounded-e-md border border-white hover:border-[#ff3300] hover:text-[#ff3300] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                >
                                     <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                     </svg>
                                     <span className="sr-only">Search</span>
                                 </button>
@@ -75,18 +98,17 @@ function Header() {
                         </div>
                     </form>
 
+
                     {/* Navigation links */}
-                    <div className={`lg:flex flex-col lg:flex-row ${isOpen ? 'block' : 'hidden'} lg:space-x-4 lg:mt-0 mt-4 flex flex-col items-center text-l`}>
-                        <a href="/" className="text-white  px-2 py-2 hover:text-orange-600 ">Home</a>
-                        <a href="#Projects" className="text-white  px-2 py-2  hover:text-orange-600">Projects</a>
-                        <a href="/" className="text-white  px-2 py-2  hover:text-orange-600">About</a>
-                        <a href="/" className="text-white  px-2 py-2  hover:text-orange-600">Contact Me</a>
+                    <div className={`lg:flex flex-col lg:flex-row ${isOpen ? 'block' : 'hidden'} lg:space-x-2 lg:mt-0 mt-4 flex flex-col items-center text-m`}>
+                        <a href="/" className="text-white px-2 py-2 hover:text-orange-600">Home</a>
+                        <a href="/recipes" className="text-white px-2 py-2 hover:text-orange-600">Browse Recipes</a>
+                        <a href="/submit" className="text-white px-2 py-2 hover:text-orange-600">Submit Recipe</a>
+                        <a href="/categories" className="text-white px-2 py-2 hover:text-orange-600">Categories</a>
+                        <a href="/about" className="text-white px-2 py-2 hover:text-orange-600">About Us</a>
                     </div>
                 </div>
-
             </nav >
-
-
         </div >
     );
 }
