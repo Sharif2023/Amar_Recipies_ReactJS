@@ -14,7 +14,7 @@ export default function SubmitRecipe() {
         tags: '',
         reference: '',
         tutorialVideo: '',
-        comment: ''
+        comment: '',
     });
 
     const handleChange = (e) => {
@@ -25,12 +25,50 @@ export default function SubmitRecipe() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        alert('Recipe Submitted Successfully!');
-        // You can send formData to your backend here
+
+        const data = new FormData();
+        for (const key in formData) {
+            if (formData[key] !== null) {
+                data.append(key, formData[key]);
+            }
+        }
+
+        try {
+            const response = await fetch('http://yourdomain.com/api/submit_recipe.php', {
+                method: 'POST',
+                body: data,
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert('Recipe Submitted Successfully!');
+                // Optionally clear the form
+                setFormData({
+                    title: '',
+                    category: '',
+                    description: '',
+                    image: null,
+                    location: '',
+                    organizerName: '',
+                    organizerEmail: '',
+                    organizerAddress: '',
+                    source: '',
+                    tags: '',
+                    reference: '',
+                    tutorialVideo: '',
+                    comment: ''
+                });
+            } else {
+                alert('Submission failed: ' + result.message);
+            }
+        } catch (error) {
+            alert('Error submitting form: ' + error.message);
+        }
     };
+
 
     return (
         <div className="container mx-auto p-4">
@@ -56,7 +94,7 @@ export default function SubmitRecipe() {
                     value={formData.category}
                     onChange={handleChange}
                 >
-                    <option value="" selected disable hidden>Select Category</option>
+                    <option value="" disable hidden>Select Category</option>
                     <option value="All Recipes">All Recipes</option>
                     <option value="Meat">Meat</option>
                     <option value="Vegetables">Vegetables</option>
@@ -161,7 +199,7 @@ export default function SubmitRecipe() {
                         value={formData.source}
                         onChange={handleChange}
                     >
-                        <option value="" selected disable hidden> Where You Get the Recipes?</option>
+                        <option value="" disable hidden> Where You Get the Recipes?</option>
                         <option value="family">From Family</option>
                         <option value="friends">From Friends</option>
                         <option value="internet">From the Internet</option>
@@ -207,7 +245,7 @@ export default function SubmitRecipe() {
                     placeholder="Place Comment for viewer"
                     className="block w-full p-2 rounded-md border-gray-300 shadow-sm"
                     style={{ backgroundColor: '#f6f6f6' }}
-                    value={formData.description}
+                    value={formData.comment}
                     onChange={handleChange}
                 />
 
