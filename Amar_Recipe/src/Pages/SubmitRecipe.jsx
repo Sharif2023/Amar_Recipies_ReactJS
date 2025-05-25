@@ -126,7 +126,7 @@ export default function SubmitRecipe() {
                     <div>
                         <label
                             htmlFor="image"
-                            className="block w-full h-48 border-2 border-dashed border-gray-300 rounded-md cursor-pointer flex flex-col items-center justify-center bg-[#f6f6f6] hover:bg-gray-50"
+                            className="w-full h-48 border-2 border-dashed border-gray-300 rounded-md cursor-pointer flex flex-col items-center justify-center bg-[#f6f6f6] hover:bg-gray-50"
                         >
                             <span className="text-center text-gray-500">
                                 <div className="mb-2">
@@ -146,6 +146,12 @@ export default function SubmitRecipe() {
                                 onChange={handleChange}
                             />
                         </label>
+                        {/* Show filename if an image is selected */}
+                        {formData.image && (
+                            <p className="mt-2 text-gray-700 text-sm">
+                                Selected file: <strong>{formData.image.name}</strong>
+                            </p>
+                        )}
                     </div>
                 </div>
 
