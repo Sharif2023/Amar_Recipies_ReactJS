@@ -97,7 +97,10 @@ export default function SubmitRecipe() {
                     <option value="" disabled hidden>Select Category</option>
                     <option value="All Recipes">All Recipes</option>
                     <option value="Meat">Meat</option>
+                    <option value="Fish">Fish</option>
+                    <option value="VegetablewithMeatorFish">Vegetable with Meat/Fish</option>
                     <option value="Vegetables">Vegetables</option>
+                    <option value="Bharta">Bharta</option>
                     <option value="Salad">Salad</option>
                     <option value="Drinks">Drinks</option>
                     <option value="Desserts">Desserts</option>
