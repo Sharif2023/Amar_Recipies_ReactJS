@@ -36,7 +36,7 @@ export default function SubmitRecipe() {
         }
 
         try {
-            const response = await fetch('http://yourdomain.com/api/submit_recipe.php', {
+            const response = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/submit_recipe.php', {
                 method: 'POST',
                 body: data,
             });
@@ -55,7 +55,7 @@ export default function SubmitRecipe() {
                     organizerName: '',
                     organizerEmail: '',
                     organizerAddress: '',
-                    source: '',
+                    status: '',
                     tags: '',
                     reference: '',
                     tutorialVideo: '',
@@ -94,7 +94,7 @@ export default function SubmitRecipe() {
                     value={formData.category}
                     onChange={handleChange}
                 >
-                    <option value="" disable hidden>Select Category</option>
+                    <option value="" disabled hidden>Select Category</option>
                     <option value="All Recipes">All Recipes</option>
                     <option value="Meat">Meat</option>
                     <option value="Vegetables">Vegetables</option>
@@ -199,7 +199,7 @@ export default function SubmitRecipe() {
                         value={formData.source}
                         onChange={handleChange}
                     >
-                        <option value="" disable hidden> Where You Get the Recipes?</option>
+                        <option value="" disabled hidden> Where You Get the Recipes?</option>
                         <option value="family">From Family</option>
                         <option value="friends">From Friends</option>
                         <option value="internet">From the Internet</option>
