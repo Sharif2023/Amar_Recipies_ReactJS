@@ -72,14 +72,14 @@ export default function SubmitRecipe() {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold text-black mb-6">Submit Recipe</h1>
+            <h1 className="text-3xl font-bold text-black mb-6">নতুন রেসিপি যোগকরণ</h1>
 
             <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit}>
                 {/* Title */}
                 <input
                     type="text"
                     name="title"
-                    placeholder="Recipe Title"
+                    placeholder="রেসিপির নাম"
                     className="block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327]"
                     style={{ backgroundColor: '#f6f6f6' }}
                     value={formData.title}
@@ -94,21 +94,22 @@ export default function SubmitRecipe() {
                     value={formData.category}
                     onChange={handleChange}
                 >
-                    <option value="" disabled hidden>Select Category</option>
-                    <option value="All Recipes">All Recipes</option>
-                    <option value="Meat">Meat</option>
-                    <option value="Fish">Fish</option>
-                    <option value="VegetablewithMeatorFish">Vegetable with Meat/Fish</option>
-                    <option value="Vegetables">Vegetables</option>
-                    <option value="Bharta">Bharta</option>
-                    <option value="Salad">Salad</option>
-                    <option value="Drinks">Drinks</option>
-                    <option value="Desserts">Desserts</option>
-                    <option value="Rice & Pasta">Rice & Pasta</option>
-                    <option value="Snacks">Snacks</option>
-                    <option value="Bangladeshi">Bangladeshi</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="Italian">Italian</option>
+                    <option value="" selected disabled hidden>রেসিপির ধরণ</option>
+                    <option value="Meat">মাংস</option>
+                    <option value="Fish">মাছ</option>
+                    <option value="dairy">দুগ্ধজাত</option>
+                    <option value="VegetablewithMeatorFish">শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য</option>
+                    <option value="Vegetables">শাকসবজি</option>
+                    <option value="Bharta">ভর্তা</option>
+                    <option value="Salad">সালাদ</option>
+                    <option value="achar">আচার</option>
+                    <option value="Drinks">পানীয়</option>
+                    <option value="Desserts">ডেজার্ট, মিষ্টান্ন</option>
+                    <option value="Rice & Pasta">রাইস আইটেম</option>
+                    <option value="Snacks">হালকা খাবার/ ফাস্টফুড</option>
+                    <option value="Bangladeshi">বাঙ্গালী</option>
+                    <option value="Chinese">চাইনিজ্জ</option>
+                    <option value="Italian">ইতালীয়ান</option>
 
                 </select>
 
@@ -117,7 +118,7 @@ export default function SubmitRecipe() {
                     <textarea
                         name="description"
                         rows="4"
-                        placeholder="Recipe Description"
+                        placeholder="বানানোর প্রক্রিয়া"
                         className="block w-full h-48 p-2 rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327]"
                         style={{ backgroundColor: '#f6f6f6' }}
                         value={formData.description}
@@ -131,7 +132,7 @@ export default function SubmitRecipe() {
                             <span className="text-center text-gray-500">
                                 <div className="mb-2">
                                     <span className="bg-[#8c0327] hover:bg-[#6b0220] text-white rounded-full py-2 px-4">
-                                        Select from Computer
+                                        ছবি যোগ করুন
                                     </span>
                                 </div>
                                 or drag recipe photo here<br />
@@ -159,7 +160,7 @@ export default function SubmitRecipe() {
                 <input
                     type="text"
                     name="location"
-                    placeholder="Region or Cuisine Origin"
+                    placeholder="অঞ্চল বা রান্নাটির উৎপত্তি"
                     className="block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327]"
                     style={{ backgroundColor: '#f6f6f6' }}
                     value={formData.location}
@@ -171,7 +172,7 @@ export default function SubmitRecipe() {
                     <input
                         type="text"
                         name="organizerName"
-                        placeholder="Your Name"
+                        placeholder="আপনার নাম"
                         className="block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327]"
                         style={{ backgroundColor: '#f6f6f6' }}
                         value={formData.organizerName}
@@ -180,7 +181,7 @@ export default function SubmitRecipe() {
                     <input
                         type="email"
                         name="organizerEmail"
-                        placeholder="Your Email"
+                        placeholder="আপনার ই-মেইল"
                         className="block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327]"
                         style={{ backgroundColor: '#f6f6f6' }}
                         value={formData.organizerEmail}
@@ -192,7 +193,7 @@ export default function SubmitRecipe() {
                 <input
                     type="text"
                     name="organizerAddress"
-                    placeholder="Your Address"
+                    placeholder="আপনার ঠিকানা"
                     className="block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327]"
                     style={{ backgroundColor: '#f6f6f6' }}
                     value={formData.organizerAddress}
@@ -208,19 +209,19 @@ export default function SubmitRecipe() {
                         value={formData.source}
                         onChange={handleChange}
                     >
-                        <option value="" selected disabled hidden> Where You Get the Recipes?</option>
-                        <option value="family">From Family</option>
-                        <option value="friends">From Friends</option>
-                        <option value="internet">From the Internet</option>
-                        <option value="books">From Cookbooks</option>
-                        <option value="self">Created Myself</option>
-                        <option value="other">Other</option>
+                        <option value="" selected disabled hidden>রেসিপিটির সন্ধান কোথা থেকে পেয়েছেন?</option>
+                        <option value="family">পরিবার</option>
+                        <option value="friends">বন্ধু-বান্ধব</option>
+                        <option value="internet">সোশ্যাল মিডিয়া</option>
+                        <option value="books">রান্নার বই থেকে</option>
+                        <option value="self">আমার নিজের</option>
+                        <option value="other">অন্যান্য</option>
                     </select>
 
                     <input
                         type="text"
                         name="tags"
-                        placeholder="Tags (comma-separated)"
+                        placeholder="ট্যাগ (শুরুতে # এবং শেষে ',')"
                         className="block w-full h-12 rounded-md border-gray-300 shadow-sm"
                         style={{ backgroundColor: '#f6f6f6' }}
                         value={formData.tags}
@@ -232,7 +233,7 @@ export default function SubmitRecipe() {
                 <input
                     type="url"
                     name="reference"
-                    placeholder="Reference Link (if any)"
+                    placeholder="রেফারেন্স লিংক (যদি থাকে)"
                     className="block w-full p-2 rounded-md border-gray-300 shadow-sm"
                     style={{ backgroundColor: '#f6f6f6' }}
                     value={formData.reference}
@@ -241,7 +242,7 @@ export default function SubmitRecipe() {
                 <input
                     type="url"
                     name="tutorialVideo"
-                    placeholder="Tutorial Video Link (YouTube etc)"
+                    placeholder="টিউটোরিয়াল ভিডিও লিংক (ইউটিউব ইত্যাদি)"
                     className="block w-full p-2 rounded-md border-gray-300 shadow-sm"
                     style={{ backgroundColor: '#f6f6f6' }}
                     value={formData.tutorialVideo}
@@ -251,7 +252,7 @@ export default function SubmitRecipe() {
                 <textarea
                     name="comment"
                     rows="4"
-                    placeholder="Place Comment for viewer"
+                    placeholder="ভিউয়ার দের জন্য মতামত থাকলে দিতে পারেন"
                     className="block w-full p-2 rounded-md border-gray-300 shadow-sm"
                     style={{ backgroundColor: '#f6f6f6' }}
                     value={formData.comment}
@@ -263,7 +264,7 @@ export default function SubmitRecipe() {
                     type="submit"
                     className="block w-full bg-[#8c0327] hover:bg-[#6b0220] text-white font-bold py-3 px-4 rounded-full"
                 >
-                    Submit Recipe
+                    যোগ করুন
                 </button>
             </form>
         </div>

@@ -14,7 +14,7 @@ function Header() {
             <nav className="bg-black p-2">
                 <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
 
-                    <div className="text-white font-bold text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer inline-flex items-center gap-2"><img src="src/assets/Amar_Recipe_Header_Logo.svg" className="w-8 h-8" alt="Amar Recipe Header Logo" />Amar Recipe</div>
+                    <div className="text-white font-bold text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer inline-flex items-center gap-2"><img src="src/assets/Amar_Recipe_Header_Logo.svg" className="w-8 h-8" alt="Amar Recipe Header Logo" />আমার রেসিপি</div>
 
                     {/* Hamburger menu for small screens */}
                     <div className="lg:hidden">
@@ -45,7 +45,7 @@ function Header() {
                                     type="button"
                                     className="h-full z-10 inline-flex items-center justify-between gap-1 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-s-md hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                                 >
-                                    <span>All categories</span>
+                                    <span>খাবারের ধরণ</span>
                                     <svg className="w-3 h-3 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                     </svg>
@@ -56,17 +56,23 @@ function Header() {
                                     className={`absolute left-0 mt-1 w-44 z-20 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 ${dropdownOpen ? '' : 'hidden'}`}
                                 >
                                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                        {["All Recipes",
-                                            "Meat",
-                                            "Vegetables",
-                                            "Salad",
-                                            "Drinks",
-                                            "Desserts",
-                                            "Rice & Pasta",
-                                            "Snacks",
-                                            "Bangladeshi",
-                                            "Chinese",
-                                            "Italian"].map((item) => (
+                                        {[
+                                            "সকল রেসিপি",
+                                            "মাংস",
+                                            "শাকসবজি",
+                                            "শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য",
+                                            "দুগ্ধজাত",
+                                            "আচার",
+                                            "সালাদ",
+                                            "পানীয়",
+                                            "ডেজার্ট, মিষ্টান্ন",
+                                            "রাইস আইটেম",
+                                            "হালকা খাবার/ ফাস্টফুড",
+                                            "বাঙ্গালী",
+                                            "চাইনিজ্জ",
+                                            "ইতালীয়ান"
+                                        ]
+                                            .map((item) => (
                                                 <li key={item}>
                                                     <button type="button" className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                         {item}
@@ -82,7 +88,7 @@ function Header() {
                                 <input
                                     type="search"
                                     className="h-full block w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 border-s-0 rounded-e-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
-                                    placeholder="Search Item of Meat, Vegetable, Salat, Drinks ..."
+                                    placeholder=" অনুসন্ধান করুন মাংস, শাকসবজি, সালাত, পানীয় আইটেম..."
                                     required
                                 />
                                 <button
@@ -100,12 +106,11 @@ function Header() {
 
 
                     {/* Navigation links */}
-                    <div className={`lg:flex flex-col lg:flex-row ${isOpen ? 'block' : 'hidden'} lg:space-x-2 lg:mt-0 mt-4 flex flex-col items-center text-m`}>
-                        <a href="/" className="text-white px-2 py-2 hover:text-orange-600">Home</a>
-                        <a href="/recipes" className="text-white px-2 py-2 hover:text-orange-600">Browse Recipes</a>
-                        <a href="/submit" className="text-white px-2 py-2 hover:text-orange-600">Submit Recipe</a>
-                        <a href="/categories" className="text-white px-2 py-2 hover:text-orange-600">Categories</a>
-                        <a href="/about" className="text-white px-2 py-2 hover:text-orange-600">About Us</a>
+                    <div className={`lg:flex flex-col lg:flex-row ${isOpen ? 'block' : 'hidden'} lg:space-x-2 lg:mt-0 mt-4 flex flex-col items-center text-sm`}>
+                        <a href="/" className="text-white px-2 py-2 hover:text-orange-600">রেসিপিগুলো দেখুন</a>
+                        <a href="/submit" className="text-white px-2 py-2 hover:text-orange-600">নতুন রেসিপি যোগ করুন</a>
+                        <a href="/categories" className="text-white px-2 py-2 hover:text-orange-600">ধরণ</a>
+                        <a href="/about" className="text-white px-2 py-2 hover:text-orange-600">আমাদের সম্পর্কে</a>
                     </div>
                 </div>
             </nav >

@@ -6,13 +6,13 @@ const Footer = () => {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="max-w-3xl mx-auto">
                     <a href="/Home" className="flex justify-center ">
-                        <div className="text-black font-bold text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer inline-flex items-center gap-2"><img src="src/assets/Amar_Recipe_Header_Logo.svg" className="w-8 h-8" alt="Amar Recipe Header Logo" />Amar Recipe</div>
+                        <div className="text-black font-bold text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer inline-flex items-center gap-2"><img src="src/assets/Amar_Recipe_Header_Logo.svg" className="w-8 h-8" alt="Amar Recipe Header Logo" />আমার রেসিপি</div>
                     </a>
-                    <ul className="text-lg flex items-center justify-center flex-col gap-7 md:flex-row md:gap-12 transition-all duration-500 py-5 mb-5 border-b border-gray-200">
-                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">Products</a></li>
-                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">Resources</a></li>
-                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">Blogs</a></li>
-                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">Support</a></li>
+                    <ul className="text-sm flex items-center justify-center flex-col gap-7 md:flex-row md:gap-12 transition-all duration-500 py-5 mb-5 border-b border-gray-200">
+                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">রেসিপিগুলো দেখুন</a></li>
+                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">নতুন রেসিপি যোগ করুন</a></li>
+                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">ধরণ</a></li>
+                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">আমাদের সম্পর্কে</a></li>
                     </ul>
                     <div className="flex space-x-10 justify-center items-center mb-5">
                         <a href="https://github.com/Sharif2023" className="block  text-gray-900 transition-all duration-500 hover:text-[#ff3300] ">
@@ -49,7 +49,7 @@ const Footer = () => {
 
                         </a>
                     </div>
-                    <span className="text-lg text-gray-500 text-center block">©<a href="https://github.com/Sharif2023">Sharif Code Corner</a> 2024, All rights reserved.</span>
+                    <span className="text-lg text-gray-500 text-center block">©<a href="https://github.com/Sharif2023">Sharif Code Corner</a> 2025, All rights reserved.</span>
                 </div>
             </div>
         </footer>

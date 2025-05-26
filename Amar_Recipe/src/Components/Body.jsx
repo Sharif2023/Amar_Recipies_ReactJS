@@ -4,28 +4,28 @@ import RecipeModal from './RecipeModal';
 
 const recipeCategories = [
   {
-    category: 'Vegetables',
+    category: 'শাকসবজি',
     image: 'https://techakim.com/sam/tg/7268/li/imgs/pizza.jpg',
     rating: 4.8,
-    desc: 'Healthy and fresh veggie meals.',
+    desc: 'পুষ্টিকর ও তাজা শাকসবজির রান্না।',
   },
   {
-    category: 'Meat',
+    category: 'মাংস',
     image: 'https://techakim.com/sam/tg/7268/li/imgs/chicken.jpg',
     rating: 4.9,
-    desc: 'Delicious meat-based recipes.',
+    desc: 'মজাদার মাংসভিত্তিক রেসিপি।',
   },
   {
-    category: 'Drinks',
+    category: 'পানীয়',
     image: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092',
     rating: 4.7,
-    desc: 'Chill with refreshing beverages.',
+    desc: 'শীতল ও সতেজ পানীয় উপভোগ করুন।',
   },
   {
-    category: 'Salad',
+    category: 'সালাদ',
     image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9',
     rating: 4.5,
-    desc: 'Crunchy and healthy salad bowls.',
+    desc: 'ক্রিসপি ও স্বাস্থ্যকর সালাদ বাটি।',
   },
 ];
 
@@ -35,17 +35,17 @@ const Body = () => {
 
   const handleViewRecipe = () => {
     setSelectedRecipe({
-      title: 'Spicy Chicken Curry',
-      category: 'Meat',
-      description: 'A traditional spicy chicken curry with rich flavor and aroma.',
+      title: 'মসলা চিকেন কারি',
+      category: 'মাংস',
+      description: 'গাঢ় স্বাদ ও ঘ্রাণযুক্ত ঐতিহ্যবাহী মসলা চিকেন কারি।',
       image: 'https://techakim.com/sam/tg/7268/li/imgs/chicken.jpg',
-      location: 'Dhaka, Bangladesh',
-      organizerName: 'Ruhul Amin',
+      location: 'ঢাকা, বাংলাদেশ',
+      organizerName: 'রুহুল আমিন',
       organizerEmail: 'ruhul@example.com',
-      organizerAddress: '123 Dhanmondi, Dhaka',
+      organizerAddress: '১২৩ ধানমন্ডি, ঢাকা',
       reference: 'https://example.com/chickencurry',
       tutorialVideo: 'https://youtube.com/examplevideo',
-      comment: 'Try this with plain rice or naan for best experience.',
+      comment: 'ভাত অথবা নান রুটির সাথে খেতে দারুণ লাগবে।',
     });
     setShowModal(true);
   };
@@ -53,7 +53,7 @@ const Body = () => {
   return (
     <div className="w-full min-h-screen bg-rose-100/30 dark:bg-[#1b1b1b] py-10">
       <h2 className="text-3xl lg:text-4xl text-center font-serif font-bold mb-10 dark:text-white">
-        Find What You Wants to Eat 🍽️
+        খুজে নিন যা খেতে চান 😇🍽️
       </h2>
 
       <div className="flex flex-wrap justify-center gap-8 px-4">
@@ -80,7 +80,7 @@ const Body = () => {
                 className="mt-4 bg-rose-600 text-white px-4 py-2 rounded-full text-sm hover:bg-rose-700 transition"
                 onClick={handleViewRecipe}
               >
-                View Recipes
+                বিস্তারিত রেসিপি
               </button>
             </div>
           </div>
