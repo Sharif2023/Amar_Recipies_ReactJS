@@ -208,7 +208,7 @@ export default function SubmitRecipe() {
                         value={formData.source}
                         onChange={handleChange}
                     >
-                        <option value="" disabled hidden> Where You Get the Recipes?</option>
+                        <option value="" selected disabled hidden> Where You Get the Recipes?</option>
                         <option value="family">From Family</option>
                         <option value="friends">From Friends</option>
                         <option value="internet">From the Internet</option>

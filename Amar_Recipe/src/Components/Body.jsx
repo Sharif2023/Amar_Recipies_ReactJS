@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoStar } from 'react-icons/io5';
+import RecipeModal from './RecipeModal';
 
 const recipeCategories = [
   {
@@ -29,6 +30,26 @@ const recipeCategories = [
 ];
 
 const Body = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+  const handleViewRecipe = () => {
+    setSelectedRecipe({
+      title: 'Spicy Chicken Curry',
+      category: 'Meat',
+      description: 'A traditional spicy chicken curry with rich flavor and aroma.',
+      image: 'https://techakim.com/sam/tg/7268/li/imgs/chicken.jpg',
+      location: 'Dhaka, Bangladesh',
+      organizerName: 'Ruhul Amin',
+      organizerEmail: 'ruhul@example.com',
+      organizerAddress: '123 Dhanmondi, Dhaka',
+      reference: 'https://example.com/chickencurry',
+      tutorialVideo: 'https://youtube.com/examplevideo',
+      comment: 'Try this with plain rice or naan for best experience.',
+    });
+    setShowModal(true);
+  };
+
   return (
     <div className="w-full min-h-screen bg-rose-100/30 dark:bg-[#1b1b1b] py-10">
       <h2 className="text-3xl lg:text-4xl text-center font-serif font-bold mb-10 dark:text-white">
@@ -57,7 +78,7 @@ const Body = () => {
               <p className="text-gray-700 dark:text-gray-300">{item.desc}</p>
               <button
                 className="mt-4 bg-rose-600 text-white px-4 py-2 rounded-full text-sm hover:bg-rose-700 transition"
-                onClick={() => alert(`View recipes in "${item.category}"`)}
+                onClick={handleViewRecipe}
               >
                 View Recipes
               </button>
@@ -65,6 +86,11 @@ const Body = () => {
           </div>
         ))}
       </div>
+      <RecipeModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        recipe={selectedRecipe}
+      />
     </div>
   );
 };
