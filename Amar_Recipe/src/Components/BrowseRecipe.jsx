@@ -29,7 +29,7 @@ const recipeCategories = [
   },
 ];
 
-const Body = () => {
+const BrowseRecipe = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
@@ -95,4 +95,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export default BrowseRecipe;

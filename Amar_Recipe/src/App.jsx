@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 //Components
 import Header from './Components/Header'
-import Body from './Components/Body';
+import BrowseRecipe from './Components/BrowseRecipe';
 import Footer from "./Components/Footer";
 
 //Pages
@@ -20,7 +20,7 @@ function App() {
       <Header />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Body />} />
+          <Route path="/" element={<BrowseRecipe />} />
           <Route path="/submit" element={<SubmitRecipe />} />
           <Route path="/about" element={<About />} />
         </Routes>
