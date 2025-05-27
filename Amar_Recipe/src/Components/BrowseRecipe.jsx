@@ -10,6 +10,10 @@ const BrowseRecipe = () => {
   const [error, setError] = useState(null);
   const baseImageUrl = 'http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/';
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const recipesPerPage = 8;
+
   // Fetch recipes from backend API
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -27,6 +31,19 @@ const BrowseRecipe = () => {
 
     fetchRecipes();
   }, []);
+
+  // Calculate pagination data
+  const indexOfLastRecipe = currentPage * recipesPerPage;
+  const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+  const totalPages = Math.ceil(recipes.length / recipesPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    if(pageNumber < 1 || pageNumber > totalPages) return;
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
 
   const handleViewRecipe = (recipe) => {
     setSelectedRecipe(recipe);
@@ -56,10 +73,10 @@ const BrowseRecipe = () => {
       </h2>
 
       <div className="flex flex-wrap justify-center gap-8">
-        {recipes.length === 0 ? (
+        {currentRecipes.length === 0 ? (
           <p className="text-center dark:text-gray-300">কোন রেসিপি পাওয়া যায়নি।</p>
         ) : (
-          recipes.map((item) => (
+          currentRecipes.map((item) => (
             <div
               key={item.id}
               className="w-[280px] sm:w-[300px] bg-white dark:bg-[#262525] rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer group"
@@ -106,6 +123,49 @@ const BrowseRecipe = () => {
           ))
         )}
       </div>
+
+      {/* Pagination */}
+      <nav className="flex justify-center pt-10" aria-label="Page navigation">
+        <ul className="inline-flex -space-x-px text-sm">
+          <li>
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+          </li>
+
+          {[...Array(totalPages)].map((_, i) => {
+            const pageNum = i + 1;
+            const isActive = pageNum === currentPage;
+            return (
+              <li key={pageNum}>
+                <button
+                  onClick={() => handlePageChange(pageNum)}
+                  className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                    isActive ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white' : 'bg-white text-gray-500'
+                  }`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {pageNum}
+                </button>
+              </li>
+            );
+          })}
+
+          <li>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
 
       {selectedRecipe && (
         <RecipeModal

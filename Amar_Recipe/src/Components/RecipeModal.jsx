@@ -1,6 +1,25 @@
 // RecipeModal.jsx
 import React from 'react';
 const backendBaseUrl = 'http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/';
+
+const categoryBanglaMap = {
+    Meat: 'মাংস',
+    Fish: 'মাছ',
+    dairy: 'দুগ্ধজাত',
+    VegetablewithMeatorFish: 'শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য',
+    Vegetables: 'শাকসবজি',
+    Bharta: 'ভর্তা',
+    Salad: 'সালাদ',
+    achar: 'আচার',
+    Drinks: 'পানীয়',
+    Desserts: 'ডেজার্ট, মিষ্টান্ন',
+    Rice_and_Pasta: 'রাইস আইটেম',
+    Snacks: 'হালকা খাবার/ ফাস্টফুড',
+    Bangladeshi: 'বাঙ্গালী',
+    Chinese: 'চাইনিজ্জ',
+    Italian: 'ইতালীয়ান',
+};
+
 const RecipeModal = ({ isOpen, onClose, recipe }) => {
     if (!isOpen || !recipe) return null;
 
@@ -29,7 +48,10 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                     />
 
                     <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>রেসিপির নাম</strong> {recipe.title}</p>
-                    <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>ধরণ:</strong> {recipe.category}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-2 py-2">
+                        <strong>রেসিপির ধরণ:</strong> {categoryBanglaMap[recipe.category] || recipe.category}
+                    </p>
+
                     <p
                         className="text-gray-700 dark:text-gray-300 mb-2 py-2"
                         style={{ whiteSpace: 'pre-line' }}
