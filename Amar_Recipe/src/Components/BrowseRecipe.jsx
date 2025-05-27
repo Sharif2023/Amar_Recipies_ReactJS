@@ -89,8 +89,8 @@ const BrowseRecipe = () => {
                     </span>
                   </div>
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3" title={item.description}>
-                  {item.description || 'বিস্তারিত তথ্য পাওয়া যায়নি।'}
+                <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3 tracking-tight" title={item.description}>
+                  {item.description.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n') || 'বিস্তারিত তথ্য পাওয়া যায়নি।'}
                 </p>
                 <button
                   className="w-full bg-rose-600 text-white py-2 rounded-full text-sm font-medium hover:bg-rose-700 transition"

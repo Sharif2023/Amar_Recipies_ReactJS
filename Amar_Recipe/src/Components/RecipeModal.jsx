@@ -9,7 +9,7 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
             <div className="bg-white dark:bg-[#1b1b1b] rounded-lg max-w-2xl w-full overflow-y-auto max-h-[90vh] shadow-xl">
                 <div className="p-6">
                     <div className="flex items-center justify-center relative mb-4">
-                        <h2 className="text-2xl font-bold dark:text-white">{recipe.title}</h2>
+                        <h2 className="text-2xl font-bold dark:text-white tracking-tight">{recipe.title}</h2>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -30,9 +30,18 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
 
                     <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>রেসিপির নাম</strong> {recipe.title}</p>
                     <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>ধরণ:</strong> {recipe.category}</p>
-                    <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>বানানোর প্রক্রিয়া:</strong><br /> {recipe.description}</p>
+                    <p
+                        className="text-gray-700 dark:text-gray-300 mb-2 py-2"
+                        style={{ whiteSpace: 'pre-line' }}
+                    >
+                        <strong>বানানোর প্রক্রিয়া:</strong><br /><br />{' '}
+                        {recipe.description.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n').replace(/\n\s*\n/g, '\n\n')}
+                    </p>
 
-                    <p className="text-gray-700 dark:text-gray-300 mb-4"><strong>মন্তব্য:</strong> {recipe.comment}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">
+                        <strong>মন্তব্য:</strong> {recipe.comment && recipe.comment.trim() !== '' ? recipe.comment : 'নেই'}
+                    </p>
+
                     <div className="border-t pt-4 text-sm text-gray-600 dark:text-gray-400">
                         <p>
                             <strong>রেফারেন্স লিংক:</strong>{' '}
