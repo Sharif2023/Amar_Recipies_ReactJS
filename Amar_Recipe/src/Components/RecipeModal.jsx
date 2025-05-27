@@ -44,7 +44,7 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                     <img
                         src={recipe.image_url ? backendBaseUrl + recipe.image_url : 'https://via.placeholder.com/400x300?text=No+Image'}
                         alt={recipe.title}
-                        className="w-full h-64 object-cover rounded-md mb-4"
+                        className="w-full h-full object-cover rounded-md mb-4"
                     />
 
                     <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>রেসিপির নাম</strong> {recipe.title}</p>
@@ -61,7 +61,7 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                     </p>
 
                     <p className="text-gray-700 dark:text-gray-300 mb-4">
-                        <strong>মন্তব্য:</strong> {recipe.comment && recipe.comment.trim() !== '' ? recipe.comment : 'নেই'}
+                        <strong>মন্তব্য:</strong><br /><br /> {recipe.comment && recipe.comment.trim() !== '' ? recipe.comment.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n').replace(/\n\s*\n/g, '\n\n') : 'নেই'}
                     </p>
 
                     <div className="border-t pt-4 text-sm text-gray-600 dark:text-gray-400">
