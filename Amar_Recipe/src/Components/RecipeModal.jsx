@@ -15,12 +15,13 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                         className="w-full h-64 object-cover rounded-md mb-4"
                     />
 
-                    <p className="text-gray-700 dark:text-gray-300 mb-2"><strong>ধরণ:</strong> {recipe.category}</p>
-                    <p className="text-gray-700 dark:text-gray-300 mb-2"><strong>বর্ণনা:</strong> {recipe.description}</p>
-                    <p className="text-gray-700 dark:text-gray-300 mb-2"><strong>অবস্থান:</strong> {recipe.location}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>রেসিপির নাম</strong> {recipe.title}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>ধরণ:</strong> {recipe.category}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-2 py-2"><strong>বানানোর প্রক্রিয়া:</strong><br /> {recipe.description}</p>
+
                     <p className="text-gray-700 dark:text-gray-300 mb-4"><strong>মন্তব্য:</strong> {recipe.comment}</p>
                     <div className="border-t pt-4 text-sm text-gray-600 dark:text-gray-400">
-                        <p className="text-gray-700 dark:text-gray-300 mb-2">
+                        <p>
                             <strong>রেফারেন্স লিংক:</strong>{' '}
                             <a
                                 href={recipe.reference}
@@ -42,12 +43,12 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                                 {recipe.tutorialVideo}
                             </a>
                         </p>
-                        
+
                     </div>
                     <div className="border-t pt-4 text-sm text-gray-600 dark:text-gray-400">
-                        <p><strong>আয়োজকের নাম:</strong> {recipe.organizerName}</p>
+                        <p><strong>অবস্থান:</strong> {recipe.location}</p>
+                        <p><strong>রেসিপিদাতার নাম:</strong> {recipe.organizerName}</p>
                         <p><strong>ইমেইল:</strong> {recipe.organizerEmail}</p>
-                        <p><strong>ঠিকানা:</strong> {recipe.organizerAddress}</p>
                     </div>
                 </div>
 
