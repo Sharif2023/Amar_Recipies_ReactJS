@@ -19,7 +19,8 @@ if ($conn->connect_error) {
 }
 
 // Helper function to sanitize input
-function sanitize($conn, $data) {
+function sanitize($conn, $data)
+{
     return $conn->real_escape_string(trim($data));
 }
 
@@ -77,6 +78,30 @@ $reference = isset($_POST['reference']) ? sanitize($conn, $_POST['reference']) :
 $tutorialVideo = isset($_POST['tutorialVideo']) ? sanitize($conn, $_POST['tutorialVideo']) : '';
 $comment = isset($_POST['comment']) ? sanitize($conn, $_POST['comment']) : '';
 
+// Function to calculate similarity of description
+function is_similar_description($conn, $new_description)
+{
+    $threshold = 90; // similarity percentage
+
+    // Fetch all existing descriptions
+    $query = "SELECT description FROM recipes"; // Replace 'recipes' with your table name
+    $result = mysqli_query($conn, $query);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        similar_text(strip_tags($new_description), strip_tags($row['description']), $percent);
+        if ($percent >= $threshold) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Before inserting, check for similar description
+if (is_similar_description($conn, $_POST['description'])) {
+    echo json_encode(["success" => false, "message" => "Similar recipe already exists."]);
+    exit;
+}
+
 // Insert into DB
 $sql = "INSERT INTO recipes (
     title, category, description, image_url, location, organizerName, organizerEmail,
@@ -114,4 +139,3 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conn->close();
-?>
