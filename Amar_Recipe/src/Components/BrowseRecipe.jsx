@@ -10,11 +10,9 @@ const BrowseRecipe = () => {
   const [error, setError] = useState(null);
   const baseImageUrl = 'http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/';
 
-  // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 8;
 
-  // Fetch recipes from backend API
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -28,26 +26,120 @@ const BrowseRecipe = () => {
         setLoading(false);
       }
     };
-
     fetchRecipes();
   }, []);
 
-  // Calculate pagination data
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
   const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
   const totalPages = Math.ceil(recipes.length / recipesPerPage);
 
   const handlePageChange = (pageNumber) => {
-    if(pageNumber < 1 || pageNumber > totalPages) return;
+    if (pageNumber < 1 || pageNumber > totalPages) return;
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-
   const handleViewRecipe = (recipe) => {
     setSelectedRecipe(recipe);
     setShowModal(true);
+  };
+
+  // Generate dynamic pagination range with ellipses and sliding window around currentPage
+  const renderPagination = () => {
+    if (totalPages <= 7) {
+      // Show all pages if total <= 7
+      return [...Array(totalPages)].map((_, i) => {
+        const pageNum = i + 1;
+        const isActive = pageNum === currentPage;
+        return (
+          <li key={pageNum}>
+            <button
+              onClick={() => handlePageChange(pageNum)}
+              className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                isActive
+                  ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
+                  : 'bg-white text-gray-500'
+              }`}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {pageNum}
+            </button>
+          </li>
+        );
+      });
+    }
+
+    const pages = [];
+    const leftSiblingIndex = Math.max(currentPage - 1, 2);
+    const rightSiblingIndex = Math.min(currentPage + 1, totalPages - 1);
+
+    // Helper to add page button
+    const addPage = (pageNum) => {
+      const isActive = pageNum === currentPage;
+      pages.push(
+        <li key={pageNum}>
+          <button
+            onClick={() => handlePageChange(pageNum)}
+            className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+              isActive
+                ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
+                : 'bg-white text-gray-500'
+            }`}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {pageNum}
+          </button>
+        </li>
+      );
+    };
+
+    // Always show first page
+    addPage(1);
+
+    // Show ellipsis if leftSiblingIndex > 2 (means gap between first and left sibling)
+    if (leftSiblingIndex > 2) {
+      pages.push(
+        <li
+          key="left-ellipsis"
+          className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 dark:text-gray-400 select-none"
+        >
+          ...
+        </li>
+      );
+    } else {
+      // If no gap, show pages 2 to leftSiblingIndex - 1 normally
+      for (let i = 2; i < leftSiblingIndex; i++) {
+        addPage(i);
+      }
+    }
+
+    // Show pages around current page
+    for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) {
+      addPage(i);
+    }
+
+    // Show ellipsis if rightSiblingIndex < totalPages - 1 (gap between right sibling and last page)
+    if (rightSiblingIndex < totalPages - 1) {
+      pages.push(
+        <li
+          key="right-ellipsis"
+          className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 dark:text-gray-400 select-none"
+        >
+          ...
+        </li>
+      );
+    } else {
+      // If no gap, show pages rightSiblingIndex+1 to totalPages-1 normally
+      for (let i = rightSiblingIndex + 1; i < totalPages; i++) {
+        addPage(i);
+      }
+    }
+
+    // Always show last page
+    addPage(totalPages);
+
+    return pages;
   };
 
   if (loading) {
@@ -82,7 +174,6 @@ const BrowseRecipe = () => {
               className="w-[280px] sm:w-[300px] bg-white dark:bg-[#262525] rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer group"
               onClick={() => handleViewRecipe(item)}
             >
-
               <img
                 src={
                   item.image_url
@@ -101,13 +192,18 @@ const BrowseRecipe = () => {
                   <div className="flex items-center text-yellow-500 text-sm select-none">
                     <IoStar />
                     <span className="ml-1 text-black dark:text-white">
-                      {/* Rating from backend or default */}
                       {item.rating ? Number(item.rating).toFixed(1) : '৪.৫'}
                     </span>
                   </div>
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3 tracking-tight" title={item.description}>
-                  {item.description.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n') || 'বিস্তারিত তথ্য পাওয়া যায়নি।'}
+                <p
+                  className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3 tracking-tight"
+                  title={item.description}
+                >
+                  {item.description
+                    .replace(/\r\n/g, '\n')
+                    .replace(/\\n/g, '\n')
+                    .replace(/\\r/g, '\n') || 'বিস্তারিত তথ্য পাওয়া যায়নি।'}
                 </p>
                 <button
                   className="w-full bg-rose-600 text-white py-2 rounded-full text-sm font-medium hover:bg-rose-700 transition"
@@ -137,23 +233,7 @@ const BrowseRecipe = () => {
             </button>
           </li>
 
-          {[...Array(totalPages)].map((_, i) => {
-            const pageNum = i + 1;
-            const isActive = pageNum === currentPage;
-            return (
-              <li key={pageNum}>
-                <button
-                  onClick={() => handlePageChange(pageNum)}
-                  className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-                    isActive ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white' : 'bg-white text-gray-500'
-                  }`}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  {pageNum}
-                </button>
-              </li>
-            );
-          })}
+          {renderPagination()}
 
           <li>
             <button
@@ -168,11 +248,7 @@ const BrowseRecipe = () => {
       </nav>
 
       {selectedRecipe && (
-        <RecipeModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          recipe={selectedRecipe}
-        />
+        <RecipeModal isOpen={showModal} onClose={() => setShowModal(false)} recipe={selectedRecipe} />
       )}
     </div>
   );
