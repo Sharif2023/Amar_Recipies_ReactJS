@@ -97,6 +97,7 @@ export default function SubmitRecipe() {
                     <option value="" selected disabled hidden>রেসিপির ধরণ</option>
                     <option value="Meat">মাংস</option>
                     <option value="Fish">মাছ</option>
+                    <option value="Egg">ডিম</option>
                     <option value="dairy">দুগ্ধজাত</option>
                     <option value="VegetablewithMeatorFish">শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য</option>
                     <option value="Vegetables">শাকসবজি</option>

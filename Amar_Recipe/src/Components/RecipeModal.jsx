@@ -5,6 +5,7 @@ const backendBaseUrl = 'http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/'
 const categoryBanglaMap = {
     Meat: 'মাংস',
     Fish: 'মাছ',
+    Egg: 'ডিম',
     dairy: 'দুগ্ধজাত',
     VegetablewithMeatorFish: 'শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য',
     Vegetables: 'শাকসবজি',
