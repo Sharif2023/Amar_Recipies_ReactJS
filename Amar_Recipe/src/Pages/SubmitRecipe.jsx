@@ -15,6 +15,7 @@ export default function SubmitRecipe() {
         reference: '',
         tutorialVideo: '',
         comment: '',
+        source: '',
     });
 
     const handleChange = (e) => {
@@ -59,7 +60,8 @@ export default function SubmitRecipe() {
                     tags: '',
                     reference: '',
                     tutorialVideo: '',
-                    comment: ''
+                    comment: '',
+                    source: '',
                 });
             } else {
                 alert('Submission failed: ' + result.message);
