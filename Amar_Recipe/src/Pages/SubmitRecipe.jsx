@@ -18,6 +18,8 @@ export default function SubmitRecipe() {
         source: '',
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         setFormData({
@@ -28,6 +30,8 @@ export default function SubmitRecipe() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setIsSubmitting(true);
 
         const data = new FormData();
         for (const key in formData) {
@@ -69,6 +73,8 @@ export default function SubmitRecipe() {
         } catch (error) {
             alert('Error submitting form: ' + error.message);
         }
+
+        setIsSubmitting(false); 
     };
 
 
@@ -270,6 +276,14 @@ export default function SubmitRecipe() {
                     যোগ করুন
                 </button>
             </form>
+            {isSubmitting && (
+                <div
+                    className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50"
+                    style={{ color: 'white', fontSize: '1.5rem', fontWeight: 'bold', textAlign: 'center', padding: '1rem' }}
+                >
+                    সাবমিশন প্রসেস চলমান, দয়া করে অপেক্ষা করুণ।
+                </div>
+            )}
         </div>
     );
 }
