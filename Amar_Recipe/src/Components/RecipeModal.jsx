@@ -71,7 +71,7 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                                 href={recipe.reference}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-500 underline"
+                                className="text-blue-500"
                             >
                                 {recipe.reference}
                             </a>
@@ -82,9 +82,9 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                                 href={recipe.tutorialVideo}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-500 underline"
+                                className="text-blue-500"
                             >
-                                {recipe.tutorialVideo}
+                                {recipe.tutorialVideo && recipe.tutorialVideo.trim() !== '' ? recipe.tutorialVideo : 'নেই'}
                             </a>
                         </p>
 
