@@ -1,36 +1,59 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from 'react'
 
-//Components
-import Header from './Components/Header'
-import BrowseRecipe from './Components/BrowseRecipe';
+// Components
+import Header from "./Components/Header";
+import BrowseRecipe from "./Components/BrowseRecipe";
 import Footer from "./Components/Footer";
 
-//Pages
+// Pages
 import SubmitRecipe from "./Pages/SubmitRecipe";
 import About from "./Pages/About";
 
-
+// Admin Panel
+import AdminPanel from "./Admin/AdminPanel";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<BrowseRecipe />} />
-          <Route path="/submit" element={<SubmitRecipe />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </BrowserRouter>
-      <Footer/>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <BrowseRecipe />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/submit"
+          element={
+            <>
+              <Header />
+              <SubmitRecipe />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <>
+              <Header />
+              <About />
+              <Footer />
+            </>
+          }
+        />
+        <Route path="/adminpanel" element={<AdminPanel />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
+
 
 //npm install react-router-dom
 
