@@ -112,10 +112,12 @@ export default function SubmitRecipe() {
                     <option value="Bharta">ভর্তা</option>
                     <option value="Salad">সালাদ</option>
                     <option value="achar">আচার</option>
+                    <option value="Soup">স্যুপ</option>
                     <option value="Drinks">পানীয়</option>
                     <option value="Desserts">ডেজার্ট, মিষ্টান্ন</option>
                     <option value="Rice_and_Pasta">রাইস আইটেম</option>
                     <option value="Snacks">হালকা খাবার/ ফাস্টফুড</option>
+                    <option value="SaucesAndCondiments">সস/মশলা</option>
                     <option value="Bangladeshi">বাঙ্গালী</option>
                     <option value="Chinese">চাইনিজ্জ</option>
                     <option value="Italian">ইতালীয়ান</option>
