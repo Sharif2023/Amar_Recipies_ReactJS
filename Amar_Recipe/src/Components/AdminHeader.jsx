@@ -64,7 +64,7 @@ const AdminHeader = () => {
               </li>
               <li>
                 <a
-                  href="/submission-requests"
+                  href="/submissionrequests"
                   className="block px-2 py-1 rounded hover:text-orange-600 transition"
                 >
                   সাবমিশন রিকুয়েষ্ট

@@ -11,6 +11,8 @@ import About from "./Pages/About";
 
 // Admin Panel
 import AdminPanel from "./Admin/AdminPanel";
+import SubmissionRequest from "./Admin/SubmissionRequest";
+import AdminHeader from "./Components/AdminHeader";
 
 function App() {
   return (
@@ -47,6 +49,13 @@ function App() {
           }
         />
         <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/submissionrequests" element={
+          <>
+            <AdminHeader />
+            <SubmissionRequest />
+            
+          </>
+        } />
       </Routes>
     </BrowserRouter>
   );
