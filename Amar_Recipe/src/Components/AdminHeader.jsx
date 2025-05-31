@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 
 const AdminHeader = () => {
   // Dropdown visibility state
@@ -63,7 +64,7 @@ const AdminHeader = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/submission-requests"
                   className="block px-2 py-1 rounded hover:text-orange-600 transition"
                 >
                   সাবমিশন রিকুয়েষ্ট

@@ -41,7 +41,7 @@ export default function SubmitRecipe() {
         }
 
         try {
-            const response = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/submit_recipe.php', {
+            const response = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/submit_recipe_request.php', {
                 method: 'POST',
                 body: data,
             });
@@ -74,7 +74,7 @@ export default function SubmitRecipe() {
             alert('Error submitting form: ' + error.message);
         }
 
-        setIsSubmitting(false); 
+        setIsSubmitting(false);
     };
 
 
