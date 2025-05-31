@@ -7,7 +7,7 @@ const HistoryDropdown = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_submission_requests.php");
+        const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_submission_history.php");
         const json = await res.json();
         if (json.success) {
           setRequests(json.data);

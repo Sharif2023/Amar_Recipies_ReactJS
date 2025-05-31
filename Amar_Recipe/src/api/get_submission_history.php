@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     exit;
 }
 
-$sql = "SELECT * FROM submission_requests WHERE status = 'Pending' ORDER BY submission_date DESC";
+$sql = "SELECT * FROM submission_requests ORDER BY submission_date DESC";
 
 $result = $conn->query($sql);
 
