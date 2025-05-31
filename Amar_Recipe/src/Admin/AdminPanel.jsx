@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminHeader from "../Components/AdminHeader";
+import AdminFooter from '../Components/AdminFooter';
 import { IoStar, IoTrashBinOutline, IoPencilOutline, IoEyeOutline } from 'react-icons/io5';
 import RecipeModal from '../Components/RecipeModal';
 
@@ -278,6 +279,7 @@ const AdminPanel = () => {
           <RecipeModal isOpen={showModal} onClose={() => setShowModal(false)} recipe={selectedRecipe} />
         )}
       </div>
+      <AdminFooter />
     </>
   );
 };

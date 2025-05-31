@@ -10,9 +10,10 @@ import SubmitRecipe from "./Pages/SubmitRecipe";
 import About from "./Pages/About";
 
 // Admin Panel
-import AdminPanel from "./Admin/AdminPanel";
-import SubmissionRequest from "./Admin/SubmissionRequest";
 import AdminHeader from "./Components/AdminHeader";
+import AdminPanel from "./Admin/AdminPanel";
+import AdminFooter from "./Components/AdminFooter";
+import SubmissionRequest from "./Admin/SubmissionRequest";
 import HistoryDropdown from "./Admin/HistoryDropdown";
 
 function App() {
@@ -50,18 +51,20 @@ function App() {
           }
         />
         <Route path="/adminpanel" element={
-            <AdminPanel />
+          <AdminPanel />
         } />
         <Route path="/submissionrequests" element={
           <>
             <AdminHeader />
             <SubmissionRequest />
-
+            <AdminFooter />
           </>
         } />
         <Route path="/history" element={
           <>
-            <AdminHeader /><HistoryDropdown />
+            <AdminHeader />
+            <HistoryDropdown />
+            <AdminFooter />
           </>} />
       </Routes>
     </BrowserRouter>
