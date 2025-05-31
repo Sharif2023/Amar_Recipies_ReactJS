@@ -13,6 +13,7 @@ import About from "./Pages/About";
 import AdminPanel from "./Admin/AdminPanel";
 import SubmissionRequest from "./Admin/SubmissionRequest";
 import AdminHeader from "./Components/AdminHeader";
+import HistoryDropdown from "./Admin/HistoryDropdown";
 
 function App() {
   return (
@@ -48,14 +49,20 @@ function App() {
             </>
           }
         />
-        <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/adminpanel" element={
+            <AdminPanel />
+        } />
         <Route path="/submissionrequests" element={
           <>
             <AdminHeader />
             <SubmissionRequest />
-            
+
           </>
         } />
+        <Route path="/history" element={
+          <>
+            <AdminHeader /><HistoryDropdown />
+          </>} />
       </Routes>
     </BrowserRouter>
   );
