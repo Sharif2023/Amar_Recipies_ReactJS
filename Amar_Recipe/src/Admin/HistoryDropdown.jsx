@@ -62,13 +62,12 @@ const HistoryDropdown = () => {
                 <p className="text-sm mt-1">
                   Status:{" "}
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      req.status === "Approved"
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${req.status === "Approved"
                         ? "bg-green-700 text-green-300"
                         : req.status === "Rejected"
-                        ? "bg-red-700 text-red-300"
-                        : "bg-yellow-700 text-yellow-300"
-                    }`}
+                          ? "bg-red-700 text-red-300"
+                          : "bg-yellow-700 text-yellow-300"
+                      }`}
                   >
                     {req.status}
                   </span>

@@ -56,11 +56,10 @@ const BrowseRecipe = () => {
           <li key={pageNum}>
             <button
               onClick={() => handlePageChange(pageNum)}
-              className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-                isActive
+              className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${isActive
                   ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
                   : 'bg-white text-gray-500'
-              }`}
+                }`}
               aria-current={isActive ? 'page' : undefined}
             >
               {pageNum}
@@ -81,11 +80,10 @@ const BrowseRecipe = () => {
         <li key={pageNum}>
           <button
             onClick={() => handlePageChange(pageNum)}
-            className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-              isActive
+            className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${isActive
                 ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
                 : 'bg-white text-gray-500'
-            }`}
+              }`}
             aria-current={isActive ? 'page' : undefined}
           >
             {pageNum}

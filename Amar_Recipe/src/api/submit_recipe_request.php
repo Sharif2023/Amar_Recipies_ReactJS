@@ -15,7 +15,8 @@ if ($conn->connect_error) {
     exit;
 }
 
-function sanitize($conn, $data) {
+function sanitize($conn, $data)
+{
     return $conn->real_escape_string(trim($data));
 }
 

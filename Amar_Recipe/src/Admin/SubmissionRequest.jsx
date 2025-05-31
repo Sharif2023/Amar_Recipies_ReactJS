@@ -252,11 +252,17 @@ const SubmissionRequest = () => {
               <strong>বানানোর প্রক্রিয়া:</strong>
             </p>
             <p className="mb-4 whitespace-pre-line text-gray-700 dark:text-gray-300">
-              {selectedSubmission.description}
+              {selectedSubmission.description
+                .replace(/\r\n/g, '\n')
+                .replace(/\\n/g, '\n')
+                .replace(/\\r/g, '\n')}
             </p>
             <p className="mb-4 text-gray-700 dark:text-gray-300">
               <strong>মন্তব্য:</strong><br />
-              {selectedSubmission.comment && selectedSubmission.comment.trim() !== '' ? selectedSubmission.comment : 'নেই'}
+              {selectedSubmission.comment && selectedSubmission.comment.trim() !== '' ? selectedSubmission.comment
+                .replace(/\r\n/g, '\n')
+                .replace(/\\n/g, '\n')
+                .replace(/\\r/g, '\n') : 'নেই'}
             </p>
 
             {selectedSubmission.reference && (
