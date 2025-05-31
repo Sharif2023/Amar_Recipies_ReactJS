@@ -8,19 +8,39 @@ const SubmissionRequest = () => {
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [selectedSubmission, setSelectedSubmission] = useState(null);
 
-  // Open modal with submission details
+  const categoryBanglaMap = {
+    Meat: 'মাংস',
+    Fish: 'মাছ',
+    Egg: 'ডিম',
+    dairy: 'দুগ্ধজাত',
+    VegetablewithMeatorFish: 'শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য',
+    Vegetables: 'শাকসবজি',
+    Bharta: 'ভর্তা',
+    Salad: 'সালাদ',
+    achar: 'আচার',
+    Soup: 'স্যুপ',
+    Drinks: 'পানীয়',
+    Desserts: 'ডেজার্ট, মিষ্টান্ন',
+    Rice_and_Pasta: 'রাইস আইটেম',
+    Snacks: 'হালকা খাবার/ ফাস্টফুড',
+    SaucesAndCondiments: 'সস/মশলা',
+    Bangladeshi: 'বাঙ্গালী',
+    Chinese: 'চাইনিজ্জ',
+    Italian: 'ইতালীয়ান',
+  };
+  // ভিউ মডাল খুলুন
   const openViewModal = (submission) => {
     setSelectedSubmission(submission);
     setViewModalOpen(true);
   };
 
-  // Close the modal
+  // ভিউ মডাল বন্ধ করুন
   const closeViewModal = () => {
     setSelectedSubmission(null);
     setViewModalOpen(false);
   };
 
-  // Fetch all submissions from API
+  // রিকুয়েষ্ট ফেচ করুন
   const fetchRequests = async () => {
     setLoading(true);
     try {
@@ -31,10 +51,10 @@ const SubmissionRequest = () => {
       if (json.success) {
         setRequests(json.data);
       } else {
-        alert("Failed to fetch requests");
+        alert("রিকুয়েষ্ট লোড করতে ব্যর্থ হয়েছে।");
       }
     } catch (err) {
-      alert("Error: " + err.message);
+      alert("ত্রুটি: " + err.message);
     }
     setLoading(false);
   };
@@ -43,10 +63,9 @@ const SubmissionRequest = () => {
     fetchRequests();
   }, []);
 
-  // Approve a submission and remove it from list locally
+  // অনুমোদন দিন
   const approveRequest = async (id) => {
-    if (!window.confirm("Are you sure you want to approve this submission?"))
-      return;
+    if (!window.confirm("আপনি কি নিশ্চিত এই সাবমিশন এপ্রুভ করতে চান?")) return;
     try {
       const res = await fetch(
         "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/approve_submission.php",
@@ -58,26 +77,26 @@ const SubmissionRequest = () => {
       );
       const json = await res.json();
       if (json.success) {
-        alert("Submission approved and moved to recipes.");
+        alert("সাবমিশন এপ্রুভ হয়েছে এবং 'আমার রেসিপি'তে যুক্ত করা হয়েছে।");
         setRequests((prev) => prev.filter((req) => req.id !== id));
       } else {
-        alert("Failed: " + json.message);
+        alert("ব্যর্থ হয়েছে: " + json.message);
       }
     } catch (err) {
-      alert("Error: " + err.message);
+      alert("ত্রুটি: " + err.message);
     }
   };
 
-  // Start rejecting: open reject modal
+  // প্রত্যাখ্যান শুরু করুন
   const startReject = (id) => {
     setRejectingId(id);
     setRejectReason("");
   };
 
-  // Submit reject reason and remove submission locally
+  // প্রত্যাখ্যান জমা দিন
   const submitReject = async () => {
     if (!rejectReason.trim()) {
-      alert("Please enter rejection reason.");
+      alert("অনুগ্রহ করে প্রত্যাখ্যানের কারণ লিখুন।");
       return;
     }
     try {
@@ -91,15 +110,15 @@ const SubmissionRequest = () => {
       );
       const json = await res.json();
       if (json.success) {
-        alert("Submission rejected.");
+        alert("সাবমিশন বাতিল হয়েছে।");
         setRequests((prev) => prev.filter((req) => req.id !== rejectingId));
         setRejectingId(null);
         setRejectReason("");
       } else {
-        alert("Failed: " + json.message);
+        alert("ব্যর্থ হয়েছে: " + json.message);
       }
     } catch (err) {
-      alert("Error: " + err.message);
+      alert("ত্রুটি: " + err.message);
     }
   };
 
@@ -108,7 +127,7 @@ const SubmissionRequest = () => {
       <h1 className="text-3xl font-bold mb-6">সাবমিশন রিকুয়েষ্ট তালিকা</h1>
 
       {loading ? (
-        <p>Loading...</p>
+        <p>লোড হচ্ছে...</p>
       ) : requests.length === 0 ? (
         <p className="text-center text-neutral-500 mt-10">কোনো সাবমিশন পাওয়া যায়নি।</p>
       ) : (
@@ -127,7 +146,7 @@ const SubmissionRequest = () => {
                   />
                 ) : (
                   <div className="flex items-center justify-center h-full text-gray-400 text-sm">
-                    No Image
+                    ছবি নেই
                   </div>
                 )}
               </div>
@@ -138,29 +157,30 @@ const SubmissionRequest = () => {
                 >
                   {req.title}
                 </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{req.category}</p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {req.category}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Organiser: <strong>{req.organizerName}</strong>
+                  প্রেরকের নাম: <strong>{req.organizerName}</strong>
                 </p>
                 <p className="text-sm mt-1">
-                  Status:{" "}
+                  অবস্থা:{" "}
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      req.status === "Approved"
-                        ? "bg-green-700 text-green-300"
-                        : req.status === "Rejected"
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${req.status === "Approved"
+                      ? "bg-green-700 text-green-300"
+                      : req.status === "Rejected"
                         ? "bg-red-700 text-red-300"
                         : "bg-yellow-700 text-yellow-300"
-                    }`}
+                      }`}
                   >
-                    {req.status}
+                    {req.status === "Pending"
+                      ? "Pending"
+                      : req.status === "Approved"
+                        ? "অনুমোদিত"
+                        : "প্রত্যাখ্যাত"}
                   </span>
                 </p>
                 {req.status === "Rejected" && req.comment && (
                   <p className="text-sm mt-1 text-red-400 italic">
-                    Reason: {req.comment}
+                    বাতিলের কারণ: {req.comment}
                   </p>
                 )}
               </div>
@@ -171,24 +191,23 @@ const SubmissionRequest = () => {
                       onClick={() => openViewModal(req)}
                       className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
                     >
-                      View
+                      দেখুন
                     </button>
-
                     <button
                       onClick={() => approveRequest(req.id)}
                       className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
                     >
-                      Approve
+                      অনুমোদন
                     </button>
                     <button
                       onClick={() => startReject(req.id)}
                       className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
                     >
-                      Reject
+                      বাতিল
                     </button>
                   </>
                 ) : (
-                  <em className="text-gray-400">No actions</em>
+                  <em className="text-gray-400">কোনো অপশন নেই</em>
                 )}
               </div>
             </li>
@@ -196,14 +215,13 @@ const SubmissionRequest = () => {
         </ul>
       )}
 
-      {/* View Modal */}
       {viewModalOpen && selectedSubmission && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="bg-white dark:bg-[#262525] rounded p-6 max-w-3xl w-full max-h-[90vh] overflow-auto relative">
             <button
               onClick={closeViewModal}
               className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 dark:hover:text-white"
-              aria-label="Close modal"
+              aria-label="মডাল বন্ধ করুন"
             >
               ✕
             </button>
@@ -220,29 +238,30 @@ const SubmissionRequest = () => {
               />
             ) : (
               <div className="w-full h-64 bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-4">
-                No Image
+                ছবি নেই
               </div>
             )}
 
             <p className="mb-2 text-gray-700 dark:text-gray-300">
-              <strong>Category:</strong> {selectedSubmission.category}
+              <strong>রেসিপির নাম:</strong> {selectedSubmission.title}
             </p>
             <p className="mb-2 text-gray-700 dark:text-gray-300">
-              <strong>Organizer:</strong> {selectedSubmission.organizerName}
+              <strong>রেসিপির ধরণ:</strong> {categoryBanglaMap[selectedSubmission.category] || selectedSubmission.category}
             </p>
             <p className="mb-2 text-gray-700 dark:text-gray-300">
-              <strong>Location:</strong> {selectedSubmission.location}
-            </p>
-            <p className="mb-2 text-gray-700 dark:text-gray-300">
-              <strong>Description:</strong>
+              <strong>বানানোর প্রক্রিয়া:</strong>
             </p>
             <p className="mb-4 whitespace-pre-line text-gray-700 dark:text-gray-300">
               {selectedSubmission.description}
             </p>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              <strong>মন্তব্য:</strong><br />
+              {selectedSubmission.comment && selectedSubmission.comment.trim() !== '' ? selectedSubmission.comment : 'নেই'}
+            </p>
 
             {selectedSubmission.reference && (
               <p className="mb-2">
-                <strong>Reference: </strong>
+                <strong>রেফারেন্স লিংক: </strong>
                 <a
                   href={selectedSubmission.reference}
                   target="_blank"
@@ -256,30 +275,35 @@ const SubmissionRequest = () => {
 
             {selectedSubmission.tutorialVideo && (
               <p className="mb-4">
-                <strong>Tutorial Video: </strong>
+                <strong>টিউটোরিয়াল ভিডিও: </strong>
                 <a
                   href={selectedSubmission.tutorialVideo}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline"
                 >
-                  Watch here
+                  এখানে দেখুন
                 </a>
               </p>
             )}
+
+            <div className="border-t pt-4 text-sm text-gray-600 dark:text-gray-400">
+              <p><strong>অবস্থান:</strong> {selectedSubmission.location}</p>
+              <p><strong>রেসিপিদাতার নাম:</strong> {selectedSubmission.organizerName}</p>
+              <p><strong>ইমেইল:</strong> {selectedSubmission.organizerEmail || 'নাই'}</p>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Reject Modal */}
       {rejectingId && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded p-6 w-96">
-            <h2 className="text-xl font-semibold mb-4">Reject Submission</h2>
+            <h2 className="text-xl font-semibold mb-4">সাবমিশনটি বাতিল করুন</h2>
             <textarea
               className="w-full border border-gray-300 p-2 mb-4 rounded"
               rows="4"
-              placeholder="Rejection reason"
+              placeholder="রেসিপিটি বাতিলের কারণ লিখুন"
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
             />
@@ -291,13 +315,13 @@ const SubmissionRequest = () => {
                 }}
                 className="px-4 py-2 border rounded"
               >
-                Cancel
+                রিজেক্ট বাতিল করুন
               </button>
               <button
                 onClick={submitReject}
                 className="px-4 py-2 bg-red-600 text-white rounded"
               >
-                Submit Reject
+                বাতিল করুন
               </button>
             </div>
           </div>
