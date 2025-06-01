@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; //for logout button
 
 const AdminHeader = () => {
   // Dropdown visibility state
   const [firstDropdownOpen, setFirstDropdownOpen] = useState(false);
   const [secondDropdownOpen, setSecondDropdownOpen] = useState(false);
   const [navCollapsed, setNavCollapsed] = useState(true);
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate("/adminlogin");
+  };
 
   return (
     <header>
@@ -231,7 +237,7 @@ const AdminHeader = () => {
                   </li>
                   <li>
                     <button
-                      href="#"
+                      onClick={handleLogout}
                       className="flex px-4 items-center justify-center py-2 text-sm bg-[#ff3300] text-neutral-300 hover:bg-orange-600 w-full"
                       role="menuitem"
                     >
