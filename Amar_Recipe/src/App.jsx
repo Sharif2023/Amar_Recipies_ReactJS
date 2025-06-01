@@ -15,6 +15,7 @@ import AdminPanel from "./Admin/AdminPanel";
 import AdminFooter from "./Components/AdminFooter";
 import SubmissionRequest from "./Admin/SubmissionRequest";
 import HistoryDropdown from "./Admin/HistoryDropdown";
+import AdminLogin from "./Admin/AdminLogin";
 
 function App() {
   return (
@@ -60,12 +61,18 @@ function App() {
             <AdminFooter />
           </>
         } />
+
         <Route path="/history" element={
           <>
             <AdminHeader />
             <HistoryDropdown />
             <AdminFooter />
           </>} />
+
+        <Route path="/adminlogin" element={
+          <AdminLogin />
+        }
+        />
       </Routes>
     </BrowserRouter>
   );
