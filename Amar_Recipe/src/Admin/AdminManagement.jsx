@@ -11,6 +11,7 @@ const AdminManagement = () => {
     const data = await res.json();
     setPendingRequests(data.filter(admin => admin.status === "pending"));
     setApprovedAdmins(data.filter(admin => admin.status === "approved"));
+
   };
 
   useEffect(() => {
@@ -18,13 +19,31 @@ const AdminManagement = () => {
   }, []);
 
   const updateStatus = async (id, status) => {
-    await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/update_admin_status.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, status }),
-    });
-    fetchRequests();
+    console.log(`Updating admin id=${id} to status=${status}`);
+
+    try {
+      const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/update_admin_status.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status }),
+      });
+      console.log('Response status:', res.status);
+
+      const data = await res.json();
+      console.log('Response JSON:', data);
+
+      if (res.ok && data.message) {
+        alert(data.message);
+        fetchRequests(); // Refresh data after update
+      } else {
+        alert("Failed to update status: " + (data.message || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error("Network or server error during updateStatus:", error);
+      alert("Network error while updating status.");
+    }
   };
+
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
@@ -65,7 +84,23 @@ const AdminManagement = () => {
                       Approve
                     </button>
                     <button
-                      onClick={() => updateStatus(admin.id, "rejected")}
+                      onClick={async () => {
+                        const reason = prompt("Enter rejection reason:");
+                        if (!reason) return alert("Rejection reason is required.");
+
+                        try {
+                          const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/reject_submission.php", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ id: admin.id, reason }),
+                          });
+                          const data = await res.json();
+                          alert(data.success ? "Rejected successfully" : data.message);
+                          fetchRequests();
+                        } catch {
+                          alert("Network error while rejecting.");
+                        }
+                      }}
                       className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
                     >
                       Reject
