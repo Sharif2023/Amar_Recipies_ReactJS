@@ -16,6 +16,9 @@ import AdminFooter from "./Components/AdminFooter";
 import SubmissionRequest from "./Admin/SubmissionRequest";
 import HistoryDropdown from "./Admin/HistoryDropdown";
 import AdminLogin from "./Admin/AdminLogin";
+import AdminSignup from "./Admin/AdminSignup";
+import AdminManagement from "./Admin/AdminManagement";
+import AdminProfile from "./Admin/AdminProfile";
 
 function App() {
   return (
@@ -73,6 +76,25 @@ function App() {
           <AdminLogin />
         }
         />
+
+        <Route path="/adminsignup" element={
+          <AdminSignup />
+        }
+        />
+
+        <Route path="/adminmanagement" element={
+          <>
+            <AdminHeader />
+            <AdminManagement />
+            <AdminFooter />
+          </>} />
+
+          <Route path="/adminprofile" element={
+          <>
+            <AdminHeader />
+            <AdminProfile />
+            <AdminFooter />
+          </>} />
       </Routes>
     </BrowserRouter>
   );

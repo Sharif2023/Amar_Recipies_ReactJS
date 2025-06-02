@@ -36,3 +36,22 @@ CREATE TABLE submission_requests (
   source VARCHAR(100),
   submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE admin_requests (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  phone VARCHAR(20),
+  email VARCHAR(100),
+  date DATE,
+  area VARCHAR(100),
+  city VARCHAR(100),
+  state VARCHAR(100),
+  postcode VARCHAR(20),
+  experience INT,
+  specialty VARCHAR(100),
+  portfolio TEXT,
+  certification TEXT,
+  password VARCHAR(255),
+  status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending'
+);
+

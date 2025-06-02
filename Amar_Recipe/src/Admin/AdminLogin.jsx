@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const AdminLogin = () => {
 
@@ -46,11 +47,19 @@ const AdminLogin = () => {
                     <div className="flex items-center justify-between">
                         <button
                             onClick={handleLogIn}
-                            className="bg-green-500 hover:bg-green-700 text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-green-600"
+                            className="bg-rose-700 hover:bg-rose-900 text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-green-600"
                             type="button"
                         >
                             Login
                         </button>
+                    </div>
+                    <div className="flex text-sm text-blue-700 underline space-x-2 items-center justify-center py-2.5">
+                    <Link to='/adminsignup'>
+                        Create Admin Account
+                    </Link>
+                    <Link to={''}>
+                        Forgot Password?
+                    </Link>
                     </div>
                 </form>
             </div>
