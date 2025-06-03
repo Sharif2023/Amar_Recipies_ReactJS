@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 const AdminLogin = () => {
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const handleLogIn = () => {
-        navigate("/adminpanel");
+    const handleLogIn = async () => {
+        try {
+            const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/admin_login.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                localStorage.setItem("admin", JSON.stringify(data.admin));
+                navigate("/adminpanel");
+            } else {
+                alert(data.message || "Login failed.");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Network error during login.");
+        }
     };
 
     return (
@@ -15,7 +35,7 @@ const AdminLogin = () => {
                 <h1 className="text-2xl font-semibold mb-4 text-center text-gray-900 dark:text-gray-200">
                     Admin Login
                 </h1>
-                <form>
+                <form onSubmit={e => e.preventDefault()}>
                     <div className="mb-4">
                         <label
                             className="block text-gray-700 dark:text-gray-400 text-sm font-bold mb-2"
@@ -24,10 +44,11 @@ const AdminLogin = () => {
                             Email <span className="text-red-500">*</span>
                         </label>
                         <input
-                            className="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-                            id="email"
                             type="email"
-                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                            required
                         />
                     </div>
                     <div className="mb-6">
@@ -38,10 +59,11 @@ const AdminLogin = () => {
                             Password <span className="text-red-500">*</span>
                         </label>
                         <input
-                            className="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-                            id="password"
                             type="password"
-                            placeholder="******************"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                            required
                         />
                     </div>
                     <div className="flex items-center justify-between">
@@ -54,12 +76,12 @@ const AdminLogin = () => {
                         </button>
                     </div>
                     <div className="flex text-sm text-blue-700 underline space-x-2 items-center justify-center py-2.5">
-                    <Link to='/adminsignup'>
-                        Create Admin Account
-                    </Link>
-                    <Link to={''}>
-                        Forgot Password?
-                    </Link>
+                        <Link to='/adminsignup'>
+                            Create Admin Account
+                        </Link>
+                        <Link to={''}>
+                            Forgot Password?
+                        </Link>
                     </div>
                 </form>
             </div>
