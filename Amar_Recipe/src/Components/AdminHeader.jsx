@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const AdminHeader = () => {
   // Dropdown visibility state
+  const [reportCount, setReportCount] = useState(0);
   const [firstDropdownOpen, setFirstDropdownOpen] = useState(false);
   const [secondDropdownOpen, setSecondDropdownOpen] = useState(false);
   const [navCollapsed, setNavCollapsed] = useState(true);
@@ -10,9 +11,34 @@ const AdminHeader = () => {
   const firstDropdownRef = useRef(null);
   const secondDropdownRef = useRef(null);
 
+  useEffect(() => {
+    const fetchReportsCount = async () => {
+      try {
+        const res = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_report_count.php');
+        const json = await res.json();
+        if (json.success) {
+          setReportCount(json.count);
+        }
+      } catch (e) {
+        console.error("Failed to fetch report count", e);
+      }
+    };
+
+    fetchReportsCount();
+
+    // Optionally poll every minute or so
+    const interval = setInterval(fetchReportsCount, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate("/adminlogin");
+  };
+
+  const onReportClick = () => {
+    setReportCount(0); // clear notification dot
+    navigate('/reports');
   };
 
   // Close dropdowns if click outside
@@ -100,12 +126,12 @@ const AdminHeader = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to={'/reports'}
                   className="block px-2 py-1 rounded hover:text-orange-600 transition"
                 >
                   রিপোর্ট
-                </a>
+                </Link>
               </li>
 
               <li>
@@ -145,8 +171,11 @@ const AdminHeader = () => {
             {/* First dropdown */}
             <div className="relative" ref={firstDropdownRef}>
               <button
-                onClick={() => setFirstDropdownOpen((prev) => !prev)}
-                className="flex items-center text-neutral-400 hover:text-orange-600 transition"
+                onClick={() => {
+                  setFirstDropdownOpen(prev => !prev);
+                  if (reportCount > 0) setReportCount(0); // clear dot on open
+                }}
+                className="flex items-center text-neutral-400 hover:text-orange-600 transition relative"
                 aria-expanded={firstDropdownOpen}
                 aria-haspopup="true"
                 aria-controls="dropdownMenu1"
@@ -164,42 +193,26 @@ const AdminHeader = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="absolute -mt-4 ml-2 rounded-full bg-red-600 px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white">
-                  1
-                </span>
+                {reportCount > 0 && (
+                  <span className="absolute -mt-4 ml-2 rounded-full bg-red-600 px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white">
+                    {reportCount}
+                  </span>
+                )}
               </button>
               {firstDropdownOpen && (
                 <ul
                   id="dropdownMenu1"
-                  className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-lg bg-[#1f1f1f] py-1 shadow-lg shadow-black/80"
+                  className="absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-lg bg-[#1f1f1f] py-1 shadow-lg shadow-black/80"
                   role="menu"
                 >
                   <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-neutral-300 hover:bg-orange-600"
+                    <button
+                      onClick={onReportClick}
+                      className="block w-full text-left px-4 py-2 text-sm text-neutral-300 hover:bg-orange-600"
                       role="menuitem"
                     >
-                      A submission request from ...
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-neutral-300 hover:bg-orange-600"
-                      role="menuitem"
-                    >
-                      The request accepted
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-neutral-300 hover:bg-orange-600"
-                      role="menuitem"
-                    >
-                      A submission request from ...
-                    </a>
+                      রিপোর্ট দেখুন ({reportCount})
+                    </button>
                   </li>
                 </ul>
               )}

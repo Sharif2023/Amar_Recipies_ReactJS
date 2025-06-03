@@ -19,6 +19,7 @@ import AdminLogin from "./Admin/AdminLogin";
 import AdminSignup from "./Admin/AdminSignup";
 import AdminManagement from "./Admin/AdminManagement";
 import AdminProfile from "./Admin/AdminProfile";
+import Reports from "./Admin/Reports";
 
 function App() {
   return (
@@ -89,12 +90,21 @@ function App() {
             <AdminFooter />
           </>} />
 
-          <Route path="/adminprofile" element={
+        <Route path="/adminprofile" element={
           <>
             <AdminHeader />
             <AdminProfile />
             <AdminFooter />
           </>} />
+
+        <Route path="/reports" element={
+          <>
+            <AdminHeader />
+            <Reports />
+            <AdminFooter />
+          </>
+
+        } />
       </Routes>
     </BrowserRouter>
   );

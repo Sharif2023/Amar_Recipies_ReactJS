@@ -56,3 +56,13 @@ CREATE TABLE admin_requests (
   comment TEXT
 );
 
+CREATE TABLE reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    recipe_id INT NOT NULL,
+    reasons TEXT NOT NULL,
+    other_reason TEXT,
+    reporter_email VARCHAR(255),
+    reported_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending','reviewed','resolved') DEFAULT 'pending'
+);
+
