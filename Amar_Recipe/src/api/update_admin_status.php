@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$conn = new mysqli("localhost", "root", "", "amar_recipes");
+$conn = new mysqli("localhost", "root", "", "amar_recipe"); // ✅ correct DB name
+
 if ($conn->connect_error) {
     echo json_encode(['success' => false, 'message' => 'DB Connection failed']);
     exit;
@@ -22,9 +23,11 @@ if (!isset($data['id'], $data['status'])) {
     exit;
 }
 
-$data = json_decode(file_get_contents('php://input'), true);
-$id = isset($data['id']) ? intval($data['id']) : 0;
-$reason = isset($data['reason']) ? trim($data['reason']) : '';
+$id = intval($data['id']);
+$status = $data['status'];
+
+$stmt = $conn->prepare("UPDATE admin_requests SET status = ? WHERE id = ?");
+$stmt->bind_param('si', $status, $id);
 
 if ($stmt->execute()) {
     echo json_encode(["message" => "Status updated"]);

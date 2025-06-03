@@ -25,7 +25,7 @@ const HistoryDropdown = () => {
 
   return (
     <div className="container bg-rose-100/30 p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">সাবমিশন রিকুয়েষ্ট ইতিহাস</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">অ্যাডমিন রিকুয়েষ্ট ইতিহাস</h1>
 
       {loading ? (
         <p>Loading...</p>

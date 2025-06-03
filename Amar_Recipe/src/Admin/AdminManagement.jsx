@@ -5,14 +5,17 @@ const AdminManagement = () => {
   const [approvedAdmins, setApprovedAdmins] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
 
-  // Fetch data
   const fetchRequests = async () => {
-    const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/admin_requests.php");
+    const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/admin_requests.php", {
+      cache: "no-store",
+    });
     const data = await res.json();
+    console.log("Fetched updated data:", data);
+
     setPendingRequests(data.filter(admin => admin.status === "pending"));
     setApprovedAdmins(data.filter(admin => admin.status === "approved"));
-
   };
+
 
   useEffect(() => {
     fetchRequests();
@@ -78,33 +81,42 @@ const AdminManagement = () => {
                       View
                     </button>
                     <button
-                      onClick={() => updateStatus(admin.id, "approved")}
-                      className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-                    >
-                      Approve
-                    </button>
-                    <button
                       onClick={async () => {
                         const reason = prompt("Enter rejection reason:");
                         if (!reason) return alert("Rejection reason is required.");
 
                         try {
-                          const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/reject_submission.php", {
+                          const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/admin_api/admin_req_reject.php", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ id: admin.id, reason }),
                           });
-                          const data = await res.json();
-                          alert(data.success ? "Rejected successfully" : data.message);
+
+                          const text = await res.text();
+                          console.log("Raw reject response text:", text); // 👈 show raw data
+
+                          // Try parsing the JSON
+                          let data;
+                          try {
+                            data = JSON.parse(text);
+                          } catch (parseErr) {
+                            console.error("❌ JSON parse error:", parseErr);
+                            alert("❌ Server response is not valid JSON. Check console.");
+                            return;
+                          }
+
+                          alert(data.success ? "✅ Rejected successfully" : data.message || "⚠️ Unknown error");
                           fetchRequests();
-                        } catch {
-                          alert("Network error while rejecting.");
+                        } catch (err) {
+                          console.error("❌ Network error during fetch:", err);
+                          alert("❌ Network request failed.");
                         }
                       }}
                       className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
                     >
                       Reject
                     </button>
+
                   </td>
                 </tr>
               ))}

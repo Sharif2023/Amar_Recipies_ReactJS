@@ -52,6 +52,7 @@ CREATE TABLE admin_requests (
   portfolio TEXT,
   certification TEXT,
   password VARCHAR(255),
-  status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending'
+  status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+  comment TEXT
 );
 
