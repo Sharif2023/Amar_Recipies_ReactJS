@@ -26,11 +26,20 @@ $stmt = $conn->prepare("INSERT INTO admin_requests (name, phone, email, date, ar
 
 $hashed_password = password_hash($data['password'], PASSWORD_DEFAULT);
 
-$stmt->bind_param("sssssssisssss", 
-  $data['name'], $data['phone'], $data['email'], $data['date'],
-  $data['area'], $data['city'], $data['state'], $data['postcode'],
-  $data['experience'], $data['specialty'], $data['portfolio'], 
-  $data['certification'], $hashed_password
+$stmt->bind_param("sssssssssssss", 
+  $data['name'], 
+  $data['phone'], 
+  $data['email'], 
+  $data['date'],
+  $data['area'], 
+  $data['city'], 
+  $data['state'], 
+  $data['postcode'],
+  $data['experience'], 
+  $data['specialty'], 
+  $data['portfolio'],
+  $data['certification'], 
+  $hashed_password
 );
 
 if ($stmt->execute()) {
