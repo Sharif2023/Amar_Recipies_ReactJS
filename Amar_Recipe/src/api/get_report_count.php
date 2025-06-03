@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 $mysqli = new mysqli("localhost", "root", "", "Amar_Recipe");
 if ($mysqli->connect_errno) {
