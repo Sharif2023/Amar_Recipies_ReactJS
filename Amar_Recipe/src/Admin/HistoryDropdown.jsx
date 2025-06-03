@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 const HistoryDropdown = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [adminActions, setAdminActions] = useState([]);
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -25,7 +26,7 @@ const HistoryDropdown = () => {
 
   return (
     <div className="container bg-rose-100/30 p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">অ্যাডমিন রিকুয়েষ্ট ইতিহাস</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">অ্যাডমিন একটিভিটি ইতিহাস</h1>
 
       {loading ? (
         <p>Loading...</p>
