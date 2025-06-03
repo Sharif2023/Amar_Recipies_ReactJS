@@ -71,8 +71,8 @@ const SubmissionRequest = () => {
         "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/approve_submission.php",
         {
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({ id }),
+          headers: { "Content-Type": "application/json" }, // JSON header
+          body: JSON.stringify({ id }),                   // JSON body
         }
       );
       const json = await res.json();
@@ -86,7 +86,7 @@ const SubmissionRequest = () => {
       alert("ত্রুটি: " + err.message);
     }
   };
-
+  
   // প্রত্যাখ্যান শুরু করুন
   const startReject = (id) => {
     setRejectingId(id);
@@ -104,8 +104,8 @@ const SubmissionRequest = () => {
         "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/reject_submission.php",
         {
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({ id: rejectingId, reason: rejectReason }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: rejectingId, reason: rejectReason }),
         }
       );
       const json = await res.json();
@@ -120,7 +120,7 @@ const SubmissionRequest = () => {
     } catch (err) {
       alert("ত্রুটি: " + err.message);
     }
-  };
+  };  
 
   return (
     <div className="container mx-auto p-4">

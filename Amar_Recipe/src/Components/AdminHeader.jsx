@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom"; //for logout button
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminHeader = () => {
   // Dropdown visibility state
@@ -8,10 +7,35 @@ const AdminHeader = () => {
   const [secondDropdownOpen, setSecondDropdownOpen] = useState(false);
   const [navCollapsed, setNavCollapsed] = useState(true);
 
+  const firstDropdownRef = useRef(null);
+  const secondDropdownRef = useRef(null);
+
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate("/adminlogin");
   };
+
+  // Close dropdowns if click outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        firstDropdownRef.current &&
+        !firstDropdownRef.current.contains(event.target)
+      ) {
+        setFirstDropdownOpen(false);
+      }
+      if (
+        secondDropdownRef.current &&
+        !secondDropdownRef.current.contains(event.target)
+      ) {
+        setSecondDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <header>
@@ -119,9 +143,9 @@ const AdminHeader = () => {
             </a>
 
             {/* First dropdown */}
-            <div className="relative">
+            <div className="relative" ref={firstDropdownRef}>
               <button
-                onClick={() => setFirstDropdownOpen(!firstDropdownOpen)}
+                onClick={() => setFirstDropdownOpen((prev) => !prev)}
                 className="flex items-center text-neutral-400 hover:text-orange-600 transition"
                 aria-expanded={firstDropdownOpen}
                 aria-haspopup="true"
@@ -182,9 +206,9 @@ const AdminHeader = () => {
             </div>
 
             {/* Second dropdown */}
-            <div className="relative">
+            <div className="relative" ref={secondDropdownRef}>
               <button
-                onClick={() => setSecondDropdownOpen(!secondDropdownOpen)}
+                onClick={() => setSecondDropdownOpen((prev) => !prev)}
                 className="flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none text-neutral-400 hover:text-orange-600"
                 aria-expanded={secondDropdownOpen}
                 aria-haspopup="true"
