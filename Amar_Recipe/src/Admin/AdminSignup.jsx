@@ -103,6 +103,7 @@ const AdminSignup = () => {
                                 id={name}
                                 value={formData[name]}
                                 onChange={handleChange}
+                                required={["name", "phone", "date", "email", "certification", "password", "confirmPassword"].includes(name)}
                                 className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-rose-500"
                             />
                         </div>
