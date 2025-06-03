@@ -26,11 +26,14 @@ $stmt = $conn->prepare("INSERT INTO admin_requests (name, phone, email, date, ar
 
 $hashed_password = password_hash($data['password'], PASSWORD_DEFAULT);
 
+date_default_timezone_set('Asia/Dhaka');
+$date = date('Y-m-d H:i:s');  
+
 $stmt->bind_param("sssssssssssss", 
   $data['name'], 
   $data['phone'], 
   $data['email'], 
-  $data['date'],
+  $date,
   $data['area'], 
   $data['city'], 
   $data['state'], 

@@ -42,7 +42,7 @@ CREATE TABLE admin_requests (
   name VARCHAR(100),
   phone VARCHAR(20),
   email VARCHAR(100),
-  date DATE,
+  date DATETIME,
   area VARCHAR(100),
   city VARCHAR(100),
   state VARCHAR(100),
