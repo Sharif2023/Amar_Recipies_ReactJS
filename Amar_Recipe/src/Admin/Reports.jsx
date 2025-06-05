@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import AdminViewRecipeModal from './AdminViewRecipeModal';
 
 const backendBaseUrl = 'http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/';
 
 const Reports = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const fetchReports = async () => {
     try {
@@ -24,35 +27,61 @@ const Reports = () => {
     fetchReports();
   }, []);
 
-  const deleteReport = async (id) => {
-    if (!window.confirm('আপনি কি এই রিপোর্ট মুছে ফেলতে চান?')) return;
+  const markasDone = async (id) => {
+    if (!window.confirm('আপনি কি নিশ্চিত এই রিপোর্ট সমাধান হয়েছে?')) return;
     try {
       const res = await fetch(`${backendBaseUrl}delete_report.php?id=${id}`, { method: 'DELETE' });
       const json = await res.json();
       if (json.success) {
-        setReports((prev) => prev.filter(r => r.id !== id));
+        setReports((prev) => prev.filter((r) => r.id !== id));
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const updateReportStatus = async (id, status) => {
+  const handleViewRecipe = (report) => {
+    const recipeId = report.recipe_id;
+    const recipe = reports.find((r) => r.recipe_id === recipeId);
+    setSelectedRecipe(recipe);
+    setShowEditModal(true);
+  };
+
+  const handleSaveRecipe = async (updatedRecipe) => {
     try {
-      const res = await fetch(`${backendBaseUrl}update_report_status.php`, {
+      const res = await fetch(`${backendBaseUrl}update_recipe.php`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ id, status }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedRecipe),
       });
       const json = await res.json();
       if (json.success) {
-        setReports((prev) => prev.map(r => r.id === id ? {...r, status} : r));
+        setReports((prev) =>
+          prev.map((report) =>
+            report.recipe_id === updatedRecipe.id ? { ...report, recipe: updatedRecipe } : report
+          )
+        );
+        alert('Recipe updated successfully.');
+        setShowEditModal(false);
       }
     } catch (error) {
       console.error(error);
+      alert('Failed to update recipe.');
     }
   };
 
+  const deleteRecipe = async (recipe) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete "${recipe.title}"?`);
+    if (!confirmDelete) return;
+
+    try {
+      await fetch(`${backendBaseUrl}delete_recipe.php?id=${recipe.id}`, { method: 'DELETE' });
+      setReports((prev) => prev.filter((r) => r.recipe_id !== recipe.id)); // Remove from UI
+      alert('Recipe deleted successfully');
+    } catch (error) {
+      alert('Failed to delete recipe');
+    }
+  };
   const sendMail = async (report) => {
     // Simulate sending mail (or integrate your mail backend)
     alert(`Send mail to: ${report.reporter_email} about report #${report.id}`);
@@ -90,32 +119,56 @@ const Reports = () => {
               <td className="border border-gray-300 p-2 text-center">{report.status}</td>
               <td className="border border-gray-300 p-2 flex justify-center gap-2">
                 <button
-                  className="px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                  onClick={() => updateReportStatus(report.id, 'reviewed')}
-                  disabled={report.status === 'reviewed'}
-                  title="Mark as Reviewed"
+                  className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                  onClick={() => markasDone(report.id)}
+                  title="Mark as Done"
                 >
-                  ✓
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                </button>
+                <button
+                  className="px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                  onClick={() => handleViewRecipe(report)}
+                  disabled={report.status === 'reviewed'}
+                  title="View and Edit Recipe"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  </svg>
                 </button>
                 <button
                   className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
-                  onClick={() => deleteReport(report.id)}
-                  title="Delete"
+                  onClick={() => deleteRecipe(report.recipe_id)}
+                  title="Delete Recipe"
                 >
-                  🗑️
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                  </svg>
                 </button>
                 <button
                   className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
                   onClick={() => sendMail(report)}
                   title="Send Mail"
                 >
-                  ✉️
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                  </svg>
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showEditModal && selectedRecipe && (
+        <AdminViewRecipeModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          recipe={selectedRecipe}
+          onSave={handleSaveRecipe} // New prop for saving changes
+        />
+      )}
     </div>
   );
 };
