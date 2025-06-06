@@ -28,15 +28,24 @@ const Reports = () => {
   }, []);
 
   const markasDone = async (id) => {
+    console.log("Attempting to delete report with ID:", id);  // Log the ID to ensure it's correct
     if (!window.confirm('আপনি কি নিশ্চিত এই রিপোর্ট সমাধান হয়েছে?')) return;
+  
     try {
       const res = await fetch(`${backendBaseUrl}delete_report.php?id=${id}`, { method: 'DELETE' });
-      const json = await res.json();
+      const json = await res.json();  // Parse JSON response
+  
       if (json.success) {
+        // If the backend confirms successful deletion, remove from the UI
         setReports((prev) => prev.filter((r) => r.id !== id));
+        alert('Report marked as done successfully.');
+      } else {
+        // If deletion was not successful, alert the error message
+        alert('Failed to mark report as done: ' + json.message);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error deleting report:", error);
+      alert('An error occurred while marking the report as done: ' + error.message);
     }
   };
 
