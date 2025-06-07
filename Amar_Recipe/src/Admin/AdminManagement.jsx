@@ -157,7 +157,7 @@ const AdminManagement = () => {
 
       {/* Modal for viewing admin details */}
       {selectedAdmin && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
           <div className="bg-white p-6 rounded-md w-full max-w-lg shadow-xl">
             <h3 className="text-xl font-bold text-rose-700 mb-4">অ্যাডমিন বিস্তারিত</h3>
             <ul className="text-sm text-gray-800 space-y-1">
