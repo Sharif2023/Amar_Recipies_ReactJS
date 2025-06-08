@@ -123,8 +123,9 @@ const Reports = () => {
         <tbody>
           {reports.map((report) => (
             <tr key={report.id} className="odd:bg-white even:bg-gray-100 dark:odd:bg-[#1b1b1b] dark:even:bg-[#262525]">
-              <td className="border border-gray-300 p-2 text-center">{report.id}</td>
+              <td className="border border-gray-300 p-2 text-center">{report.report_id}</td>
               <td className="border border-gray-300 p-2 text-center">{report.recipe_id}</td>
+
               <td className="border border-gray-300 p-2">
                 {JSON.parse(report.reasons).join(', ')}
               </td>
