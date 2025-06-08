@@ -111,7 +111,7 @@ const Reports = () => {
       <table className="w-full border-collapse border border-gray-300 dark:border-gray-700">
         <thead>
           <tr className="bg-gray-200 dark:bg-gray-700">
-            <th className="border border-gray-300 p-2">ID</th>
+            <th className="border border-gray-300 p-2">রিপোর্ট আইডি</th>
             <th className="border border-gray-300 p-2">রেসিপির আইডি</th>
             <th className="border border-gray-300 p-2">কারণসমূহ</th>
             <th className="border border-gray-300 p-2">অন্যান্য কারণ</th>
