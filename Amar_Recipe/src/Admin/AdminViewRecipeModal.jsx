@@ -32,7 +32,10 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
   useEffect(() => {
     console.log('Recipe Data:', recipe);
     if (recipe) {
-      setEditedRecipe({ ...recipe });
+      setEditedRecipe({
+        ...recipe,
+        id: recipe.id || recipe.recipe_id
+      });
     }
   }, [recipe]);
 
@@ -52,7 +55,8 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
   };
 
   const handleSave = () => {
-    onSave(editedRecipe); // Call onSave function to update the recipe
+    console.log("Saving Recipe:", editedRecipe);
+    onSave(editedRecipe);
   };
 
   return (

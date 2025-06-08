@@ -56,7 +56,19 @@ const Reports = () => {
 
   const handleViewRecipe = (report) => {
     const recipeId = report.recipe_id;
-    const recipe = reports.find((r) => r.recipe_id === recipeId);
+    const matchedReport = reports.find((r) => r.recipe_id === recipeId);
+
+    const recipe = {
+      id: matchedReport.recipe_id,
+      title: matchedReport.title,
+      image_url: matchedReport.image_url,
+      description: matchedReport.description,
+      comment: matchedReport.comment,
+      location: matchedReport.location,
+      organizerName: matchedReport.organizerName,
+      organizerEmail: matchedReport.organizerEmail,
+    };
+
     setSelectedRecipe(recipe);
     setShowEditModal(true);
   };
@@ -68,19 +80,22 @@ const Reports = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedRecipe),
       });
+
       const json = await res.json();
       if (json.success) {
         setReports((prev) =>
           prev.map((report) =>
-            report.recipe_id === updatedRecipe.id ? { ...report, recipe: updatedRecipe } : report
+            report.recipe_id === updatedRecipe.id ? { ...report, ...updatedRecipe } : report
           )
         );
         alert('Recipe updated successfully.');
         setShowEditModal(false);
+      } else {
+        alert('Failed to update recipe: ' + json.message);
       }
     } catch (error) {
       console.error(error);
-      alert('Failed to update recipe.');
+      alert('Error: ' + error.message);
     }
   };
 
