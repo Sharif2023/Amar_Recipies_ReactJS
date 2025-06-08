@@ -53,21 +53,29 @@ const AdminPanel = () => {
   };
 
   const handleDelete = async (recipe) => {
-    // TODO: Implement delete functionality (call API to delete, then refresh list)
     const confirmDelete = window.confirm(`Are you sure you want to delete "${recipe.title}"?`);
     if (!confirmDelete) return;
-
+  
     try {
-      // Example API call placeholder:
-      // await fetch(`http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/delete_recipe.php?id=${recipe.id}`, { method: 'DELETE' });
-
-      // Remove deleted recipe from state for instant UI feedback:
-      setRecipes((prev) => prev.filter((r) => r.id !== recipe.id));
-      alert('Recipe deleted successfully (simulate).');
+      const res = await fetch(`${baseImageUrl}delete_recipe.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: recipe.id }),
+      });
+  
+      const json = await res.json();
+      if (json.success) {
+        setRecipes((prev) => prev.filter((r) => r.id !== recipe.id));
+        alert('Recipe deleted successfully.');
+      } else {
+        alert('Failed to delete recipe: ' + json.message);
+      }
     } catch (error) {
-      alert('Failed to delete recipe. Try again.');
+      alert('Error deleting recipe: ' + error.message);
     }
-  };
+  };  
 
   // Pagination rendering (same as your existing code)
   const renderPagination = () => {

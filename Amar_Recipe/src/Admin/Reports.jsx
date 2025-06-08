@@ -84,18 +84,31 @@ const Reports = () => {
     }
   };
 
-  const deleteRecipe = async (recipe) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete "${recipe.title}"?`);
+  const deleteRecipe = async (recipeId) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete recipe ID: ${recipeId}?`);
     if (!confirmDelete) return;
 
     try {
-      await fetch(`${backendBaseUrl}delete_recipe.php?id=${recipe.id}`, { method: 'DELETE' });
-      setReports((prev) => prev.filter((r) => r.recipe_id !== recipe.id)); // Remove from UI
-      alert('Recipe deleted successfully');
+      const res = await fetch(`${backendBaseUrl}delete_recipe.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: recipeId }),
+      });
+
+      const json = await res.json();
+      if (json.success) {
+        setReports((prev) => prev.filter((r) => r.recipe_id !== recipeId));
+        alert('Recipe deleted successfully');
+      } else {
+        alert('Failed to delete recipe: ' + json.message);
+      }
     } catch (error) {
-      alert('Failed to delete recipe');
+      alert('Failed to delete recipe. Error: ' + error.message);
     }
   };
+
   const sendMail = async (report) => {
     // Simulate sending mail (or integrate your mail backend)
     alert(`Send mail to: ${report.reporter_email} about report #${report.id}`);
