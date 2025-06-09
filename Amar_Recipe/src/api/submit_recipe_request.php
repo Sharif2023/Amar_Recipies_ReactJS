@@ -68,6 +68,22 @@ $reference = isset($_POST['reference']) ? sanitize($conn, $_POST['reference']) :
 $tutorialVideo = isset($_POST['tutorialVideo']) ? sanitize($conn, $_POST['tutorialVideo']) : '';
 $comment = isset($_POST['comment']) ? sanitize($conn, $_POST['comment']) : '';
 
+function is_similar_description($conn, $new_desc)
+{
+    $threshold = 90;
+    $res = $conn->query("SELECT description FROM recipes");
+    while ($row = $res->fetch_assoc()) {
+        similar_text(strip_tags($new_desc), strip_tags($row['description']), $percent);
+        if ($percent >= $threshold) return true;
+    }
+    return false;
+}
+
+if (is_similar_description($conn, $description)) {
+    echo json_encode(["success" => false, "message" => "A similar recipe already exists."]);
+    exit;
+}
+
 // Insert into submission_requests table
 $sql = "INSERT INTO submission_requests 
     (title, category, description, image, location, organizerName, organizerEmail, organizerAddress, status, tags, reference, tutorialVideo, comment, source)
