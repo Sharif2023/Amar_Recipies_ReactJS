@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AdminHeader from "../Components/AdminHeader";
 import AdminFooter from '../Components/AdminFooter';
 import { IoStar, IoTrashBinOutline, IoPencilOutline, IoEyeOutline } from 'react-icons/io5';
-import RecipeModal from '../Components/RecipeModal';
+import AdminViewRecipeModal from './AdminViewRecipeModal';
 
 const AdminPanel = () => {
   const [recipes, setRecipes] = useState([]);
@@ -48,14 +48,39 @@ const AdminPanel = () => {
   };
 
   const handleEdit = (recipe) => {
-    // TODO: Implement edit functionality (e.g., navigate to edit page or open edit modal)
-    alert(`Edit feature not implemented yet for: ${recipe.title}`);
+    setSelectedRecipe(recipe);
+    setShowModal(true);
   };
+
+  const handleSaveRecipe = async (updatedRecipe) => {
+    try {
+      const res = await fetch(`${baseImageUrl}update_recipe.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedRecipe),
+      });
+  
+      const json = await res.json();
+      if (json.success) {
+        setRecipes((prev) =>
+          prev.map((r) =>
+            r.id === updatedRecipe.id ? { ...r, ...updatedRecipe } : r
+          )
+        );
+        alert('Recipe updated successfully.');
+        setShowModal(false);
+      } else {
+        alert('Failed to update recipe: ' + json.message);
+      }
+    } catch (error) {
+      alert('Error updating recipe: ' + error.message);
+    }
+  };  
 
   const handleDelete = async (recipe) => {
     const confirmDelete = window.confirm(`Are you sure you want to delete "${recipe.title}"?`);
     if (!confirmDelete) return;
-  
+
     try {
       const res = await fetch(`${baseImageUrl}delete_recipe.php`, {
         method: 'POST',
@@ -64,7 +89,7 @@ const AdminPanel = () => {
         },
         body: JSON.stringify({ id: recipe.id }),
       });
-  
+
       const json = await res.json();
       if (json.success) {
         setRecipes((prev) => prev.filter((r) => r.id !== recipe.id));
@@ -75,7 +100,7 @@ const AdminPanel = () => {
     } catch (error) {
       alert('Error deleting recipe: ' + error.message);
     }
-  };  
+  };
 
   // Pagination rendering (same as your existing code)
   const renderPagination = () => {
@@ -88,8 +113,8 @@ const AdminPanel = () => {
             <button
               onClick={() => handlePageChange(pageNum)}
               className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${isActive
-                  ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
-                  : 'bg-white text-gray-500'
+                ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
+                : 'bg-white text-gray-500'
                 }`}
               aria-current={isActive ? 'page' : undefined}
             >
@@ -111,8 +136,8 @@ const AdminPanel = () => {
           <button
             onClick={() => handlePageChange(pageNum)}
             className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${isActive
-                ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
-                : 'bg-white text-gray-500'
+              ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
+              : 'bg-white text-gray-500'
               }`}
             aria-current={isActive ? 'page' : undefined}
           >
@@ -282,7 +307,12 @@ const AdminPanel = () => {
         </nav>
 
         {selectedRecipe && (
-          <RecipeModal isOpen={showModal} onClose={() => setShowModal(false)} recipe={selectedRecipe} />
+          <AdminViewRecipeModal
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            recipe={selectedRecipe}
+            onSave={handleSaveRecipe}
+          />
         )}
       </div>
       <AdminFooter />
