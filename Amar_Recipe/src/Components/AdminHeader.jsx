@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const AdminHeader = () => {
-  // Dropdown visibility state
   const [reportCount, setReportCount] = useState(0);
+  const [submissionCount, setSubmissionCount] = useState(0);
   const [firstDropdownOpen, setFirstDropdownOpen] = useState(false);
   const [secondDropdownOpen, setSecondDropdownOpen] = useState(false);
   const [navCollapsed, setNavCollapsed] = useState(true);
@@ -12,22 +12,26 @@ const AdminHeader = () => {
   const secondDropdownRef = useRef(null);
 
   useEffect(() => {
-    const fetchReportsCount = async () => {
+    const fetchCounts = async () => {
       try {
-        const res = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_report_count.php');
-        const json = await res.json();
-        if (json.success) {
-          setReportCount(json.count);
-        }
-      } catch (e) {
-        console.error("Failed to fetch report count", e);
+        const [reportRes, submissionRes] = await Promise.all([
+          fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_report_count.php'),
+          fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_submission_count.php')
+        ]);
+
+        const reportJson = await reportRes.json();
+        const submissionJson = await submissionRes.json();
+
+        if (reportJson.success) setReportCount(reportJson.count);
+        if (submissionJson.success) setSubmissionCount(submissionJson.count);
+
+      } catch (error) {
+        console.error("Error fetching counts:", error);
       }
     };
 
-    fetchReportsCount();
-
-    // Optionally poll every minute or so
-    const interval = setInterval(fetchReportsCount, 60000);
+    fetchCounts();
+    const interval = setInterval(fetchCounts, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -39,6 +43,11 @@ const AdminHeader = () => {
   const onReportClick = () => {
     setReportCount(0);
     navigate('/reports');
+  };
+
+  const onSubmissionClick = () => {
+    setSubmissionCount(0);
+    navigate('/submissionrequests');
   };
 
   // Close dropdowns if click outside
@@ -168,19 +177,18 @@ const AdminHeader = () => {
               </svg>
             </a>
 
-            {/* First dropdown */}
             <div className="relative" ref={firstDropdownRef}>
               <button
                 onClick={() => {
-                  setFirstDropdownOpen(prev => !prev);
-                  if (reportCount > 0) setReportCount(0); // clear dot on open
+                  setFirstDropdownOpen((prev) => !prev);
                 }}
                 className="flex items-center text-neutral-400 hover:text-orange-600 transition relative"
                 aria-expanded={firstDropdownOpen}
                 aria-haspopup="true"
-                aria-controls="dropdownMenu1"
+                aria-controls="dropdownMenuNotifications"
                 aria-label="Notifications"
               >
+                {/* Bell Icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -193,15 +201,19 @@ const AdminHeader = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                {reportCount > 0 && (
+
+                {/* Red dot if any count is > 0 */}
+                {(reportCount > 0 || submissionCount > 0) && (
                   <span className="absolute -mt-4 ml-2 rounded-full bg-red-600 px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white">
-                    {reportCount}
+                    {reportCount + submissionCount}
                   </span>
                 )}
               </button>
+
+              {/* Dropdown Menu */}
               {firstDropdownOpen && (
                 <ul
-                  id="dropdownMenu1"
+                  id="dropdownMenuNotifications"
                   className="absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-lg bg-[#1f1f1f] py-1 shadow-lg shadow-black/80"
                   role="menu"
                 >
@@ -209,9 +221,16 @@ const AdminHeader = () => {
                     <button
                       onClick={onReportClick}
                       className="block w-full text-left px-4 py-2 text-sm text-neutral-300 hover:bg-orange-600"
-                      role="menuitem"
                     >
                       রিপোর্ট দেখুন ({reportCount})
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={onSubmissionClick}
+                      className="block w-full text-left px-4 py-2 text-sm text-neutral-300 hover:bg-orange-600"
+                    >
+                      সাবমিশন রিকুয়েষ্ট ({submissionCount})
                     </button>
                   </li>
                 </ul>

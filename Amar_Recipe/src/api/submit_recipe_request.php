@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
+header('Content-Type: application/json');
 
 $servername = "localhost";
 $username = "root";
@@ -20,7 +20,6 @@ function sanitize($conn, $data)
     return $conn->real_escape_string(trim($data));
 }
 
-// Validate required fields (you can adjust)
 $required_fields = ['title', 'category', 'description', 'location', 'organizerName', 'organizerEmail', 'organizerAddress'];
 foreach ($required_fields as $field) {
     if (empty($_POST[$field])) {
@@ -29,7 +28,6 @@ foreach ($required_fields as $field) {
     }
 }
 
-// Image upload (same as your submit_recipe.php)
 $image_url = null;
 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $uploadDir = __DIR__ . '/uploads/';
@@ -61,7 +59,7 @@ $location = sanitize($conn, $_POST['location']);
 $organizerName = sanitize($conn, $_POST['organizerName']);
 $organizerEmail = sanitize($conn, $_POST['organizerEmail']);
 $organizerAddress = sanitize($conn, $_POST['organizerAddress']);
-$status = 'Pending'; // default status for new submissions
+$status = 'Pending';
 $source = isset($_POST['source']) ? sanitize($conn, $_POST['source']) : '';
 $tags = isset($_POST['tags']) ? sanitize($conn, $_POST['tags']) : '';
 $reference = isset($_POST['reference']) ? sanitize($conn, $_POST['reference']) : '';
@@ -84,12 +82,10 @@ if (is_similar_description($conn, $description)) {
     exit;
 }
 
-// Insert into submission_requests table
-$sql = "INSERT INTO submission_requests 
+$stmt = $conn->prepare("INSERT INTO submission_requests 
     (title, category, description, image, location, organizerName, organizerEmail, organizerAddress, status, tags, reference, tutorialVideo, comment, source)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-$stmt = $conn->prepare($sql);
 if (!$stmt) {
     echo json_encode(['success' => false, 'message' => "Prepare failed: " . $conn->error]);
     exit;
