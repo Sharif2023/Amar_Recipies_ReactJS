@@ -131,7 +131,7 @@ const Reports = () => {
 
   if (loading) return <p>লোড হচ্ছে...</p>;
 
-  if (reports.length === 0) return <p>কোনো রিপোর্ট পাওয়া যায়নি।</p>;
+  if (reports.length === 0) return <p className='text-center text-neutral-500 mt-10'>কোনো রিপোর্ট পাওয়া যায়নি।</p>;
 
   return (
     <div className="p-6 max-w-4xl mx-auto">

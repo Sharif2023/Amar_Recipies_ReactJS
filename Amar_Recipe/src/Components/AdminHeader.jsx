@@ -37,7 +37,7 @@ const AdminHeader = () => {
   };
 
   const onReportClick = () => {
-    setReportCount(0); // clear notification dot
+    setReportCount(0);
     navigate('/reports');
   };
 
