@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set("Asia/Dhaka");
+
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -77,7 +80,7 @@ if (!$stmt->execute()) {
 $stmt->close();
 
 // Update submission_requests status to Approved
-$update = $conn->prepare("UPDATE submission_requests SET status = 'Approved' WHERE id = ?");
+$update = $conn->prepare("UPDATE submission_requests SET status = 'Approved', submission_date = NOW() WHERE id = ?");
 $update->bind_param('i', $id);
 $update->execute();
 $update->close();

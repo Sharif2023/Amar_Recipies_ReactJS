@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set("Asia/Dhaka");
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -26,7 +29,7 @@ if (!isset($data['id'], $data['status'])) {
 $id = intval($data['id']);
 $status = $data['status'];
 
-$stmt = $conn->prepare("UPDATE admin_requests SET status = ? WHERE id = ?");
+$stmt = $conn->prepare("UPDATE admin_requests SET status = ?, date = NOW() WHERE id = ?");
 $stmt->bind_param('si', $status, $id);
 
 if ($stmt->execute()) {

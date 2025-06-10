@@ -1,10 +1,12 @@
 <?php
-// ✅ no whitespace or empty lines before <?php
+
+date_default_timezone_set("Asia/Dhaka");
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Content-Type: application/json");
-ini_set("display_errors", 0); // ✅ hide PHP warnings in production
+ini_set("display_errors", 0);
 error_reporting(0);
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -27,7 +29,7 @@ if ($id <= 0 || empty($reason)) {
     exit;
 }
 
-$stmt = $conn->prepare("UPDATE admin_requests SET status = 'rejected', comment = ? WHERE id = ?");
+$stmt = $conn->prepare("UPDATE admin_requests SET status = 'rejected', comment = ?, date = NOW() WHERE id = ?");
 $stmt->bind_param("si", $reason, $id);
 
 if ($stmt->execute()) {
