@@ -25,7 +25,6 @@ if ($conn->connect_error) {
 
 $data = json_decode(file_get_contents('php://input'), true);
 $id = isset($data['id']) ? intval($data['id']) : 0;
-$reason = isset($data['reason']) ? trim($data['reason']) : '';
 
 if ($id <= 0) {
     echo json_encode(['success' => false, 'message' => 'Invalid submission id']);
@@ -79,11 +78,13 @@ if (!$stmt->execute()) {
 }
 $stmt->close();
 
-// Update submission_requests status to Approved
-$update = $conn->prepare("UPDATE submission_requests SET status = 'Approved', submission_date = NOW() WHERE id = ?");
+// Update submission_requests status to Approved and record approval time
+$update = $conn->prepare("UPDATE submission_requests SET status = 'Approved', action_date = NOW() WHERE id = ?");
 $update->bind_param('i', $id);
 $update->execute();
 $update->close();
 
 echo json_encode(['success' => true]);
 $conn->close();
+
+?>

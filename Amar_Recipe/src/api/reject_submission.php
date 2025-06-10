@@ -32,7 +32,7 @@ if ($id <= 0 || empty($reason)) {
     exit;
 }
 
-$stmt = $conn->prepare("UPDATE submission_requests SET status = 'Rejected', comment = ?, submission_date = NOW() WHERE id = ?");
+$stmt = $conn->prepare("UPDATE submission_requests SET status = 'Rejected', comment = ?, action_date = NOW() WHERE id = ?");
 $stmt->bind_param('si', $reason, $id);
 if ($stmt->execute()) {
     echo json_encode(['success' => true]);
@@ -41,3 +41,4 @@ if ($stmt->execute()) {
 }
 $stmt->close();
 $conn->close();
+?>

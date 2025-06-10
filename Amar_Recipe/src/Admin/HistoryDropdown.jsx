@@ -11,13 +11,13 @@ const HistoryDropdown = () => {
           fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_submission_history.php"),
           fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_admin_activity_history.php")
         ]);
-  
+
         const subJson = await subRes.json();
         const adminJson = await adminRes.json();
-  
+
         if (subJson.success && adminJson.success) {
           const combined = [];
-  
+
           for (const item of subJson.data) {
             combined.push({
               ...item,
@@ -25,7 +25,7 @@ const HistoryDropdown = () => {
               activity_time: item.action_date ? new Date(item.action_date) : null
             });
           }
-  
+
           for (const item of adminJson.data) {
             combined.push({
               ...item,
@@ -33,9 +33,9 @@ const HistoryDropdown = () => {
               activity_time: new Date(item.action_date)
             });
           }
-  
+
           combined.sort((a, b) => b.activity_time - a.activity_time);
-  
+
           setRequests(combined);
         } else {
           alert("Failed to fetch data.");
@@ -43,10 +43,10 @@ const HistoryDropdown = () => {
       } catch (err) {
         alert("Error: " + err.message);
       }
-  
+
       setLoading(false);
     };
-  
+
     fetchAllHistories();
   }, []);
 
@@ -92,7 +92,7 @@ const HistoryDropdown = () => {
                     {req.status === "rejected" && req.comment && (
                       <p className="text-sm mt-1 text-red-400 italic">Reason: {req.comment}</p>
                     )}
-
+                    <p className="text-xs text-gray-400 mt-1">Action Date: {new Date(req.action_date).toLocaleString()}</p>
                   </div>
                 </>
               ) : (

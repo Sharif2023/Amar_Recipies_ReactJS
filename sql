@@ -34,7 +34,9 @@ CREATE TABLE submission_requests (
   tutorialVideo VARCHAR(255),
   comment TEXT,
   source VARCHAR(100),
-  submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  action_date DATETIME DEFAULT NULL;
+
 );
 
 CREATE TABLE admin_requests (
