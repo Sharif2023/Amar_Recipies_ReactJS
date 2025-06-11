@@ -26,14 +26,15 @@ if ($conn->connect_error) {
 $data = json_decode(file_get_contents('php://input'), true);
 $id = isset($data['id']) ? intval($data['id']) : 0;
 $reason = isset($data['reason']) ? trim($data['reason']) : '';
+$adminName = isset($data['admin_name']) ? trim($data['admin_name']) : '';
 
-if ($id <= 0 || empty($reason)) {
+if ($id <= 0 || empty($reason) || empty($adminName)) {
     echo json_encode(['success' => false, 'message' => 'Invalid parameters']);
     exit;
 }
 
-$stmt = $conn->prepare("UPDATE submission_requests SET status = 'Rejected', comment = ?, action_date = NOW() WHERE id = ?");
-$stmt->bind_param('si', $reason, $id);
+$stmt = $conn->prepare("UPDATE submission_requests SET status = 'Rejected', comment = ?, admin_name = ?, action_date = NOW() WHERE id = ?");
+$stmt->bind_param('ssi', $reason, $adminName, $id);
 if ($stmt->execute()) {
     echo json_encode(['success' => true]);
 } else {
@@ -41,4 +42,5 @@ if ($stmt->execute()) {
 }
 $stmt->close();
 $conn->close();
+
 ?>
