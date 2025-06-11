@@ -63,16 +63,19 @@ const SubmissionRequest = () => {
     fetchRequests();
   }, []);
 
-  // অনুমোদন দিন
   const approveRequest = async (id) => {
+    const admin = JSON.parse(localStorage.getItem("admin"));
     if (!window.confirm("আপনি কি নিশ্চিত এই সাবমিশন এপ্রুভ করতে চান?")) return;
     try {
       const res = await fetch(
         "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/approve_submission.php",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" }, // JSON header
-          body: JSON.stringify({ id }),                   // JSON body
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id,
+            admin_name: admin.name,  // Pass admin name here
+          }),
         }
       );
       const json = await res.json();
@@ -85,7 +88,7 @@ const SubmissionRequest = () => {
     } catch (err) {
       alert("ত্রুটি: " + err.message);
     }
-  };
+  };  
   
   // প্রত্যাখ্যান শুরু করুন
   const startReject = (id) => {
@@ -93,8 +96,8 @@ const SubmissionRequest = () => {
     setRejectReason("");
   };
 
-  // প্রত্যাখ্যান জমা দিন
   const submitReject = async () => {
+    const admin = JSON.parse(localStorage.getItem("admin"));
     if (!rejectReason.trim()) {
       alert("অনুগ্রহ করে প্রত্যাখ্যানের কারণ লিখুন।");
       return;
@@ -105,7 +108,11 @@ const SubmissionRequest = () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: rejectingId, reason: rejectReason }),
+          body: JSON.stringify({
+            id: rejectingId,
+            reason: rejectReason,
+            admin_name: admin.name,  // Pass admin name here
+          }),
         }
       );
       const json = await res.json();
