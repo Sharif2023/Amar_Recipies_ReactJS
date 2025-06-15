@@ -25,9 +25,10 @@ if ($conn->connect_error) {
 
 $data = json_decode(file_get_contents('php://input'), true);
 $id = isset($data['id']) ? intval($data['id']) : 0;
+$adminName = isset($data['admin_name']) ? trim($data['admin_name']) : '';
 
-if ($id <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Invalid submission id']);
+if ($id <= 0 || empty($adminName)) {
+    echo json_encode(['success' => false, 'message' => 'Invalid parameters']);
     exit;
 }
 
@@ -44,7 +45,6 @@ if (!$submission) {
     exit;
 }
 
-// Insert into recipes table
 $sql = "INSERT INTO recipes 
 (title, category, description, image_url, location, organizerName, organizerEmail, organizerAddress, source, tags, reference, tutorialVideo, comment)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -78,9 +78,9 @@ if (!$stmt->execute()) {
 }
 $stmt->close();
 
-// Update submission_requests status to Approved and record approval time
-$update = $conn->prepare("UPDATE submission_requests SET status = 'Approved', action_date = NOW() WHERE id = ?");
-$update->bind_param('i', $id);
+// Update submission_requests status to Approved and record approval time with admin name
+$update = $conn->prepare("UPDATE submission_requests SET status = 'Approved', admin_name = ?, action_date = NOW() WHERE id = ?");
+$update->bind_param('si', $adminName, $id);
 $update->execute();
 $update->close();
 
