@@ -24,11 +24,13 @@ const AdminManagement = () => {
   const updateStatus = async (id, status) => {
     console.log(`Updating admin id=${id} to status=${status}`);
 
+    const admin = JSON.parse(localStorage.getItem("admin"));
+
     try {
       const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/update_admin_status.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, status }),
+        body: JSON.stringify({ id, status, admin_name: admin.name }),  // Include admin's name
       });
       console.log('Response status:', res.status);
 
@@ -46,7 +48,6 @@ const AdminManagement = () => {
       alert("আপডেট করার সময় নেটওয়ার্ক ত্রুটি হয়েছে");
     }
   };
-
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
@@ -90,12 +91,13 @@ const AdminManagement = () => {
                       onClick={async () => {
                         const reason = prompt("আবেদন বাতিলের কারণ:");
                         if (!reason) return alert("আবেদন বাতিলের কারণ জানানো জরুরি.");
+                        const admin = JSON.parse(localStorage.getItem("admin"));
 
                         try {
                           const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/admin_api/admin_req_reject.php", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ id: admin.id, reason }),
+                            body: JSON.stringify({ id: adminId, reason, admin_name: admin.name }),
                           });
 
                           const text = await res.text();
