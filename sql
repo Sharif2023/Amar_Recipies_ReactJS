@@ -36,7 +36,7 @@ CREATE TABLE submission_requests (
   source VARCHAR(100),
   submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   action_date DATETIME DEFAULT NULL;
-
+  admin_name VARCHAR(100) DEFAULT NULL;
 );
 
 CREATE TABLE admin_requests (
@@ -56,6 +56,7 @@ CREATE TABLE admin_requests (
   password VARCHAR(255),
   status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
   comment TEXT
+  admin_name VARCHAR(100) DEFAULT NULL;
 );
 
 CREATE TABLE reports (
