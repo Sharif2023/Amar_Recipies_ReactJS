@@ -92,6 +92,10 @@ const HistoryDropdown = () => {
                     {req.status === "rejected" && req.comment && (
                       <p className="text-sm mt-1 text-red-400 italic">Reason: {req.comment}</p>
                     )}
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Admin Name: <strong>{req.admin_name}</strong>
+                    </p>
+
                     <p className="text-xs text-gray-400 mt-1">Action Date: {new Date(req.action_date).toLocaleString()}</p>
                   </div>
                 </>
@@ -108,6 +112,7 @@ const HistoryDropdown = () => {
                   )}
                   <p className="text-xs text-gray-400 mt-1">Action Date: {req.action_date}</p>
                   <p className="text-xs font-medium text-indigo-500 mt-1">Type: {req.type === "recipe" ? "Recipe" : "Admin"}</p>
+                  
                   <p className="text-xs text-gray-400 mt-1">
                     {new Date(req.activity_time).toLocaleString()}
                   </p>
