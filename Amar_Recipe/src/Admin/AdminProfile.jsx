@@ -1,6 +1,13 @@
 import React from "react";
 
 const AdminProfile = () => {
+
+  const formatCertification = (certificationText) => {
+    return certificationText.split('\n').map((line, index) => (
+      <p key={index}>{line}</p>
+    ));
+  };
+
   const admin = JSON.parse(localStorage.getItem("admin"));
 
   if (!admin) return (
@@ -57,7 +64,7 @@ const AdminProfile = () => {
         </div>
         <div className="sm:col-span-2">
           <p className="font-semibold text-lg mb-1">সার্টিফিকেশন তথ্য</p>
-          <p className="text-gray-900">{admin.certification || "নাই"}</p>
+          <p className="text-gray-900">{formatCertification(admin.certification) || "নাই"}</p>
         </div>
       </div>
     </div>
