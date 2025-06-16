@@ -21,6 +21,12 @@ const AdminManagement = () => {
     fetchRequests();
   }, []);
 
+  const formatCertification = (certificationText) => {
+    return certificationText.split('\n').map((line, index) => (
+      <p key={index}>{line}</p>
+    ));
+  };
+
   const updateStatus = async (id, status) => {
     console.log(`Updating admin id=${id} to status=${status}`);
 
@@ -168,7 +174,7 @@ const AdminManagement = () => {
               <li><strong>মোবাইল:</strong> {selectedAdmin.phone}</li>
               <li><strong>দক্ষতা:</strong> {selectedAdmin.specialty}</li>
               <li><strong>অভিজ্ঞতা:</strong> {selectedAdmin.experience} years</li>
-              <li><strong>সার্টিফিকেশন তথ্য:</strong> {selectedAdmin.certification}</li>
+              <li><strong>সার্টিফিকেশন তথ্য:</strong> {formatCertification(selectedAdmin.certification)}</li>
               <li><strong>শহর:</strong> {selectedAdmin.city}</li>
               <li><strong>তারিখ:</strong> {selectedAdmin.date}</li>
             </ul>
