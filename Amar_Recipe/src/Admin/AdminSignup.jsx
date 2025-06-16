@@ -89,7 +89,7 @@ const AdminSignup = () => {
                         { label: "Years of Cooking Experience", name: "experience", type: "number" },
                         { label: "Specialty (e.g., desserts, vegetarian)", name: "specialty", type: "text" },
                         { label: "Portfolio Link (optional)", name: "portfolio", type: "url" },
-                        { label: "Certification Details", name: "certification", type: "text" },
+                        { label: "Certification Details", name: "certification", type: "textarea" },
                         { label: "Password", name: "password", type: "password" },
                         { label: "Confirm Password", name: "confirmPassword", type: "password" },
                     ].map(({ label, name, type }) => (
@@ -97,15 +97,26 @@ const AdminSignup = () => {
                             <label className="block mb-2 text-gray-700 font-medium" htmlFor={name}>
                                 {label}
                             </label>
-                            <input
-                                type={type}
-                                name={name}
-                                id={name}
-                                value={formData[name]}
-                                onChange={handleChange}
-                                required={["name", "phone", "date", "email", "certification", "password", "confirmPassword"].includes(name)}
-                                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-rose-500"
-                            />
+                            {type === "textarea" ? (
+                                <textarea
+                                    name={name}
+                                    id={name}
+                                    value={formData[name]}
+                                    onChange={handleChange}
+                                    rows="4"
+                                    className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-rose-500"
+                                />
+                            ) : (
+                                <input
+                                    type={type}
+                                    name={name}
+                                    id={name}
+                                    value={formData[name]}
+                                    onChange={handleChange}
+                                    required={["name", "phone", "date", "email", "certification", "password", "confirmPassword"].includes(name)}
+                                    className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-rose-500"
+                                />
+                            )}
                         </div>
                     ))}
 
