@@ -1,11 +1,43 @@
 import { useState } from "react";
+import { useNavigate, Link, NavLink } from "react-router-dom";
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const navigate = useNavigate();
+
+    const categoryMapping = {
+        "মাংস": "Meat",
+        "মাছ": "Fish",
+        "ডিম": "Egg",
+        "দুগ্ধজাত": "dairy",
+        "শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য": "VegetablewithMeatorFish",
+        "শাকসবজি": "Vegetables",
+        "ভর্তা": "Bharta",
+        "সালাদ": "Salad",
+        "আচার": "achar",
+        "স্যুপ": "Soup",
+        "পানীয়": "Drinks",
+        "ডেজার্ট, মিষ্টান্ন": "Desserts",
+        "রাইস আইটেম": "Rice_and_Pasta",
+        "হালকা খাবার/ ফাস্টফুড": "Snacks",
+        "সস/মশলা": "SaucesAndCondiments",
+        "বাঙ্গালী": "Bangladeshi",
+        "চাইনিজ্জ": "Chinese",
+        "ইতালীয়ান": "Italian",
+    };
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
+    };
+
+    const handleCategoryChange = (category) => {
+        const mappedCategory = categoryMapping[category];
+        setSelectedCategory(category);
+        // Navigate to BrowseRecipe with the selected category
+        navigate(`/browse-recipes?category=${encodeURIComponent(mappedCategory)}`);
+        setDropdownOpen(false); // Close the dropdown after selection
     };
 
     return (
@@ -14,7 +46,9 @@ function Header() {
             <nav className="bg-black p-2">
                 <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
 
-                    <div className="text-white font-bold text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer inline-flex items-center gap-2"><img src="src/assets/Amar_Recipe_Header_Logo.svg" className="w-8 h-8" alt="Amar Recipe Header Logo" />আমার রেসিপি</div>
+                    <Link to={'/'}>
+                        <div className="text-white font-bold text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer inline-flex items-center gap-2"><img src="src/assets/Amar_Recipe_Header_Logo.svg" className="w-8 h-8" alt="Amar Recipe Header Logo" />আমার রেসিপি</div>
+                    </Link>
 
                     {/* Hamburger menu for small screens */}
                     <div className="lg:hidden">
@@ -45,7 +79,7 @@ function Header() {
                                     type="button"
                                     className="h-full z-10 inline-flex items-center justify-between gap-1 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-s-md hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                                 >
-                                    <span>খাবারের ধরণ</span>
+                                    <span>{selectedCategory || 'খাবারের ধরণ'}</span>
                                     <svg className="w-3 h-3 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                     </svg>
@@ -57,24 +91,32 @@ function Header() {
                                 >
                                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                                         {[
-                                            "সকল রেসিপি",
                                             "মাংস",
+                                            "মাছ",
+                                            "ডিম",
+                                            "ভর্তা",
                                             "শাকসবজি",
                                             "শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য",
                                             "দুগ্ধজাত",
                                             "আচার",
                                             "সালাদ",
+                                            "স্যুপ",
                                             "পানীয়",
                                             "ডেজার্ট, মিষ্টান্ন",
                                             "রাইস আইটেম",
                                             "হালকা খাবার/ ফাস্টফুড",
+                                            "সস/মশলা",
                                             "বাঙ্গালী",
                                             "চাইনিজ্জ",
                                             "ইতালীয়ান"
                                         ]
                                             .map((item) => (
                                                 <li key={item}>
-                                                    <button type="button" className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleCategoryChange(item)}
+                                                        className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                                    >
                                                         {item}
                                                     </button>
                                                 </li>
@@ -107,10 +149,30 @@ function Header() {
 
                     {/* Navigation links */}
                     <div className={`lg:flex flex-col lg:flex-row ${isOpen ? 'block' : 'hidden'} lg:space-x-2 lg:mt-0 mt-4 flex flex-col items-center text-sm`}>
-                        <a href="/" className="text-white px-2 py-2 hover:text-orange-600">রেসিপিগুলো দেখুন</a>
-                        <a href="/submit" className="text-white px-2 py-2 hover:text-orange-600">নতুন রেসিপি যোগ করুন</a>
-                        <a href="/categories" className="text-white px-2 py-2 hover:text-orange-600">ধরণ</a>
-                        <a href="/about" className="text-white px-2 py-2 hover:text-orange-600">আমাদের সম্পর্কে</a>
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) => isActive ? 'text-orange-600 px-2 py-2' : 'text-white px-2 py-2'}
+                        >
+                            রেসিপিগুলো দেখুন
+                        </NavLink>
+                        <NavLink
+                            to="/submit"
+                            className={({ isActive }) => isActive ? 'text-orange-600 px-2 py-2' : 'text-white px-2 py-2'}
+                        >
+                            নতুন রেসিপি যোগ করুন
+                        </NavLink>
+                        <NavLink
+                            to="/categories"
+                            className={({ isActive }) => isActive ? 'text-orange-600 px-2 py-2' : 'text-white px-2 py-2'}
+                        >
+                            ধরণ
+                        </NavLink>
+                        <NavLink
+                            to="/about"
+                            className={({ isActive }) => isActive ? 'text-orange-600 px-2 py-2' : 'text-white px-2 py-2'}
+                        >
+                            আমাদের সম্পর্কে
+                        </NavLink>
                     </div>
                 </div>
             </nav >

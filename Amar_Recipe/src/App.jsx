@@ -36,6 +36,16 @@ function App() {
           }
         />
         <Route
+          path="/browse-recipes"
+          element={
+            <>
+              <Header />
+              <BrowseRecipe />
+              <Footer />
+            </>
+          }
+        />
+        <Route
           path="/submit"
           element={
             <>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 
 const AdminHeader = () => {
   const [reportCount, setReportCount] = useState(0);
@@ -7,9 +7,24 @@ const AdminHeader = () => {
   const [firstDropdownOpen, setFirstDropdownOpen] = useState(false);
   const [secondDropdownOpen, setSecondDropdownOpen] = useState(false);
   const [navCollapsed, setNavCollapsed] = useState(true);
+  const [profileImage, setProfileImage] = useState(
+    "https://static.vecteezy.com/system/resources/previews/032/176/191/non_2x/business-avatar-profile-black-icon-man-of-user-symbol-in-trendy-flat-style-isolated-on-male-profile-people-diverse-face-for-social-network-or-web-vector.jpg"
+  );
 
   const firstDropdownRef = useRef(null);
   const secondDropdownRef = useRef(null);
+  const BASE_URL = "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/";
+
+  const [admin, setAdmin] = useState(JSON.parse(localStorage.getItem("admin")));
+
+   useEffect(() => {
+    if (admin && admin.profileImage) {
+      const fullImagePath = admin.profileImage.startsWith("http")
+        ? admin.profileImage
+        : BASE_URL + admin.profileImage;
+      setProfileImage(fullImagePath);
+    }
+  }, [admin]);
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -119,37 +134,45 @@ const AdminHeader = () => {
           >
             <ul className="flex flex-col lg:flex-row list-none gap-4 lg:gap-6 mb-4 lg:mb-0 lg:mr-6 text-neutral-400">
               <li>
-                <Link
+                <NavLink
                   to="/adminpanel"
-                  className="block px-2 py-1 rounded hover:text-orange-600 transition"
+                  className={({ isActive }) =>
+                    isActive ? 'text-orange-600 px-2 py-2 flex-shrink-0' : 'text-white px-2 py-2 flex-shrink-0'
+                  }
                 >
                   ড্যাশবোর্ড
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
+                <NavLink
                   to="/submissionrequests"
-                  className="block px-2 py-1 rounded hover:text-orange-600 transition"
+                  className={({ isActive }) =>
+                    isActive ? 'text-orange-600 px-2 py-2 flex-shrink-0' : 'text-white px-2 py-2 flex-shrink-0'
+                  }
                 >
                   সাবমিশন রিকুয়েষ্ট
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
+                <NavLink
                   to={'/reports'}
-                  className="block px-2 py-1 rounded hover:text-orange-600 transition"
+                  className={({ isActive }) =>
+                    isActive ? 'text-orange-600 px-2 py-2 flex-shrink-0' : 'text-white px-2 py-2 flex-shrink-0'
+                  }
                 >
                   রিপোর্ট
-                </Link>
+                </NavLink>
               </li>
 
               <li>
-                <Link
+                <NavLink
                   to='/adminmanagement'
-                  className="block px-2 py-1 rounded hover:text-orange-600 transition"
+                  className={({ isActive }) =>
+                    isActive ? 'text-orange-600 px-2 py-2 flex-shrink-0' : 'text-white px-2 py-2 flex-shrink-0'
+                  }
                 >
                   অ্যাডমিন ম্যানেজমেন্ট
-                </Link>
+                </NavLink>
               </li>
             </ul>
 
@@ -210,7 +233,7 @@ const AdminHeader = () => {
                 )}
               </button>
 
-              {/* Dropdown Menu */}
+              {/*Notification Dropdown Menu */}
               {firstDropdownOpen && (
                 <ul
                   id="dropdownMenuNotifications"
@@ -237,10 +260,10 @@ const AdminHeader = () => {
               )}
             </div>
 
-            {/* Second dropdown */}
+            {/* Profile dropdown */}
             <div className="relative" ref={secondDropdownRef}>
               <button
-                onClick={() => setSecondDropdownOpen((prev) => !prev)}
+                onClick={() => setSecondDropdownOpen((prev) => !prev)} //updated
                 className="flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none text-neutral-400 hover:text-orange-600"
                 aria-expanded={secondDropdownOpen}
                 aria-haspopup="true"
@@ -248,10 +271,9 @@ const AdminHeader = () => {
                 aria-label="User menu"
               >
                 <img
-                  src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
-                  alt="User avatar"
-                  loading="lazy"
-                  className="h-6 w-6 rounded-full"
+                  src={profileImage}
+                  alt="Admin Profile"
+                  className="h-8 w-8 rounded-full border-2 border-rose-600 shadow-md"
                 />
               </button>
               {secondDropdownOpen && (
@@ -260,6 +282,10 @@ const AdminHeader = () => {
                   className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-lg bg-[#1f1f1f] py-1 shadow-lg shadow-black/80"
                   role="menu"
                 >
+                  <li className="pt-2 pb-2">
+                    <div className="px-2 text-sm text-white">{admin.name}</div> 
+                    <div className="px-2 text-sm text-neutral-400"><small>{admin.email}</small></div> 
+                  </li><hr className="text-neutral-500" />
                   <li>
                     <Link
                       to='/adminprofile'

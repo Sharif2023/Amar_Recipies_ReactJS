@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { IoStar } from 'react-icons/io5';
 import RecipeModal from './RecipeModal';
 
@@ -10,24 +11,49 @@ const BrowseRecipe = () => {
   const [error, setError] = useState(null);
   const baseImageUrl = 'http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/';
 
+  const { search } = useLocation();
+  const category = new URLSearchParams(search).get('category') || 'সকল রেসিপি';
+  const normalizedCategory = category.trim().toLowerCase();
+
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 8;
 
   useEffect(() => {
     const fetchRecipes = async () => {
+      setLoading(true); // Set loading state to true while fetching data
+      setError(null); // Reset previous error state
+
       try {
         const res = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_recipes.php');
         if (!res.ok) throw new Error('Failed to fetch recipes');
         const data = await res.json();
-        setRecipes(data.recipes || []);
+
+        console.log("Fetched Recipes: ", data);  // For debugging
+
+        // Filter recipes based on the category from URL query parameters
+        const filteredRecipes = data.recipes.filter((recipe) => {
+          const recipeCategory = recipe.category.trim().toLowerCase();
+          console.log("Recipe Category:", recipeCategory); // Log recipe categories for debugging
+
+          // If the category is 'All Recipes', show all recipes
+          if (normalizedCategory === 'সকল রেসিপি') return true;
+
+          // Otherwise, filter by category
+          return recipeCategory === normalizedCategory;
+        });
+
+        console.log("Filtered Recipes: ", filteredRecipes);  // For debugging
+
+        setRecipes(filteredRecipes);
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
+
     fetchRecipes();
-  }, []);
+  }, [normalizedCategory]);
 
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
@@ -57,8 +83,8 @@ const BrowseRecipe = () => {
             <button
               onClick={() => handlePageChange(pageNum)}
               className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${isActive
-                  ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
-                  : 'bg-white text-gray-500'
+                ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
+                : 'bg-white text-gray-500'
                 }`}
               aria-current={isActive ? 'page' : undefined}
             >
@@ -81,8 +107,8 @@ const BrowseRecipe = () => {
           <button
             onClick={() => handlePageChange(pageNum)}
             className={`flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${isActive
-                ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
-                : 'bg-white text-gray-500'
+              ? 'bg-blue-50 text-rose-600 dark:bg-gray-700 dark:text-white'
+              : 'bg-white text-gray-500'
               }`}
             aria-current={isActive ? 'page' : undefined}
           >
@@ -167,49 +193,24 @@ const BrowseRecipe = () => {
           <p className="text-center dark:text-gray-300">কোন রেসিপি পাওয়া যায়নি।</p>
         ) : (
           currentRecipes.map((item) => (
-            <div
-              key={item.id}
-              className="w-[280px] sm:w-[300px] bg-white dark:bg-[#262525] rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer group"
-              onClick={() => handleViewRecipe(item)}
-            >
+            <div key={item.id} className="w-[280px] sm:w-[300px] bg-white dark:bg-[#262525] rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer group" onClick={() => handleViewRecipe(item)}>
               <img
-                src={
-                  item.image_url
-                    ? baseImageUrl + item.image_url
-                    : 'https://via.placeholder.com/300x200?text=No+Image'
-                }
+                src={item.image_url ? baseImageUrl + item.image_url : 'https://via.placeholder.com/300x200?text=No+Image'}
                 alt={item.title}
                 className="w-full h-[200px] object-cover group-hover:brightness-90"
               />
-
               <div className="p-5">
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-lg font-semibold dark:text-white tracking-tighter" title={item.title}>
-                    {item.title}
-                  </h3>
+                  <h3 className="text-lg font-semibold dark:text-white tracking-tighter" title={item.title}>{item.title}</h3>
                   <div className="flex items-center text-yellow-500 text-sm select-none">
                     <IoStar />
-                    <span className="ml-1 text-black dark:text-white">
-                      {item.rating ? Number(item.rating).toFixed(1) : '৪.৫'}
-                    </span>
+                    <span className="ml-1 text-black dark:text-white">{item.rating ? Number(item.rating).toFixed(1) : '৪.৫'}</span>
                   </div>
                 </div>
-                <p
-                  className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3 tracking-tight"
-                  title={item.description}
-                >
-                  {item.description
-                    .replace(/\r\n/g, '\n')
-                    .replace(/\\n/g, '\n')
-                    .replace(/\\r/g, '\n') || 'বিস্তারিত তথ্য পাওয়া যায়নি।'}
+                <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3 tracking-tight" title={item.description}>
+                  {item.description.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n') || 'বিস্তারিত তথ্য পাওয়া যায়নি।'}
                 </p>
-                <button
-                  className="w-full bg-rose-600 text-white py-2 rounded-full text-sm font-medium hover:bg-rose-700 transition"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleViewRecipe(item);
-                  }}
-                >
+                <button className="w-full bg-rose-600 text-white py-2 rounded-full text-sm font-medium hover:bg-rose-700 transition" onClick={(e) => { e.stopPropagation(); handleViewRecipe(item); }}>
                   বিস্তারিত রেসিপি
                 </button>
               </div>
@@ -217,6 +218,7 @@ const BrowseRecipe = () => {
           ))
         )}
       </div>
+
 
       {/* Pagination */}
       <nav className="flex justify-center pt-10" aria-label="Page navigation">
