@@ -49,7 +49,7 @@ $stmt->close();
 
 $response = ["success" => true];
 
-// If image is uploaded, handle image update
+// If there's a profile image to upload
 if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] === UPLOAD_ERR_OK) {
     // Fetch old image path first
     $getImageQuery = $conn->prepare("SELECT profile_image FROM admin_requests WHERE id = ?");
@@ -61,7 +61,7 @@ if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] === UPLOA
 
     // Upload new image
     $imageName = basename($_FILES['profileImage']['name']);
-    $targetDir = "admin_dp_uploads/";
+    $targetDir = "admin_dp_uploads/"; // Store image in relative path
     $newImagePath = $targetDir . uniqid() . "_" . $imageName;
 
     if (move_uploaded_file($_FILES['profileImage']['tmp_name'], $newImagePath)) {
@@ -70,11 +70,12 @@ if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] === UPLOA
             unlink($oldImagePath);
         }
 
-        // Save new path in database
+        // Save new path in database as a relative path
         $updateImgStmt = $conn->prepare("UPDATE admin_requests SET profile_image = ? WHERE id = ?");
         $updateImgStmt->bind_param("si", $newImagePath, $id);
         if ($updateImgStmt->execute()) {
-            $response["profileImage"] = $newImagePath;
+            // Respond with the full URL (returning it for the frontend to handle)
+            $response["profileImage"] = "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/" . $newImagePath;
         } else {
             $response["success"] = false;
             $response["message"] = "Error saving image path: " . $updateImgStmt->error;
@@ -88,4 +89,3 @@ if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] === UPLOA
 
 $conn->close();
 echo json_encode($response);
-?>
