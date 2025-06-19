@@ -55,8 +55,9 @@ CREATE TABLE admin_requests (
   certification TEXT,
   password VARCHAR(255),
   status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
-  comment TEXT
-  admin_name VARCHAR(100) DEFAULT NULL;
+  comment TEXT,
+  admin_name VARCHAR(100) DEFAULT NULL,
+  profile_image VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE reports (
