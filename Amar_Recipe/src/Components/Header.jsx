@@ -8,6 +8,7 @@ function Header() {
     const navigate = useNavigate();
 
     const categoryMapping = {
+        "সকল রেসিপি": "AllRecipes",
         "মাংস": "Meat",
         "মাছ": "Fish",
         "ডিম": "Egg",
@@ -35,8 +36,11 @@ function Header() {
     const handleCategoryChange = (category) => {
         const mappedCategory = categoryMapping[category];
         setSelectedCategory(category);
-        // Navigate to BrowseRecipe with the selected category
-        navigate(`/browse-recipes?category=${encodeURIComponent(mappedCategory)}`);
+        if (category === "সকল রেসিপি") {
+            navigate("/"); // Redirect to home
+        } else {
+            navigate(`/browse-recipes?category=${encodeURIComponent(mappedCategory)}`);
+        }
         setDropdownOpen(false); // Close the dropdown after selection
     };
 
@@ -91,6 +95,7 @@ function Header() {
                                 >
                                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                                         {[
+                                            "সকল রেসিপি",
                                             "মাংস",
                                             "মাছ",
                                             "ডিম",
