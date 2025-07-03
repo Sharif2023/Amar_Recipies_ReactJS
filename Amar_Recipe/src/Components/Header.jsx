@@ -5,6 +5,7 @@ function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 
     const categoryMapping = {
@@ -44,6 +45,12 @@ function Header() {
         setDropdownOpen(false); // Close the dropdown after selection
     };
 
+    // Search handler to navigate with the search term
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        navigate(`/browse-recipes?searchTerm=${searchTerm}`);
+    };
+
     return (
         <div>
             {/* Navbar */}
@@ -74,7 +81,7 @@ function Header() {
                         </button>
                     </div>
 
-                    <form className="max-w-lg mx-auto w-full">
+                    <form className="max-w-lg mx-auto w-full" onSubmit={handleSearchSubmit}>
                         <div className="flex h-11.5">
                             {/* Dropdown Button */}
                             <div className="relative">
@@ -134,8 +141,11 @@ function Header() {
                             <div className="relative w-full">
                                 <input
                                     type="search"
+                                    name="searchTerm"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)} // Update the search term
                                     className="h-full block w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 border-s-0 rounded-e-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
-                                    placeholder=" অনুসন্ধান করুন মাংস, শাকসবজি, সালাত, পানীয় আইটেম..."
+                                    placeholder="অনুসন্ধান করুন মাংস, শাকসবজি, সালাত, পানীয় আইটেম..."
                                     required
                                 />
                                 <button
