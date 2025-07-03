@@ -177,12 +177,6 @@ function Header() {
                             নতুন রেসিপি যোগ করুন
                         </NavLink>
                         <NavLink
-                            to="/categories"
-                            className={({ isActive }) => isActive ? 'text-orange-600 px-2 py-2' : 'text-white px-2 py-2'}
-                        >
-                            ধরণ
-                        </NavLink>
-                        <NavLink
                             to="/about"
                             className={({ isActive }) => isActive ? 'text-orange-600 px-2 py-2' : 'text-white px-2 py-2'}
                         >
