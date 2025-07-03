@@ -13,6 +13,7 @@ const BrowseRecipe = () => {
 
   const { search } = useLocation();
   const category = new URLSearchParams(search).get('category') || 'সকল রেসিপি';
+  const searchTerm = new URLSearchParams(search).get('searchTerm') || '';
   const normalizedCategory = category.trim().toLowerCase();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,8 +21,8 @@ const BrowseRecipe = () => {
 
   useEffect(() => {
     const fetchRecipes = async () => {
-      setLoading(true); // Set loading state to true while fetching data
-      setError(null); // Reset previous error state
+      setLoading(true);
+      setError(null);
 
       try {
         const res = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/get_recipes.php');
@@ -30,20 +31,21 @@ const BrowseRecipe = () => {
 
         console.log("Fetched Recipes: ", data);  // For debugging
 
-        // Filter recipes based on the category from URL query parameters
+        // Filter recipes based on category and search term
         const filteredRecipes = data.recipes.filter((recipe) => {
           const recipeCategory = recipe.category.trim().toLowerCase();
-          console.log("Recipe Category:", recipeCategory); // Log recipe categories for debugging
+          const lowerSearchTerm = searchTerm.toLowerCase();
 
-          // If the category is 'All Recipes', show all recipes
-          if (normalizedCategory === 'সকল রেসিপি') return true;
+          const matchesSearchTerm =
+            recipe.title.toLowerCase().includes(lowerSearchTerm) ||
+            recipe.description.toLowerCase().includes(lowerSearchTerm) ||
+            (recipe.tags && recipe.tags.toLowerCase().includes(lowerSearchTerm));
 
-          // Otherwise, filter by category
-          return recipeCategory === normalizedCategory;
+          return (
+            (normalizedCategory === 'সকল রেসিপি' || recipeCategory === normalizedCategory) &&
+            matchesSearchTerm
+          );
         });
-
-        console.log("Filtered Recipes: ", filteredRecipes);  // For debugging
-
         setRecipes(filteredRecipes);
       } catch (err) {
         setError(err.message);
@@ -53,7 +55,7 @@ const BrowseRecipe = () => {
     };
 
     fetchRecipes();
-  }, [normalizedCategory]);
+  }, [searchTerm, normalizedCategory]);
 
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
