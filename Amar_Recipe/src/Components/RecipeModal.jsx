@@ -37,6 +37,10 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
     const [selectedReasons, setSelectedReasons] = useState([]);
     const [otherReason, setOtherReason] = useState('');
     const [submitStatus, setSubmitStatus] = useState(null);
+    const [rating, setRating] = useState(0);
+    const [email, setEmail] = useState('');
+    const [averageRating, setAverageRating] = useState(recipe.rating || 0);
+    const [ratingCount, setRatingCount] = useState(recipe.ratingCount || 0);
 
     const toggleReason = (id) => {
         setSelectedReasons((prev) =>
@@ -82,6 +86,56 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
             setSubmitStatus('error');
         }
     };
+
+    const handleSubmitRating = async () => {
+    if (!email || rating === 0) {
+        alert('Please enter your email and rating');
+        return;
+    }
+
+    // Check if the user has already rated the recipe
+    const checkRating = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/check_user_rating.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ recipeId: recipe.id, email: email }),
+    });
+
+    const checkData = await checkRating.json();
+
+    if (checkData.success && checkData.exists) {
+        // Notify user if they have already rated this recipe
+        alert('You have already rated this recipe!');
+        return;
+    }
+
+    const ratingData = {
+        recipeId: recipe.id,
+        email,
+        rating,
+    };
+
+    try {
+        const res = await fetch('http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/rate_recipe.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(ratingData),
+        });
+        const json = await res.json();
+
+        if (json.success) {
+            // Update the average rating
+            const newTotalRatings = ratingCount * averageRating + rating;
+            const newCount = ratingCount + 1;
+            setAverageRating((newTotalRatings / newCount).toFixed(1));
+            setRatingCount(newCount);
+        } else {
+            alert('Failed to submit your rating');
+        }
+    } catch (error) {
+        alert('Error occurred while submitting your rating');
+    }
+};
+
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
@@ -154,8 +208,33 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                         <p><strong>রেসিপিদাতার নাম:</strong> {recipe.organizerName}</p>
                         <p><strong>ইমেইল:</strong> {recipe.organizerEmail}</p>
                     </div>
+                    <div className="flex items-center text-yellow-500 text-sm select-none">
+                        <span>Average Rating: </span>
+                        <div className="ml-2 text-black dark:text-white">{averageRating} / 5</div>
+                        <span className="ml-2">({ratingCount} ratings)</span>
+                    </div>
+                    <div className="mt-4">
+                        <h3 className="text-lg font-semibold dark:text-white">Rate this Recipe</h3>
+                        <div className="flex space-x-2 mt-2">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <span
+                                    key={star}
+                                    className={`cursor-pointer ${star <= rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                                    onClick={() => setRating(star)}
+                                >
+                                    ★
+                                </span>
+                            ))}
+                        </div>
+                        <input
+                            type="email"
+                            className="mt-2 w-full p-2 border border-gray-300 rounded"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
                 </div>
-
 
                 {/* Report modal */}
                 {reportOpen && (
@@ -217,7 +296,7 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                     </svg>
                     <div className='flex space-x-1'>
                         <button
-                            onClick={''}
+                            onClick={handleSubmitRating}
                             className="flex bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
