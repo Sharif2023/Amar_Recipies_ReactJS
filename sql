@@ -15,6 +15,8 @@ CREATE TABLE recipes (
     reference VARCHAR(255),
     tutorialVideo VARCHAR(255),
     comment TEXT,
+    rating DECIMAL(3, 1) DEFAULT 0,
+    ratingCount INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -70,3 +72,11 @@ CREATE TABLE reports (
     status ENUM('pending','reviewed','resolved') DEFAULT 'pending'
 );
 
+CREATE TABLE ratings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    recipe_id INT NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    rating INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+);
