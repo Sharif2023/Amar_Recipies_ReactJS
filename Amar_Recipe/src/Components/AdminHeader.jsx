@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
+import ChatModal from "../Admin/ChatModal";
 
 const AdminHeader = () => {
   const [reportCount, setReportCount] = useState(0);
@@ -10,6 +11,7 @@ const AdminHeader = () => {
   const [profileImage, setProfileImage] = useState(
     "https://static.vecteezy.com/system/resources/previews/032/176/191/non_2x/business-avatar-profile-black-icon-man-of-user-symbol-in-trendy-flat-style-isolated-on-male-profile-people-diverse-face-for-social-network-or-web-vector.jpg"
   );
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const firstDropdownRef = useRef(null);
   const secondDropdownRef = useRef(null);
@@ -52,6 +54,10 @@ const AdminHeader = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate("/adminlogin");
+  };
+
+  const toggleChat = () => {
+    setIsChatOpen((prev) => !prev); 
   };
 
   const onReportClick = () => {
@@ -186,18 +192,20 @@ const AdminHeader = () => {
             </div>
           </div>
 
-          {/* Right elements */}
+          {/* Chat elements */}
           <div className="flex items-center space-x-4">
-            {/* Cart Icon */}
+            {/* Chat Icon */}
             <a
               href="#"
               className="text-neutral-400 hover:text-orange-600 transition"
               aria-label="Cart"
+              onClick={toggleChat}
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
               </svg>
             </a>
+            <ChatModal isOpen={isChatOpen} onClose={toggleChat} />
 
             <div className="relative" ref={firstDropdownRef}>
               <button
