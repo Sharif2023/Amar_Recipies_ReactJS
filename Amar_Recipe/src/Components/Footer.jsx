@@ -9,7 +9,7 @@ const Footer = () => {
                         <div className="text-black font-bold text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer inline-flex items-center gap-2"><img src="src/assets/Amar_Recipe_Header_Logo.svg" className="w-8 h-8" alt="Amar Recipe Header Logo" />আমার রেসিপি</div>
                     </a>
                     <ul className="text-sm flex items-center justify-center flex-col gap-7 md:flex-row md:gap-12 transition-all duration-500 py-5 mb-5 border-b border-gray-200">
-                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">রেসিপিগুলো দেখুন</a></li>
+                        <li><a href="/browserecipe" className=" text-gray-800 hover:text-[#ff3300]">রেসিপিগুলো দেখুন</a></li>
                         <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">নতুন রেসিপি যোগ করুন</a></li>
                         <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">আমাদের সম্পর্কে</a></li>
                     </ul>
