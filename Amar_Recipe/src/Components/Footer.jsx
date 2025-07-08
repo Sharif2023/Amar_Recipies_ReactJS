@@ -10,7 +10,7 @@ const Footer = () => {
                     </a>
                     <ul className="text-sm flex items-center justify-center flex-col gap-7 md:flex-row md:gap-12 transition-all duration-500 py-5 mb-5 border-b border-gray-200">
                         <li><a href="/browserecipe" className=" text-gray-800 hover:text-[#ff3300]">রেসিপিগুলো দেখুন</a></li>
-                        <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">নতুন রেসিপি যোগ করুন</a></li>
+                        <li><a href="/submitrecipe" className=" text-gray-800 hover:text-[#ff3300]">নতুন রেসিপি যোগ করুন</a></li>
                         <li><a href="#" className=" text-gray-800 hover:text-[#ff3300]">আমাদের সম্পর্কে</a></li>
                     </ul>
                     <div className="flex space-x-10 justify-center items-center mb-5">
