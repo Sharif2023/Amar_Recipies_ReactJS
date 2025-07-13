@@ -4,6 +4,16 @@ const AdminManagement = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [approvedAdmins, setApprovedAdmins] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
+  const [isRootAdmin, setIsRootAdmin] = useState(false);
+
+  const rootAdminEmail = "sharifislam0505@gmail.com";
+
+  useEffect(() => {
+    const admin = JSON.parse(localStorage.getItem("admin"));
+    if (admin && admin.email === rootAdminEmail) {
+      setIsRootAdmin(true);
+    }
+  }, []);
 
   const fetchRequests = async () => {
     const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/admin_requests.php", {
@@ -54,6 +64,33 @@ const AdminManagement = () => {
       alert("আপডেট করার সময় নেটওয়ার্ক ত্রুটি হয়েছে");
     }
   };
+  const handleDeleteAdmin = async (adminId) => {
+    if (window.confirm("Are you sure you want to delete this admin?")) {
+      const loggedInAdmin = JSON.parse(localStorage.getItem("admin"));
+  
+      try {
+        const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/admin_api/admin_delete.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            adminId,
+            loggedInEmail: loggedInAdmin.email // Pass the logged-in admin's email
+          })
+        });
+  
+        const data = await res.json();
+        if (data.success) {
+          alert("Admin deleted successfully");
+          fetchRequests(); // Refresh data after delete
+        } else {
+          alert(data.message || "Failed to delete admin.");
+        }
+      } catch (error) {
+        console.error("Delete error:", error);
+        alert("Error occurred while deleting the admin.");
+      }
+    }
+  };  
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
@@ -157,6 +194,14 @@ const AdminManagement = () => {
                 >
                   বিস্তারিত তথ্য
                 </button>
+                {isRootAdmin && (
+                  <button
+                    onClick={() => handleDeleteAdmin(admin.id)}
+                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                  >
+                    Delete
+                  </button>
+                )}
               </li>
             ))}
           </ul>
