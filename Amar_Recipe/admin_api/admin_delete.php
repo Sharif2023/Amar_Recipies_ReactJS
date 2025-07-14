@@ -2,14 +2,9 @@
 
 // Allow all origins (for development purposes)
 header("Access-Control-Allow-Origin: *");
-
-// Allow specific methods
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-
-// Allow the content type header
 header("Access-Control-Allow-Headers: Content-Type");
 
-// Handle preflight request (for browsers sending OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
@@ -26,18 +21,29 @@ if ($conn->connect_error) {
 $adminId = isset($data['adminId']) ? intval($data['adminId']) : 0;
 $loggedInEmail = isset($data['loggedInEmail']) ? $data['loggedInEmail'] : '';
 
+$rootAdminEmail = "sharifislam0505@gmail.com";
+
 // Check if logged-in admin is root admin
-$rootAdminEmail = "sharifislam0505@gmail.com"; // Define the root admin's email
 if ($loggedInEmail !== $rootAdminEmail) {
     echo json_encode(['success' => false, 'message' => 'Unauthorized action']);
     exit;
 }
 
-if ($adminId <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Invalid admin ID']);
+// ✅ Prevent deleting the root admin
+$checkStmt = $conn->prepare("SELECT email FROM admin_requests WHERE id = ?");
+$checkStmt->bind_param("i", $adminId);
+$checkStmt->execute();
+$checkStmt->bind_result($adminEmail);
+$checkStmt->fetch();
+$checkStmt->close();
+
+if ($adminEmail === $rootAdminEmail) {
+    echo json_encode(['success' => false, 'message' => 'Root admin cannot be deleted']);
+    $conn->close();
     exit;
 }
 
+// Proceed to delete if not root admin
 $stmt = $conn->prepare("DELETE FROM admin_requests WHERE id = ?");
 $stmt->bind_param("i", $adminId);
 
