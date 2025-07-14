@@ -80,3 +80,13 @@ CREATE TABLE ratings (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id)
 );
+
+CREATE TABLE admin_chat_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT NOT NULL,  -- admin ID or user ID
+    receiver_id INT NOT NULL,  -- admin ID or user ID
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES admin_requests(id),
+    FOREIGN KEY (receiver_id) REFERENCES admin_requests(id)
+);
