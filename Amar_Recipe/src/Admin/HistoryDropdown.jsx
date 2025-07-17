@@ -101,17 +101,17 @@ const HistoryDropdown = () => {
                 </>
               ) : (
                 <div className="flex-grow">
-                  <h3 className="text-lg font-semibold dark:text-white truncate">Admin: {req.name}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Email: {req.email}</p>
+                  <h3 className="text-lg font-semibold dark:text-white truncate">অ্যাডমিনের নাম: {req.name}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">অ্যাডমিনের ইমেইল: {req.email}</p>
                   <p className="text-sm mt-1">
-                    Status:
+                    স্ট্যাটাস:
                     <span className={`px-2 py-1 rounded-full text-xs font-semibold ${req.status === "approved" ? "bg-green-700 text-green-300" : "bg-red-700 text-red-300"}`}>{req.status}</span>
                   </p>
                   {req.status === "rejected" && req.rejection_reason && (
-                    <p className="text-sm mt-1 text-red-400 italic">Reason: {req.rejection_reason}</p>
+                    <p className="text-sm mt-1 text-red-400 italic">কারণ: {req.rejection_reason}</p>
                   )}
-                  <p className="text-xs text-gray-400 mt-1">Action Date: {req.action_date}</p>
-                  <p className="text-xs font-medium text-indigo-500 mt-1">Type: {req.type === "recipe" ? "Recipe" : "Admin"}</p>
+                  <p className="text-xs text-gray-400 mt-1">অ্যাকশনের সময়: {req.action_date}</p>
+                  <p className="text-xs font-medium text-indigo-500 mt-1">ধরণ: {req.type === "recipe" ? "Recipe" : "Admin"}</p>
                   
                   <p className="text-xs text-gray-400 mt-1">
                     {new Date(req.activity_time).toLocaleString()}
