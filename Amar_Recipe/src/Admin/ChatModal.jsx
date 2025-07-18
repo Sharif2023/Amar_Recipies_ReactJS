@@ -42,7 +42,6 @@ const ChatModal = ({ isOpen, onClose, senderId }) => {
     fetch(`http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/admin_get_messages.php?sender_id=${senderId}&receiver_id=${receiverId}`)
       .then(response => response.json())
       .then(data => {
-        console.log('Fetched messages:', data);  // Add this log
         if (data.success) {
           setMessages(data.messages);
         } else {
