@@ -21,12 +21,21 @@ const AdminHeader = () => {
 
   useEffect(() => {
     const adminData = JSON.parse(localStorage.getItem("admin"));
-  
-    if (adminData && adminData.profileImage) {
-      setProfileImage(adminData.profileImage);  // Set full image path (already saved in localStorage)
+    const BASE_URL = "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/";
+
+    if (adminData) {
+      setAdmin(adminData);
+
+      if (adminData.profileImage) {
+        const fullPath = adminData.profileImage.startsWith("http")
+          ? adminData.profileImage
+          : BASE_URL + adminData.profileImage;
+
+        setProfileImage(fullPath);
+      }
     }
-  }, []);  
-  
+  }, []);
+
   useEffect(() => {
     const fetchCounts = async () => {
       try {
@@ -57,7 +66,7 @@ const AdminHeader = () => {
   };
 
   const toggleChat = () => {
-    setIsChatOpen((prev) => !prev); 
+    setIsChatOpen((prev) => !prev);
   };
 
   const onReportClick = () => {
@@ -290,8 +299,8 @@ const AdminHeader = () => {
                   role="menu"
                 >
                   <li className="pt-2 pb-2">
-                    <div className="px-2 text-sm text-white">{admin.name}</div> 
-                    <div className="px-2 text-sm text-neutral-400"><small>{admin.email}</small></div> 
+                    <div className="px-2 text-sm text-white">{admin.name}</div>
+                    <div className="px-2 text-sm text-neutral-400"><small>{admin.email}</small></div>
                   </li><hr className="text-neutral-500" />
                   <li>
                     <Link
