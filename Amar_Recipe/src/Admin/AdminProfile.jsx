@@ -70,26 +70,31 @@ const AdminProfile = () => {
   };
 
   useEffect(() => {
+    const adminData = JSON.parse(localStorage.getItem("admin"));
     const BASE_URL = "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/";
 
-    if (admin?.profileImage) {
-      const fullPath = admin.profileImage.startsWith("http")
-        ? admin.profileImage
-        : BASE_URL + admin.profileImage;
+    if (adminData) {
+      setAdmin(adminData);
 
-      setProfileImage(fullPath);
+      if (adminData.profileImage) {
+        const fullPath = adminData.profileImage.startsWith("http")
+          ? adminData.profileImage
+          : BASE_URL + adminData.profileImage;
+
+        setProfileImage(fullPath);
+      }
     }
-  }, [admin]);
+  }, []);
 
   const handleSave = async () => {
     const updatedAdmin = { ...admin, profileImage, ...formData };
-  
+
     const formDataToSend = new FormData();
-  
+
     if (selectedImageFile) {
       formDataToSend.append("profileImage", selectedImageFile);
     }
-  
+
     formDataToSend.append("name", formData.name);
     formDataToSend.append("email", formData.email);
     formDataToSend.append("phone", formData.phone);
@@ -99,7 +104,7 @@ const AdminProfile = () => {
     formDataToSend.append("portfolio", formData.portfolio);
     formDataToSend.append("certification", formData.certification);
     formDataToSend.append("id", admin.id);
-  
+
     try {
       const res = await fetch(
         "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/update_admin_profile.php",
@@ -108,23 +113,27 @@ const AdminProfile = () => {
           body: formDataToSend,
         }
       );
-  
+
       const result = await res.json();
-  
+
       if (result.success) {
         alert("Profile updated successfully!");
         setIsEditing(false);
-  
-        // Update localStorage with the new profile image path
+
+        const fullProfileImagePath = (result.profileImage || profileImage).startsWith("http")
+          ? result.profileImage
+          : "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/" + result.profileImage;
+
         const updatedAdminWithImage = {
           ...updatedAdmin,
-          profileImage: result.profileImage || profileImage
+          profileImage: fullProfileImagePath
         };
-  
+
+
         // Save updated profile image in localStorage
-        localStorage.setItem("admin", JSON.stringify(updatedAdminWithImage));  
+        localStorage.setItem("admin", JSON.stringify(updatedAdminWithImage));
         setAdmin(updatedAdminWithImage);
-        setProfileImage(result.profileImage || profileImage);
+        setProfileImage(fullProfileImagePath);
         setSelectedImageFile(null);
       } else {
         alert("Error updating profile");
@@ -133,7 +142,7 @@ const AdminProfile = () => {
       console.error("Error in fetching or parsing the response:", error);
       alert("There was an issue with the profile update.");
     }
-  };    
+  };
 
   return (
     <div className="max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-lg border border-rose-200">
