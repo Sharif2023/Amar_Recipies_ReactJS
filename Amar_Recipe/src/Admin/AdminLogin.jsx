@@ -18,7 +18,20 @@ const AdminLogin = () => {
             const data = await res.json();
 
             if (data.success) {
-                localStorage.setItem("admin", JSON.stringify(data.admin));
+                // Normalize the profile image path before saving to localStorage
+                const BASE_URL = "http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/";
+
+                const fullProfileImage = data.admin.profile_image?.startsWith("http")
+                    ? data.admin.profile_image
+                    : BASE_URL + data.admin.profile_image;
+
+                // Save the normalized admin object to localStorage
+                const adminWithFullImage = {
+                    ...data.admin,
+                    profileImage: fullProfileImage // normalized profile image URL
+                };
+
+                localStorage.setItem("admin", JSON.stringify(adminWithFullImage));
                 navigate("/adminpanel");
             } else {
                 alert(data.message || "Login failed.");
