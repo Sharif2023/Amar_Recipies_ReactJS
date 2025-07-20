@@ -320,14 +320,14 @@ const AdminProfile = () => {
             onClick={handleEditToggle}
             className="px-4 py-2 text-white bg-rose-600 rounded-full hover:bg-rose-700 transition"
           >
-            Edit Profile
+            পরিবর্তন আনুন
           </button>
         ) : (
           <button
             onClick={handleSave}
             className="px-4 py-2 text-white bg-green-600 rounded-full hover:bg-green-700 transition"
           >
-            Save Changes
+            পরিবর্তন সংরক্ষণ করুন
           </button>
         )}
       </div>
