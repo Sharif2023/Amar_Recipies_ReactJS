@@ -85,7 +85,7 @@ const SettingsPage = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
                             </svg>
-                            <span>Change Password</span>
+                            <span>পাসওয়ার্ড পরিবর্তন</span>
                         </button>
                     </li>
                     <li>
@@ -96,23 +96,23 @@ const SettingsPage = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                             </svg>
-                            <span>Delete Account</span>
+                            <span>একাউন্ট মুছুন</span>
                         </button>
                     </li>
                 </ul>
             </div>
 
             {/* Main Content */}
-            <div className="w-3/4 p-6 flex-grow flex flex-col">
-                <h2 className="text-3xl font-semibold mb-6">Settings and Privacy</h2>
+            <div className="w-3/4 p-6 flex-grow flex flex-col bg-[#f8f8ff]">
+                <h2 className="text-3xl font-semibold mb-6">সেটিংস এবং প্রাইভেসি</h2>
 
                 {/* Change Password Section */}
                 {activeSection === 'password' && (
                     <div id="password" className="mb-12">
-                        <h3 className="text-xl font-medium text-gray-700 mb-4">Change Password</h3>
+                        <h3 className="text-xl font-medium text-gray-700 mb-4">পাসওয়ার্ড পরিবর্তন</h3>
                         <form onSubmit={e => e.preventDefault()} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-600">Current Password</label>
+                                <label className="block text-sm font-medium text-gray-600">বর্তমান পাসওয়ার্ড</label>
                                 <input
                                     type="password"
                                     value={currentPassword}
@@ -122,7 +122,7 @@ const SettingsPage = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-600">New Password</label>
+                                <label className="block text-sm font-medium text-gray-600">নতুন পাসওয়ার্ড</label>
                                 <input
                                     type="password"
                                     value={newPassword}
@@ -132,7 +132,7 @@ const SettingsPage = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-600">Confirm New Password</label>
+                                <label className="block text-sm font-medium text-gray-600">পুনরায় নতুন পাসওয়ার্ড</label>
                                 <input
                                     type="password"
                                     value={confirmPassword}
@@ -147,7 +147,7 @@ const SettingsPage = () => {
                                 disabled={loading}
                                 className="w-full mt-4 bg-orange-600 text-white py-2 rounded-md hover:bg-orange-700 transition duration-300"
                             >
-                                {loading ? 'Changing...' : 'Change Password'}
+                                {loading ? 'পাসওয়ার্ড পরিবর্তিত হচ্ছে...' : 'পাসওয়ার্ড পরিবর্তন করুন'}
                             </button>
                         </form>
                     </div>
@@ -156,16 +156,16 @@ const SettingsPage = () => {
                 {/* Delete Account Section */}
                 {activeSection === 'delete' && (
                     <div id="delete" className="mb-12 flex-grow">
-                        <h3 className="text-xl font-medium text-gray-700 mb-4">Delete Account</h3>
+                        <h3 className="text-xl font-medium text-gray-700 mb-4">একাউন্ট মুছুন</h3>
                         <p className="text-sm text-gray-600 mb-4">
-                            Deleting your account will permanently remove all your data. This action cannot be undone.
+                        আপনার অ্যাকাউন্ট মুছে ফেললে আপনার সমস্ত ডেটা স্থায়ীভাবে মুছে যাবে। এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।
                         </p>
                         <button
                             onClick={handleAccountDelete}
                             disabled={loading}
                             className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition duration-300"
                         >
-                            {loading ? 'Deleting...' : 'Delete Account'}
+                            {loading ? 'মুছা হচ্ছে...' : 'অ্যাকাউন্ট মুছে ফেলুন'}
                         </button>
                     </div>
                 )}

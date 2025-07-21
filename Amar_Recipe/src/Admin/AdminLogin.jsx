@@ -54,7 +54,7 @@ const AdminLogin = () => {
                             className="block text-gray-700 dark:text-gray-400 text-sm font-bold mb-2"
                             htmlFor="email"
                         >
-                            Email <span className="text-red-500">*</span>
+                            ইমেইল <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="email"
@@ -69,7 +69,7 @@ const AdminLogin = () => {
                             className="block text-gray-700 dark:text-gray-400 text-sm font-bold mb-2"
                             htmlFor="password"
                         >
-                            Password <span className="text-red-500">*</span>
+                            পাসওয়ার্ড <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="password"
@@ -85,15 +85,15 @@ const AdminLogin = () => {
                             className="bg-rose-700 hover:bg-rose-900 text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-green-600"
                             type="button"
                         >
-                            Login
+                            লগইন
                         </button>
                     </div>
-                    <div className="flex text-sm text-blue-700 underline space-x-2 items-center justify-center py-2.5">
+                    <div className="flex text-sm text-blue-700 underline space-x-4 items-center justify-center py-2.5">
                         <Link to='/adminsignup'>
-                            Create Admin Account
+                            অ্যাডমিন একাউন্ট খুলুন
                         </Link>
                         <Link to={''}>
-                            Forgot Password?
+                            পাসওয়ার্ড ভুলে গেছেন?
                         </Link>
                     </div>
                 </form>
