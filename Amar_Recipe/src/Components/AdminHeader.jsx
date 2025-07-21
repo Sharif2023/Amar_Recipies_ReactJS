@@ -305,7 +305,7 @@ const AdminHeader = () => {
                   <li>
                     <Link
                       to='/adminprofile'
-                      className="flex items-center px-2 py-2 text-sm text-neutral-300 hover:bg-orange-600"
+                      className="flex items-center px-2 py-2 text-sm text-neutral-300 hover:bg-gray-700"
                       role="menuitem"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4.5 mr-1">
@@ -318,7 +318,7 @@ const AdminHeader = () => {
 
                     <Link
                       to="/history"
-                      className="flex px-2 items-center py-2 text-sm text-neutral-300 hover:bg-orange-600"
+                      className="flex px-2 items-center py-2 text-sm text-neutral-300 hover:bg-gray-700"
                       role="menuitem"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4.5 mr-1">
@@ -333,7 +333,7 @@ const AdminHeader = () => {
                   <li>
                     <Link
                       to="/settings"
-                      className="flex px-2 items-center py-2 text-sm text-neutral-300 hover:bg-orange-600"
+                      className="flex px-2 items-center py-2 text-sm text-neutral-300 hover:bg-gray-700"
                       role="menuitem"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4.5 mr-1">
