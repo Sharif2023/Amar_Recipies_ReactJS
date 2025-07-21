@@ -20,6 +20,7 @@ import AdminSignup from "./Admin/AdminSignup";
 import AdminManagement from "./Admin/AdminManagement";
 import AdminProfile from "./Admin/AdminProfile";
 import Reports from "./Admin/Reports";
+import SettingsPage from "./Components/SettingsPage";
 
 function App() {
   return (
@@ -107,14 +108,20 @@ function App() {
             <AdminFooter />
           </>} />
 
+        <Route path="/settings" element={
+          <>
+            <AdminHeader />
+            <SettingsPage />
+            <AdminFooter />
+          </>} />
+
         <Route path="/reports" element={
           <>
             <AdminHeader />
             <Reports />
             <AdminFooter />
-          </>
-
-        } />
+          </>} />
+          
       </Routes>
     </BrowserRouter>
   );
