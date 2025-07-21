@@ -179,7 +179,7 @@ const BrowseRecipe = () => {
   if (error) {
     return (
       <div className="flex justify-center items-center min-h-screen dark:bg-[#1b1b1b]">
-        <p className="text-red-500 text-lg">ত্রুটি: {error}</p>
+        <p className="text-red-500 text-lg">ত্রুটি: ডাটাবেজের সাথে সংযোগ ব্যর্থ হচ্ছে</p>
       </div>
     );
   }
