@@ -20,7 +20,7 @@ import AdminSignup from "./Admin/AdminSignup";
 import AdminManagement from "./Admin/AdminManagement";
 import AdminProfile from "./Admin/AdminProfile";
 import Reports from "./Admin/Reports";
-import SettingsPage from "./Components/SettingsPage";
+import SettingsPage from "./Admin/SettingsPage";
 
 function App() {
   return (
