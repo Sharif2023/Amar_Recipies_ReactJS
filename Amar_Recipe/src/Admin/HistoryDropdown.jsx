@@ -76,42 +76,42 @@ const HistoryDropdown = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="flex items-center justify-center h-full text-gray-400 text-sm">No Image</div>
+                      <div className="flex items-center justify-center h-full text-gray-400 text-sm">কোনও ছবি নেই</div>
                     )}
                   </div>
                   <div className="flex-grow min-w-0">
                     <h3 className="text-lg font-semibold dark:text-white truncate">{req.title}</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400">{req.category}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Organiser: <strong>{req.organizerName}</strong></p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">রেসিপিদাতার নামঃ <strong>{req.organizerName}</strong></p>
                     <p className="text-sm mt-1">
-                      Status:
+                      স্ট্যাটাসঃ
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${req.status.toLowerCase() === "approved" ? "bg-green-700 text-green-300" : "bg-red-700 text-red-300"}`}>
                         {req.status}
                       </span>
                     </p>
                     {req.status === "rejected" && req.comment && (
-                      <p className="text-sm mt-1 text-red-400 italic">Reason: {req.comment}</p>
+                      <p className="text-sm mt-1 text-red-400 italic">কারণঃ {req.comment}</p>
                     )}
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Admin Name: <strong>{req.admin_name}</strong>
+                      অ্যাডমিনের নামঃ <strong>{req.admin_name}</strong>
                     </p>
 
-                    <p className="text-xs text-gray-400 mt-1">Action Date: {new Date(req.action_date).toLocaleString()}</p>
+                    <p className="text-xs text-gray-400 mt-1">অ্যাকশনের সময়ঃ {new Date(req.action_date).toLocaleString()}</p>
                   </div>
                 </>
               ) : (
                 <div className="flex-grow">
-                  <h3 className="text-lg font-semibold dark:text-white truncate">অ্যাডমিনের নাম: {req.name}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">অ্যাডমিনের ইমেইল: {req.email}</p>
+                  <h3 className="text-lg font-semibold dark:text-white truncate">অ্যাডমিনের নামঃ {req.name}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">অ্যাডমিনের ইমেইলঃ {req.email}</p>
                   <p className="text-sm mt-1">
-                    স্ট্যাটাস:
+                    স্ট্যাটাসঃ
                     <span className={`px-2 py-1 rounded-full text-xs font-semibold ${req.status === "approved" ? "bg-green-700 text-green-300" : "bg-red-700 text-red-300"}`}>{req.status}</span>
                   </p>
                   {req.status === "rejected" && req.rejection_reason && (
-                    <p className="text-sm mt-1 text-red-400 italic">কারণ: {req.rejection_reason}</p>
+                    <p className="text-sm mt-1 text-red-400 italic">কারণঃ {req.rejection_reason}</p>
                   )}
-                  <p className="text-xs text-gray-400 mt-1">অ্যাকশনের সময়: {req.action_date}</p>
-                  <p className="text-xs font-medium text-indigo-500 mt-1">ধরণ: {req.type === "recipe" ? "Recipe" : "Admin"}</p>
+                  <p className="text-xs text-gray-400 mt-1">অ্যাকশনের সময়ঃ {req.action_date}</p>
+                  <p className="text-xs font-medium text-indigo-500 mt-1">ধরণঃ {req.type === "recipe" ? "Recipe" : "Admin"}</p>
                   
                   <p className="text-xs text-gray-400 mt-1">
                     {new Date(req.activity_time).toLocaleString()}

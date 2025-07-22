@@ -67,18 +67,18 @@ const AdminPanel = () => {
             r.id === updatedRecipe.id ? { ...r, ...updatedRecipe } : r
           )
         );
-        alert('Recipe updated successfully.');
+        alert('রেসিপি সফলভাবে আপডেট করা হয়েছে।');
         setShowModal(false);
       } else {
-        alert('Failed to update recipe: ' + json.message);
+        alert('রেসিপি আপডেট করা যায়নি: ' + json.message);
       }
     } catch (error) {
-      alert('Error updating recipe: ' + error.message);
+      alert('রেসিপি আপডেট করার সময় ত্রুটি: ' + error.message);
     }
   };  
 
   const handleDelete = async (recipe) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete "${recipe.title}"?`);
+    const confirmDelete = window.confirm(`আপনি কি নিশ্চিত যে রেসিপি মুছে ফেলতে চান "${recipe.title}"?`);
     if (!confirmDelete) return;
 
     try {
@@ -93,12 +93,12 @@ const AdminPanel = () => {
       const json = await res.json();
       if (json.success) {
         setRecipes((prev) => prev.filter((r) => r.id !== recipe.id));
-        alert('Recipe deleted successfully.');
+        alert('রেসিপিটি সফলভাবে মুছে ফেলা হয়েছে।');
       } else {
-        alert('Failed to delete recipe: ' + json.message);
+        alert('রেসিপি মুছে ফেলা যায়নি: ' + json.message);
       }
     } catch (error) {
-      alert('Error deleting recipe: ' + error.message);
+      alert('রেসিপি মুছে ফেলার সময় ত্রুটি: ' + error.message);
     }
   };
 
@@ -249,7 +249,7 @@ const AdminPanel = () => {
                   <button
                     onClick={() => handleViewRecipe(item)}
                     className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                    aria-label={`View details of ${item.title}`}
+                    aria-label={`বিস্তারিত দেখুন ${item.title}`}
                     title="View Details"
                     type="button"
                   >
@@ -258,8 +258,8 @@ const AdminPanel = () => {
                   <button
                     onClick={() => handleEdit(item)}
                     className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                    aria-label={`Edit ${item.title}`}
-                    title="Edit Recipe"
+                    aria-label={`এডিট ${item.title}`}
+                    title="রেসিপি এডিট করুন"
                     type="button"
                   >
                     <IoPencilOutline className="w-6 h-6 text-green-600" />
@@ -267,8 +267,8 @@ const AdminPanel = () => {
                   <button
                     onClick={() => handleDelete(item)}
                     className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                    aria-label={`Delete ${item.title}`}
-                    title="Delete Recipe"
+                    aria-label={`মুছুন ${item.title}`}
+                    title="রেসিপি মুছুন"
                     type="button"
                   >
                     <IoTrashBinOutline className="w-6 h-6 text-red-600" />

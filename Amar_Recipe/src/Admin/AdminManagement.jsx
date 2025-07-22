@@ -65,7 +65,7 @@ const AdminManagement = () => {
     }
   };
   const handleDeleteAdmin = async (adminId) => {
-    if (window.confirm("Are you sure you want to delete this admin?")) {
+    if (window.confirm("আপনি কি নিশ্চিত যে আপনি এই অ্যাডমিনকে মুছে ফেলতে চান?")) {
       const loggedInAdmin = JSON.parse(localStorage.getItem("admin"));
 
       try {
@@ -80,14 +80,14 @@ const AdminManagement = () => {
 
         const data = await res.json();
         if (data.success) {
-          alert("Admin deleted successfully");
+          alert("অ্যাডমিন সফলভাবে মুছে ফেলা হয়েছে");
           fetchRequests();
         } else {
-          alert(data.message || "Failed to delete admin.");
+          alert(data.message || "অ্যাডমিন মুছে ফেলা যায়নি।");
         }
       } catch (error) {
         console.error("Delete error:", error);
-        alert("Error occurred while deleting the admin.");
+        alert("অ্যাডমিন মুছে ফেলার সময় ত্রুটি ঘটেছে ⚠️");
       }
     }
   };
@@ -152,7 +152,7 @@ const AdminManagement = () => {
                             data = JSON.parse(text);
                           } catch (parseErr) {
                             console.error("❌ JSON parse error:", parseErr);
-                            alert("❌ Server response is not valid JSON. Check console.");
+                            alert("❌ সার্ভারের প্রতিক্রিয়াটি বৈধ JSON নয়। কনসোলটি পরীক্ষা করুন।");
                             return;
                           }
 

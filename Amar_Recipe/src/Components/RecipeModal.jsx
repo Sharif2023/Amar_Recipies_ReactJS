@@ -209,12 +209,12 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
                         <p><strong>ইমেইল:</strong> {recipe.organizerEmail}</p>
                     </div>
                     <div className="flex items-center text-yellow-500 text-sm select-none">
-                        <span>Average Rating: </span>
+                        <span>★</span>
                         <div className="ml-2 text-black dark:text-white">{averageRating} / 5</div>
                         <span className="ml-2">({ratingCount} ratings)</span>
                     </div>
                     <div className="mt-4">
-                        <h3 className="text-lg font-semibold dark:text-white">Rate this Recipe</h3>
+                        <h3 className="text-lg font-semibold dark:text-white">রেসিপিটিকে রেটিং দিন</h3>
                         <div className="flex space-x-2 mt-2">
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <span

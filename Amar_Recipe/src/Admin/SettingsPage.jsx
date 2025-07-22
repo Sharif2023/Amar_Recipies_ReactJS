@@ -30,20 +30,20 @@ const SettingsPage = () => {
 
             const result = await response.json();
             if (result.success) {
-                alert('Password changed successfully!');
+                alert('পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!');
                 navigate('/adminpanel');
             } else {
                 setError(result.message);
             }
         } catch (error) {
-            setError('An error occurred.');
+            setError('কোনও সমস্যা হয়েছে।');
         } finally {
             setLoading(false);
         }
     };
 
     const handleAccountDelete = async () => {
-        const confirmation = window.confirm('Are you sure you want to delete your account? This action cannot be undone.');
+        const confirmation = window.confirm('আপনি কি নিশ্চিত যে আপনি আপনার অ্যাকাউন্টটি মুছে ফেলতে চান? এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।');
         if (confirmation) {
             setLoading(true);
             const admin = JSON.parse(localStorage.getItem("admin"));  // Get the logged-in admin's info
@@ -58,13 +58,13 @@ const SettingsPage = () => {
 
                 const result = await response.json();
                 if (result.success) {
-                    alert('Account deleted successfully!');
+                    alert('অ্যাকাউন্ট সফলভাবে মুছে ফেলা হয়েছে!');
                     navigate('/adminlogin');
                 } else {
                     setError(result.message);
                 }
             } catch (error) {
-                setError('An error occurred.');
+                setError('কোনও সমস্যা হয়েছে।');
             } finally {
                 setLoading(false);
             }
@@ -75,7 +75,7 @@ const SettingsPage = () => {
         <div className="flex min-h-screen">
             {/* Sidebar */}
             <div className="w-1/5 bg-gray-800 text-white h-screen p-6">
-                <h2 className="text-2xl font-semibold mb-8">Settings</h2>
+                <h2 className="text-2xl font-semibold mb-8">সেটিংস</h2>
                 <ul className="space-y-6">
                     <li>
                         <button

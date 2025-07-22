@@ -39,7 +39,7 @@ const AdminProfile = () => {
   if (!admin) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-red-600 text-lg font-semibold">Unauthorized Access</p>
+        <p className="text-red-600 text-lg font-semibold">অননুমোদিত প্রবেশ</p>
       </div>
     );
   }
@@ -136,11 +136,11 @@ const AdminProfile = () => {
         setProfileImage(fullProfileImagePath);
         setSelectedImageFile(null);
       } else {
-        alert("Error updating profile");
+        alert("প্রোফাইল আপডেট করার সময় ত্রুটি হয়েছে ⚠️");
       }
     } catch (error) {
       console.error("Error in fetching or parsing the response:", error);
-      alert("There was an issue with the profile update.");
+      alert("প্রোফাইল আপডেটে একটি সমস্যা হয়েছে।");
     }
   };
 
@@ -166,7 +166,7 @@ const AdminProfile = () => {
       {isEditing && (
         <div className="mt-6 py-3 flex justify-center">
           <label className="block text-sm font-semibold text-gray-700 py-2 file:px-4">
-            Choose a new profile photo
+            নতুন প্রোফাইল ছবি বেছে নিন
           </label>
           <input
             type="file"
