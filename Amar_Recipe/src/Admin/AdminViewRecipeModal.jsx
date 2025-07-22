@@ -63,11 +63,11 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="bg-white dark:bg-[#1b1b1b] rounded-lg w-full max-w-2xl overflow-y-auto max-h-[90vh] shadow-xl">
         <div className="p-6">
-          <h2 className="text-2xl font-bold dark:text-white mb-6">Edit Recipe</h2>
+          <h2 className="text-2xl font-bold dark:text-white mb-6">রেসিপি এডিট</h2>
 
           {/* Editable Title */}
           <div className="mb-4">
-            <label className="block mb-2 font-bold">Title:</label>
+            <label className="block mb-2 font-bold">রেসিপির নামঃ</label>
             <div className="flex items-center gap-2">
               {isEditing.title ? (
                 <input
@@ -84,14 +84,14 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
                 onClick={() => toggleEdit('title')}
                 className="text-blue-600 hover:text-blue-800 focus:outline-none"
               >
-                {isEditing.title ? 'Save' : 'Edit'}
+                {isEditing.title ? 'সংরক্ষণ করুণ' : 'পরিবর্তন করুণ'}
               </button>
             </div>
           </div>
 
           {/* Editable Image URL */}
           <div className="mb-4">
-            <label className="block mb-2 font-bold">Image URL:</label>
+            <label className="block mb-2 font-bold">ছবিটির পথঃ</label>
             <div className="flex items-center gap-2">
               <img
                 src={editedRecipe.image_url ? backendBaseUrl + editedRecipe.image_url : 'https://dummyimage.com/400x300/000/fff&text=No+Image'}
@@ -113,66 +113,66 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
                 onClick={() => toggleEdit('image_url')}
                 className="text-blue-600 hover:text-blue-800 focus:outline-none"
               >
-                {isEditing.image_url ? 'Save' : 'Edit'}
+                {isEditing.image_url ? 'সংরক্ষণ করুণ' : 'পরিবর্তন করুণ'}
               </button>
             </div>
           </div>
 
           {/* Category Display */}
           <p className="text-gray-700 dark:text-gray-300 mb-2 py-2">
-            <strong>রেসিপির ধরণ:</strong> {categoryBanglaMap[editedRecipe.category] || editedRecipe.category}
+            <strong>রেসিপির ধরণঃ</strong> {categoryBanglaMap[editedRecipe.category] || editedRecipe.category}
           </p>
 
           {/* Editable Description */}
           <div className="mb-4">
-            <label className="block mb-2 font-bold">Description:</label>
+            <label className="block mb-2 font-bold">বানানোর প্রক্রিয়াঃ</label>
             <div className="flex items-center gap-2">
               {isEditing.description ? (
                 <textarea
                   name="description"
-                  value={editedRecipe.description}
+                  value={editedRecipe.description.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n').replace(/\n\s*\n/g, '\n\n')}
                   onChange={handleChange}
                   className="w-full p-2 rounded border border-gray-300 dark:border-gray-600"
                 />
               ) : (
-                <span className="flex-1 text-gray-700 dark:text-gray-300">{editedRecipe.description}</span>
+                <span className="flex-1 text-gray-700 dark:text-gray-300">{editedRecipe.description.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n').replace(/\n\s*\n/g, '\n\n')}</span>
               )}
               <button
                 onClick={() => toggleEdit('description')}
                 className="text-blue-600 hover:text-blue-800 focus:outline-none"
               >
-                {isEditing.description ? 'Save' : 'Edit'}
+                {isEditing.description ? 'সংরক্ষণ করুণ' : 'পরিবর্তন করুণ'}
               </button>
             </div>
           </div>
 
           {/* Editable Comment */}
           <div className="mb-4">
-            <label className="block mb-2 font-bold">Comments:</label>
+            <label className="block mb-2 font-bold">মন্তব্যঃ</label>
             <div className="flex items-center gap-2">
               {isEditing.comment ? (
                 <input
                   type="text"
                   name="comment"
-                  value={editedRecipe.comment}
+                  value={editedRecipe.comment.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n').replace(/\n\s*\n/g, '\n\n')}
                   onChange={handleChange}
                   className="w-full p-2 rounded border border-gray-300 dark:border-gray-600"
                 />
               ) : (
-                <span className="flex-1 text-gray-700 dark:text-gray-300">{editedRecipe.comment || 'No comments available'}</span>
+                <span className="flex-1 text-gray-700 dark:text-gray-300">{editedRecipe.comment.replace(/\r\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n').replace(/\n\s*\n/g, '\n\n') || 'No comments available'}</span>
               )}
               <button
                 onClick={() => toggleEdit('comment')}
                 className="text-blue-600 hover:text-blue-800 focus:outline-none"
               >
-                {isEditing.comment ? 'Save' : 'Edit'}
+                {isEditing.comment ? 'সংরক্ষণ করুণ' : 'পরিবর্তন করুণ'}
               </button>
             </div>
           </div>
 
           {/* Editable Location */}
           <div className="mb-4">
-            <label className="block mb-2 font-bold">Location:</label>
+            <label className="block mb-2 font-bold">রেসিপিটির উৎপত্তিস্থলঃ</label>
             <div className="flex items-center gap-2">
               {isEditing.location ? (
                 <input
@@ -189,14 +189,14 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
                 onClick={() => toggleEdit('location')}
                 className="text-blue-600 hover:text-blue-800 focus:outline-none"
               >
-                {isEditing.location ? 'Save' : 'Edit'}
+                {isEditing.location ? 'সংরক্ষণ করুণ' : 'পরিবর্তন করুণ'}
               </button>
             </div>
           </div>
 
           {/* Editable Organizer Name */}
           <div className="mb-4">
-            <label className="block mb-2 font-bold">Organizer Name:</label>
+            <label className="block mb-2 font-bold">রেসিপিদাতার নামঃ</label>
             <div className="flex items-center gap-2">
               {isEditing.organizerName ? (
                 <input
@@ -213,14 +213,14 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
                 onClick={() => toggleEdit('organizerName')}
                 className="text-blue-600 hover:text-blue-800 focus:outline-none"
               >
-                {isEditing.organizerName ? 'Save' : 'Edit'}
+                {isEditing.organizerName ? 'সংরক্ষণ করুণ' : 'পরিবর্তন করুণ'}
               </button>
             </div>
           </div>
 
           {/* Editable Organizer Email */}
           <div className="mb-4">
-            <label className="block mb-2 font-bold">Organizer Email:</label>
+            <label className="block mb-2 font-bold">রেসিপিদাতার ইমেইলঃ</label>
             <div className="flex items-center gap-2">
               {isEditing.organizerEmail ? (
                 <input
@@ -237,7 +237,7 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
                 onClick={() => toggleEdit('organizerEmail')}
                 className="text-blue-600 hover:text-blue-800 focus:outline-none"
               >
-                {isEditing.organizerEmail ? 'Save' : 'Edit'}
+                {isEditing.organizerEmail ? 'সংরক্ষণ করুণ' : 'পরিবর্তন করুণ'}
               </button>
             </div>
           </div>
@@ -245,10 +245,10 @@ const AdminViewRecipeModal = ({ isOpen, onClose, recipe, onSave }) => {
           {/* Action Buttons */}
           <div className="flex justify-between mt-6">
             <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-              Cancel
+              বাতিল করুণ
             </button>
             <button onClick={handleSave} className="px-4 py-2 bg-rose-600 text-white rounded hover:bg-rose-700">
-              Save All Changes
+              পরিবর্তনগুলো সংরক্ষণ করুণ
             </button>
           </div>
         </div>

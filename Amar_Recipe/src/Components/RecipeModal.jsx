@@ -204,7 +204,7 @@ const RecipeModal = ({ isOpen, onClose, recipe }) => {
 
                     </div>
                     <div className="border-t pt-4 text-sm text-gray-600 dark:text-gray-400">
-                        <p><strong>অবস্থান:</strong> {recipe.location}</p>
+                        <p><strong>রেসিপিটির উৎপত্তিস্থল:</strong> {recipe.location}</p>
                         <p><strong>রেসিপিদাতার নাম:</strong> {recipe.organizerName}</p>
                         <p><strong>ইমেইল:</strong> {recipe.organizerEmail}</p>
                     </div>
