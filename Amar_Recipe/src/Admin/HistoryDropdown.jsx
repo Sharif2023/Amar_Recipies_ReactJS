@@ -1,5 +1,26 @@
 import React, { useEffect, useState } from "react";
 
+const categoryBanglaMap = {
+  Meat: 'মাংস',
+  Fish: 'মাছ',
+  Egg: 'ডিম',
+  dairy: 'দুগ্ধজাত',
+  VegetablewithMeatorFish: 'শাকসবজি দিয়ে মাছ/মাংস/অন্যান্য',
+  Vegetables: 'শাকসবজি',
+  Bharta: 'ভর্তা',
+  Salad: 'সালাদ',
+  achar: 'আচার',
+  Soup: 'স্যুপ',
+  Drinks: 'পানীয়',
+  Desserts: 'ডেজার্ট, মিষ্টান্ন',
+  Rice_and_Pasta: 'রাইস আইটেম',
+  Snacks: 'হালকা খাবার/ ফাস্টফুড',
+  SaucesAndCondiments: 'সস/মশলা',
+  Bangladeshi: 'বাঙ্গালী',
+  Chinese: 'চাইনিজ্জ',
+  Italian: 'ইতালীয়ান',
+};
+
 const HistoryDropdown = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -80,8 +101,8 @@ const HistoryDropdown = () => {
                     )}
                   </div>
                   <div className="flex-grow min-w-0">
-                    <h3 className="text-lg font-semibold dark:text-white truncate">{req.title}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{req.category}</p>
+                    <h3 className="text-lg font-semibold dark:text-white truncate">রেসিপির নামঃ {req.title}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">রেসিপির ধরণঃ {categoryBanglaMap[req.category] || req.category}</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">রেসিপিদাতার নামঃ <strong>{req.organizerName}</strong></p>
                     <p className="text-sm mt-1">
                       স্ট্যাটাসঃ
