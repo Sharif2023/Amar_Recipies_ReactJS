@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AdminManagement = () => {
+  const navigate = useNavigate();
   const [pendingRequests, setPendingRequests] = useState([]);
   const [approvedAdmins, setApprovedAdmins] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
@@ -10,10 +12,16 @@ const AdminManagement = () => {
 
   useEffect(() => {
     const admin = JSON.parse(localStorage.getItem("admin"));
+
+    if (!admin) {
+      navigate("/adminlogin");
+      return;
+    }
+
     if (admin && admin.email === rootAdminEmail) {
       setIsRootAdmin(true);
     }
-  }, []);
+  }, [navigate]);
 
   const fetchRequests = async () => {
     const res = await fetch("http://localhost/Amar_Recipies_jsx/Amar_Recipe/src/api/admin_requests.php", {

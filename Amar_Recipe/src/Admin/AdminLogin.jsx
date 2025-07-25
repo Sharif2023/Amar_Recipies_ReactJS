@@ -96,6 +96,11 @@ const AdminLogin = () => {
                             পাসওয়ার্ড ভুলে গেছেন?
                         </Link>
                     </div>
+                    <div className="flex text-sm text-green-500 underline space-x-4 items-center justify-center py-2.5">
+                        <Link to='#'>
+                            কিভাবে অ্যাডমিন হবেন?
+                        </Link>
+                    </div>
                 </form>
             </div>
         </div>

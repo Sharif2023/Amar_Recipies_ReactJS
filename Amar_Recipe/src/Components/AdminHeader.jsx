@@ -62,6 +62,7 @@ const AdminHeader = () => {
 
   const navigate = useNavigate();
   const handleLogout = () => {
+    localStorage.removeItem("admin");
     navigate("/adminlogin");
   };
 
